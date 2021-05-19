@@ -1,0 +1,7 @@
+.questions_wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5% 15%;
+    align-items: stretch;
+    justify-content: space-between;
+}

@@ -1,0 +1,28 @@
+.textarea{
+    box-sizing: border-box;
+    width: 100%;
+    resize:none;
+    padding: 1em;
+    outline: none;
+    border: 1px solid rgb(137, 137, 255);
+    border-radius: 5px;
+    transition-property: all;
+    overflow: hidden;
+    font-size: 1em;
+}
+.none_error{
+    border: 1px solid rgb(137, 137, 255);
+}
+.textarea:hover{
+    border: 1px solid rgb(79, 79, 255);
+    transition: 0.25s;
+}
+.textarea_error{
+    border: 1px solid rgb(255, 27, 27)!important;
+}
+.container{
+    width: 100%;
+}
+.error_message{
+    color:rgb(255, 27, 27);
+}

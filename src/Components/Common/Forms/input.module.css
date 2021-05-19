@@ -1,0 +1,27 @@
+.container{
+    width: 100%;
+}
+.login_form__input{
+    margin-top: 1em;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1em;
+    outline: none;
+    border: 1px solid rgb(137, 137, 255);
+    border-radius: 5px;
+    transition-property: all;
+    overflow: hidden;
+    font-size: 1em;
+  
+ 
+}
+.login_form__input:hover{
+    border: 1px solid rgb(79, 79, 255);
+    transition: 0.25s;
+}
+.error_message{
+    color:rgb(255, 27, 27);
+}
+.login_form__input_error{
+    border: 1px solid rgb(255, 27, 27)!important;
+}

@@ -1,0 +1,67 @@
+.header{
+    background-color: #fafafa;
+    width: 100%;
+}
+.header__wrapper{
+    padding: 1em 15%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logo__image{
+    font-size: 1.5em;
+    font-weight: 600;
+    width: 100%;
+    object-fit: contain;
+    color:teal;
+    filter: blur(0.009em);
+    user-select: none;
+    white-space: nowrap;
+    transition-property: all;
+    cursor: pointer;
+}
+.logo__image:hover{
+    transition: 0.35s;
+    filter:brightness(1.5);
+   
+}
+.seacrh_form{
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    width: 50%;
+}
+.seacrh_form__input{
+    padding: 0.5em;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    
+    border-bottom: 1px solid silver;
+    width: 100%;
+}
+.search__button{
+    margin-left: 10px;
+    background-color: transparent;
+    width: 20px;
+}
+.search__icon{
+    width: 100%;
+    object-fit: contain;
+}
+.enter_wrapper{
+    display: flex;
+}
+.button_enter{
+    padding: 0.9em 2em;
+    background-color: teal;
+    color:white;
+    border-radius: 10px;
+    text-align: center;
+    transition-property: all;
+}
+.button_enter:hover{
+    filter:brightness(1.5);
+    transition: 0.35s;
+}

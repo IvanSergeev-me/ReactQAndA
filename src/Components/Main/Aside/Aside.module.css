@@ -1,0 +1,65 @@
+.aside_collapsed{
+    z-index: 2;
+    position: fixed;
+    top:40%;
+    right: 0;
+}
+.aside_collapsed_arrow{
+    width: 100px;
+    cursor: pointer;
+    transition-property: all;
+    
+}
+.aside_collapsed_arrow:hover{
+    animation: arrowdance 2s ease-in-out infinite;
+}
+.aside_showed{
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top:0;
+    width: 400px;
+    z-index: 2;
+    overflow-y: auto;
+}
+.aside_container{
+    height: 100%;
+    padding: 5%;
+    border-radius: 1em 0 0 1em;
+    border:1px solid black;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+.aside_close_button{
+    padding: 0.9em 2em;
+    background-color: teal;
+    color:white;
+    font-size: 1em;
+    border-radius: 10px;
+    text-align: center;
+    transition-property: all;
+}
+.aside_nav{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    border-top: 2px solid teal;
+}
+.aside_nav_element{
+    cursor: pointer;
+    color: black;
+    font-size: 2em;
+    margin-top: 1em!important;
+}  
+.aside_nav_element:hover{
+    color: teal;
+}           
+                  
+@keyframes arrowdance{
+   0% { margin-right: 0;}
+   50% { margin-right: 40px ;}
+   100% { margin-right: 0;}
+}
+/*800px - пора медиазапросить*/

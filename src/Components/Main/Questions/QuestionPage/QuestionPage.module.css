@@ -1,0 +1,136 @@
+.questionPage_wrapper{
+    
+    padding: 5% 15% 15% 5%;
+}
+.question_views_eye{
+    object-fit: contain;
+    width: 1.5em;
+}
+.question_views_count{
+        color: black;
+     margin-left: 5px;
+}
+ 
+.questionPage_header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+}
+.questionPage_header_left{
+    display: flex;
+    flex-direction: column;
+}
+.question_category_container{
+    color: black;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    
+    
+}
+.question_category{
+    cursor: pointer;
+    font-weight: 600;
+    color: black;
+}
+.question_subcategory{
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(49, 49, 49);
+}
+.question_category:hover{
+    color:teal;
+    text-decoration: underline;
+}
+.question_subcategory:hover{
+    color:teal;
+    text-decoration: underline;
+}
+.question_id{
+    font-size: 1.2em;
+}
+.question_date{
+    margin :1em 0;
+    text-decoration: underline;
+    color: gray;
+
+}
+
+.question_title{
+    color:teal;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+.question_views{
+    display: flex;
+    align-items: center;
+}
+.questionPage_body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.body_author{
+    font-size: 1.5em;
+}
+.body_author_name{
+    color: teal;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.body_author_name:hover{
+    filter: brightness(1.5);
+}
+
+.body_text{
+    margin: 1em 0;
+    width: 100%;
+    padding: 2em;
+    color: black;
+    background-color: #fafafa;
+    border-radius: 10px;
+}
+.body_review{
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.answerGiven{
+    color:green;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.answerNotGiven{
+    color:red;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.low_rating{
+    color: red;
+}
+.medium_rating{
+ color: orange;
+}
+.high_rating{
+    color: green;
+}
+.questionPage_answers{
+    margin-top: 2em;
+    width: 100%;
+}
+.answers_header{
+    user-select: none;
+    width: 100%;
+    color: black;
+    font-size: 1.5em;
+    font-weight: 600;
+    border-bottom: 2px solid teal;
+    margin-bottom: 1em;
+}
+.totalAnswers{
+    font-size: 1.1em;
+}
