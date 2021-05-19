@@ -1,0 +1,43 @@
+GET http://localhost:8080/user/exists/abc/0000
+
+###
+GET http://localhost:8080/question/info/1
+
+###
+GET http://localhost:8080/question/all
+
+###
+GET http://localhost:8080/answer/forQuestion/1
+
+###
+POST http://localhost:8080/user/update
+Content-Type: application/json
+
+{
+  "id": "10",
+  "login": "test12312",
+  "password": "0000"
+}
+
+<> 2021-05-08T211843.200.txt
+
+###
+POST http://localhost:8080/user/create
+Content-Type: application/json
+
+{
+  "id": "0",
+  "login": "abc",
+  "password": "0000"
+}
+
+<> 2021-05-08T211104.200.json
+
+###
+DELETE http://localhost:8080/user/delete/abcabc
+
+<> 2021-05-08T212041.200.txt
+<> 2021-05-08T212016.200.txt
+
+###
+GET http://localhost:8080/question/forSubcategory/1
