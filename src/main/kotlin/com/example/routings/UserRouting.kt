@@ -10,55 +10,35 @@ import io.ktor.request.*
 fun Route.userRouting() {
     route("/user") {
 
-        get("/exists/{login}/{password}") {
-            try {
-                val login = call.parameters["login"] ?: return@get call.badRequest()
-                val password = call.parameters["password"] ?: return@get call.badRequest()
-                call.respond(UserController.exists(login, password))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/exists/{login}/{password}") {
+            val login = it.call.parameters["login"] ?: return@getAndHandleException it.call.badRequest()
+            val password = it.call.parameters["password"] ?: return@getAndHandleException it.call.badRequest()
+//                call.response.headers.append("Set-Cookie", "id=123123")
+//                println(call.request.cookies["id"])
+            it.call.respond(UserController.exists(login, password))
         }
 
-        get("/{id}") {
-            try {
-                val id = call.parameters["id"] ?: return@get call.badRequest()
-                call.respond(UserController.getById(id.toInt()))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/{id}") {
+            val id = it.call.parameters["id"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(UserController.getById(id.toInt()))
         }
 
 
-        post("/create") {
-            try {
-                val user = call.receive<User>()
-                call.respond(UserController.create(user))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
-
+        postAndHandleException("/create") {
+            val user = it.call.receive<User>()
+            it.call.respond(UserController.create(user))
         }
 
-        post("/update") {
-            try {
-                val new = call.receive<User>()
-                UserController.update(new)
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/update") {
+            val new = it.call.receive<User>()
+            UserController.update(new)
+            it.call.ok()
         }
 
-        delete("/delete/{login}") {
-            try {
-                val login = call.parameters["login"] ?: return@delete call.badRequest()
-                UserController.delete(login)
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        deleteAndHandleException("/delete/{login}") {
+            val login = it.call.parameters["login"] ?: return@deleteAndHandleException it.call.badRequest()
+            UserController.delete(login)
+            it.call.ok()
         }
-
     }
 }

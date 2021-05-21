@@ -3,69 +3,43 @@ package com.example.routings
 import com.example.controllers.AnswerController
 import com.example.model.Answer
 import com.example.model.AnswerScore
-import com.example.model.Status
 import io.ktor.application.*
-import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.answerRouting() {
     route("/answer") {
-        get("/forQuestion/{questionId}") {
-            try {
-                val questionId = call.parameters["questionId"] ?: return@get call.badRequest()
-                call.respond(AnswerController.getForQuestion(questionId.toInt()))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/forQuestion/{questionId}") {
+            val questionId = it.call.parameters["questionId"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(AnswerController.getForQuestion(questionId.toInt()))
         }
 
-        get("/forUser/{userId}") {
-            try {
-                val userId = call.parameters["userId"] ?: return@get call.badRequest()
-                call.respond(AnswerController.getRated(userId.toInt()))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/forUser/{userId}") {
+            val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(AnswerController.getRated(userId.toInt()))
         }
 
-        post("/create") {
-            try {
-                val answer = call.receive<Answer>()
-                call.respond(AnswerController.create(answer))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/create") {
+            val answer = it.call.receive<Answer>()
+            it.call.respond(AnswerController.create(answer))
         }
 
-        post("/createScore") {
-            try {
-                val score = call.receive<AnswerScore>()
-                call.respond(AnswerController.createScore(score))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/createScore") {
+            val score = it.call.receive<AnswerScore>()
+            it.call.respond(AnswerController.createScore(score))
         }
 
-        post("/update") {
-            try {
-                val answer = call.receive<Answer>()
-                AnswerController.update(answer)
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/update") {
+            val answer = it.call.receive<Answer>()
+            AnswerController.update(answer)
+            it.call.ok()
         }
 
-        delete("/delete/{id}") {
-            try {
-                val id = call.parameters["id"] ?: return@delete call.badRequest()
-                AnswerController.delete(id.toInt())
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        deleteAndHandleException("/delete/{id}") {
+            val id = it.call.parameters["id"] ?: return@deleteAndHandleException it.call.badRequest()
+            AnswerController.delete(id.toInt())
+            it.call.ok()
         }
     }
 }

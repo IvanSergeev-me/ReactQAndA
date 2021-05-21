@@ -10,91 +10,55 @@ import io.ktor.routing.*
 
 fun Route.questionRouting() {
     route("/question") {
-        get("/all") {
-            try {
-                call.respond(QuestionController.getAll())
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/all") {
+            it.call.respond(QuestionController.getAll())
         }
 
-        get("/forSubcategory/{subcategoryId}") {
-            try {
-                val subcategoryId = call.parameters["subcategoryId"] ?: return@get call.badRequest()
-                call.respond(QuestionController.getForSubcategory(subcategoryId.toInt()))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/forSubcategory/{subcategoryId}") {
+            val subcategoryId = it.call.parameters["subcategoryId"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(QuestionController.getForSubcategory(subcategoryId.toInt()))
         }
 
-        get("/forUser/{userId}") {
-            try {
-                val userId = call.parameters["userId"] ?: return@get call.badRequest()
-                call.respond(QuestionController.getForUser(userId.toInt()))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/forUser/{userId}") {
+            val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(QuestionController.getForUser(userId.toInt()))
         }
 
-        get("/forUserRated/{userId}") {
-            try {
-                val userId = call.parameters["userId"] ?: return@get call.badRequest()
-                call.respond(QuestionController.getRated(userId.toInt()))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/forUserRated/{userId}") {
+            val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(QuestionController.getRated(userId.toInt()))
         }
 
-        get("/search/{query}") {
-            try {
-                val query = call.parameters["query"] ?: return@get call.badRequest()
-                call.respond(QuestionController.search(query))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/search/{query}") {
+            val query = it.call.parameters["query"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(QuestionController.search(query))
         }
 
-        get("/info/{id}") {
-            val id = call.parameters["id"] ?: return@get call.badRequest()
-            call.respond(QuestionController.getInfo(id.toInt()))
+        getAndHandleException("/info/{id}") {
+            val id = it.call.parameters["id"] ?: return@getAndHandleException it.call.badRequest()
+            it.call.respond(QuestionController.getInfo(id.toInt()))
         }
 
-        post("/create") {
-            try {
-                val question = call.receive<Question>()
-                call.respond(QuestionController.create(question))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/create") {
+            val question = it.call.receive<Question>()
+            it.call.respond(QuestionController.create(question))
         }
 
-        post("/createScore") {
-            try {
-                val score = call.receive<QuestionScore>()
-                call.respond(QuestionController.createScore(score))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/createScore") {
+            val score = it.call.receive<QuestionScore>()
+            it.call.respond(QuestionController.createScore(score))
         }
 
-        post("/update") {
-            try {
-                val question = call.receive<Question>()
-                QuestionController.update(question)
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/update") {
+            val question = it.call.receive<Question>()
+            QuestionController.update(question)
+            it.call.ok()
         }
 
-        delete("/delete/{id}") {
-            try {
-                val id = call.parameters["id"] ?: return@delete call.badRequest()
-                QuestionController.delete(id.toInt())
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        deleteAndHandleException("/delete/{id}") {
+            val id = it.call.parameters["id"] ?: return@deleteAndHandleException it.call.badRequest()
+            QuestionController.delete(id.toInt())
+            it.call.ok()
         }
     }
 }

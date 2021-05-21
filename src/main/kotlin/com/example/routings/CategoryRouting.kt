@@ -9,41 +9,25 @@ import io.ktor.routing.*
 
 fun Route.categoryRouting() {
     route("/category") {
-        get("/list") {
-            try {
-                call.respond(CategoryController.getList())
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        getAndHandleException("/list") {
+            it.call.respond(CategoryController.getList())
         }
 
-        post("/create") {
-            try {
-                val category = call.receive<Category>()
-                call.respond(CategoryController.create(category))
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/create") {
+            val category = it.call.receive<Category>()
+            it.call.respond(CategoryController.create(category))
         }
 
-        post("/update") {
-            try {
-                val category = call.receive<Category>()
-                CategoryController.update(category)
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        postAndHandleException("/update") {
+            val category = it.call.receive<Category>()
+            CategoryController.update(category)
+            it.call.ok()
         }
 
-        delete("/delete/{id}") {
-            try {
-                val id = call.parameters["id"] ?: return@delete call.badRequest()
-                CategoryController.delete(id.toInt())
-                call.ok()
-            } catch (t: Throwable) {
-                call.exception(t)
-            }
+        deleteAndHandleException("/delete/{id}") {
+            val id = it.call.parameters["id"] ?: return@deleteAndHandleException it.call.badRequest()
+            CategoryController.delete(id.toInt())
+            it.call.ok()
         }
     }
 }
