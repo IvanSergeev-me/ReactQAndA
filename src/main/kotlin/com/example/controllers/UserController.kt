@@ -15,7 +15,7 @@ object UserController {
                     it
             }
 
-    fun nullUser(): User = User(0, "null", "null")
+    fun nullUser(): User = User(0, "null", "null", "https://otvet.imgsmail.ru/download/41080312_a3fe5cece4de5bc646fc456e0edef711_800.jpg")
 
     private fun create(user: User): User = transaction {
             Users.insert {
@@ -25,7 +25,8 @@ object UserController {
                 User(
                     id = it[Users.id],
                     login = user.login,
-                    password = user.password
+                    password = user.password,
+                    image = user.image
                 )
             }
         }
@@ -48,7 +49,8 @@ object UserController {
             User(
                 id = it[Users.id],
                 login = it[Users.login],
-                password = it[Users.password]
+                password = it[Users.password],
+                image = it[Users.image]
             )
         }.firstOrNull() ?: throw IllegalArgumentException("Неверный логин или пароль")
     }
@@ -76,7 +78,8 @@ object UserController {
                 User(
                     id = it[Users.id],
                     login = it[Users.login],
-                    password = "hidden"
+                    password = "hidden",
+                    image = it[Users.image]
                 )
             }.firstOrNull() ?: throw IllegalArgumentException("Нет пользователя с таким id")
     }
@@ -89,7 +92,8 @@ object UserController {
                 User(
                     id = it[Users.id],
                     login = it[Users.login],
-                    password = "hidden"
+                    password = "hidden",
+                    image = it[Users.image]
                 )
             }.firstOrNull() ?: nullUser()
     }

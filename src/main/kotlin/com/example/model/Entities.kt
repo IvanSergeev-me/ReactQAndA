@@ -17,7 +17,8 @@ data class Status(
 data class User(
     val id: Int,
     val login: String,
-    val password: String
+    val password: String,
+    val image: String
 )
 
 @Serializable
@@ -57,10 +58,16 @@ data class QuestionFull(
     val views: Int,
     val answers: Int,
     val averageRating: Double,
-    val author: String,
+    val author: User,
     val title: String,
     val text: String,
     val isAnswerGiven: Boolean
+)
+
+@Serializable
+data class QuestionsAndCurrentUser(
+    val currentUser: User,
+    val questions: List<QuestionFull>
 )
 
 @Serializable

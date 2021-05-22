@@ -1,8 +1,10 @@
 package com.example.routings
 
 import com.example.controllers.QuestionController
+import com.example.controllers.UserController
 import com.example.model.Question
 import com.example.model.QuestionScore
+import com.example.model.QuestionsAndCurrentUser
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -12,16 +14,35 @@ fun Route.questionRouting() {
     route("/question") {
         getAndHandleException("/all") {
             it.call.respond(QuestionController.getAll())
+            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
+            val data = QuestionsAndCurrentUser(
+                UserController.getByToken(token),
+                QuestionController.getAll()
+            )
+
+            it.call.respond(data)
         }
 
         getAndHandleException("/forSubcategory/{subcategoryId}") {
             val subcategoryId = it.call.parameters["subcategoryId"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(QuestionController.getForSubcategory(subcategoryId.toInt()))
+            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
+            val data = QuestionsAndCurrentUser(
+                UserController.getByToken(token),
+                QuestionController.getForSubcategory(subcategoryId.toInt())
+            )
+
+            it.call.respond(data)
         }
 
         getAndHandleException("/forUser/{userId}") {
             val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(QuestionController.getForUser(userId.toInt()))
+            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
+            val data = QuestionsAndCurrentUser(
+                UserController.getByToken(token),
+                QuestionController.getForUser(userId.toInt())
+            )
+
+            it.call.respond(data)
         }
 
         getAndHandleException("/forUserRated/{userId}") {
