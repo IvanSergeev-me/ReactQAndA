@@ -21,6 +21,12 @@ data class User(
 )
 
 @Serializable
+data class Token(
+    val token: String,
+    val userId: Int
+)
+
+@Serializable
 data class Category(
     val id: Int,
     val name: String

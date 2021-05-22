@@ -52,3 +52,8 @@ object QuestionScores: Table("question_scores") {
     val questionId = integer("question_id").references(Questions.id)
     val score = integer("score")
 }
+
+object Tokens: Table("tokens") {
+    val token = varchar("token", 64).primaryKey()
+    val userId = integer("user_id").references(Users.id)
+}

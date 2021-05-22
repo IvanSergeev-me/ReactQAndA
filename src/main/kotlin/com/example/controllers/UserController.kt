@@ -1,22 +1,47 @@
 package com.example.controllers
 
-import com.example.model.Id
-import com.example.model.User
-import com.example.model.Users
+import com.example.model.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object UserController {
-    fun create(user: User): Id = Id(
-        transaction {
+
+    private fun User.token(): String =
+        "%x".format(("" + login.hashCode() + id).toBigInteger())
+            .let {
+                if (it.length < 32 )
+                    it.padStart(32 - it.length, '0')
+                else
+                    it
+            }
+
+    fun nullUser(): User = User(0, "null", "null")
+
+    private fun create(user: User): User = transaction {
             Users.insert {
                 it[login] = user.login
                 it[password] = user.password
-            }[Users.id]
+            }.let {
+                User(
+                    id = it[Users.id],
+                    login = user.login,
+                    password = user.password
+                )
+            }
         }
-    )
 
-    fun exists(login: String, password: String): Int = transaction {
+    private fun saveToken(user: User): Unit = transaction {
+        Tokens.insert {
+            it[token] = user.token()
+            it[userId] = user.id
+        }
+    }
+
+    fun deleteToken(user: User): Unit = transaction {
+        Tokens.deleteWhere { Tokens.userId eq user.id }
+    }
+
+    private fun checkUser(login: String, password: String): User = transaction {
         Users.select {
             Users.login.eq(login) and Users.password.eq(password)
         }.map {
@@ -25,7 +50,23 @@ object UserController {
                 login = it[Users.login],
                 password = it[Users.password]
             )
-        }.firstOrNull()?.id ?: 0
+        }.firstOrNull() ?: throw IllegalArgumentException("Неверный логин или пароль")
+    }
+
+    fun register(user: User): Pair<User, Token> = transaction {
+        val new = create(user)
+        saveToken(new)
+        Pair(new, Token(new.token(), new.id))
+    }
+
+    fun auth(user: User): Pair<User, Token> = transaction {
+        val checked = checkUser(user.login, user.password)
+        saveToken(checked)
+        Pair(checked, Token(checked.token(), checked.id))
+    }
+
+    fun signout(user: User) {
+        deleteToken(user)
     }
 
     fun getById(id: Int): User = transaction {
@@ -40,7 +81,21 @@ object UserController {
             }.firstOrNull() ?: throw IllegalArgumentException("Нет пользователя с таким id")
     }
 
+    fun getByToken(token: String): User = transaction {
+        Tokens
+            .leftJoin(Users)
+            .select { Tokens.token eq token }
+            .map {
+                User(
+                    id = it[Users.id],
+                    login = it[Users.login],
+                    password = "hidden"
+                )
+            }.firstOrNull() ?: nullUser()
+    }
+
     fun delete(login: String) {
+        // TODO: 22.05.2021 нужно удалять токен здесь
         transaction {
             Users.deleteWhere { Users.login.eq(login) }
         }

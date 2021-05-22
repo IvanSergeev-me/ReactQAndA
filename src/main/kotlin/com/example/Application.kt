@@ -36,7 +36,8 @@ fun initDatabase() {
             Subcategories,
             Users,
             QuestionScores,
-            AnswerScores
+            AnswerScores,
+            Tokens
         )
     }
 }

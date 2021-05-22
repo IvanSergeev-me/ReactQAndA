@@ -7,26 +7,36 @@ import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
 
+const val COOKIE_NAME_AUTH_TOKEN = "auth-token"
+
 fun Route.userRouting() {
     route("/user") {
-
-        getAndHandleException("/exists/{login}/{password}") {
-            val login = it.call.parameters["login"] ?: return@getAndHandleException it.call.badRequest()
-            val password = it.call.parameters["password"] ?: return@getAndHandleException it.call.badRequest()
-//                call.response.headers.append("Set-Cookie", "id=123123")
-//                println(call.request.cookies["id"])
-            it.call.respond(UserController.exists(login, password))
-        }
-
         getAndHandleException("/{id}") {
             val id = it.call.parameters["id"] ?: return@getAndHandleException it.call.badRequest()
             it.call.respond(UserController.getById(id.toInt()))
         }
 
-
-        postAndHandleException("/create") {
+        postAndHandleException("/register") {
             val user = it.call.receive<User>()
-            it.call.respond(UserController.create(user))
+            val (new, token) = UserController.register(user)
+            it.call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${token.token}")
+            it.call.respond(new)
+        }
+
+        postAndHandleException("/auth") {
+            val user = it.call.receive<User>()
+            val (checked, token) = UserController.auth(user)
+            if (checked.id > 0) {
+                it.call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${token.token}")
+                it.call.respond(checked)
+            } else {
+                throw IllegalArgumentException("Неверный логин или пароль")
+            }
+        }
+
+        deleteAndHandleException("/signout") {
+            val user = it.call.receive<User>()
+            UserController.deleteToken(user)
         }
 
         postAndHandleException("/update") {
