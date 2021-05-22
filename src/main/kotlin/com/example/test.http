@@ -42,3 +42,18 @@ DELETE http://localhost:8080/user/delete/abcabc
 
 ###
 GET http://localhost:8080/question/forSubcategory/1
+
+###
+GET http://localhost:8080/question/all
+Cookie: auth-token=0000000000000000000000eb28b
+
+###
+POST http://localhost:8080/user/auth
+Content-Type: application/json
+
+{
+  "id": "0",
+  "login": "aaa",
+  "password": "0000",
+  "image": "oiuiui"
+}

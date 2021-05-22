@@ -84,6 +84,18 @@ object UserController {
             }.firstOrNull() ?: throw IllegalArgumentException("Нет пользователя с таким id")
     }
 
+    fun getShortById(id: Int): UserShort = transaction {
+        Users
+            .select { Users.id eq id }
+            .map {
+                UserShort(
+                    id = it[Users.id],
+                    login = it[Users.login],
+                    image = it[Users.image]
+                )
+            }.firstOrNull() ?: throw IllegalArgumentException("Нет пользователя с таким id")
+    }
+
     fun getByToken(token: String): User = transaction {
         Tokens
             .leftJoin(Users)

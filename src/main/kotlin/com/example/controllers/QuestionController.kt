@@ -26,7 +26,7 @@ object QuestionController {
         subcategory = row[Questions.subcategoryId].let { subId ->
             SubcategoryController.getById(subId).name
         },
-        author = UserController.getById(row[Questions.userId]),
+        author = UserController.getShortById(row[Questions.userId]),
         title = row[Questions.title],
         text = row[Questions.description],
         averageRating = row[QuestionScores.score.avg()]?.toDouble() ?: 0.0,

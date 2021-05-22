@@ -22,6 +22,20 @@ data class User(
 )
 
 @Serializable
+data class UserShort(
+    val id: Int,
+    val login: String,
+    val image: String,
+)
+
+@Serializable
+data class UserAuth(
+    val login: String,
+    val password: String,
+    val rememberMe: Boolean
+)
+
+@Serializable
 data class Token(
     val token: String,
     val userId: Int
@@ -58,16 +72,10 @@ data class QuestionFull(
     val views: Int,
     val answers: Int,
     val averageRating: Double,
-    val author: User,
+    val author: UserShort,
     val title: String,
     val text: String,
     val isAnswerGiven: Boolean
-)
-
-@Serializable
-data class QuestionsAndCurrentUser(
-    val currentUser: User,
-    val questions: List<QuestionFull>
 )
 
 @Serializable
@@ -75,16 +83,6 @@ data class QuestionInfo (
     val question: QuestionFull,
     val answers: List<AnswerWithRating>
 )
-//
-//@Serializable
-//data class QuestionWithRating(
-//    val id: Int,
-//    val subcategoryId: Int,
-//    val userId: Int,
-//    val averageRating: Double,
-//    val title: String,
-//    val description: String
-//)
 
 @Serializable
 data class Answer(

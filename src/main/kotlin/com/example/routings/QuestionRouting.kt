@@ -14,35 +14,18 @@ fun Route.questionRouting() {
     route("/question") {
         getAndHandleException("/all") {
             it.call.respond(QuestionController.getAll())
-            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
-            val data = QuestionsAndCurrentUser(
-                UserController.getByToken(token),
-                QuestionController.getAll()
-            )
-
-            it.call.respond(data)
+            it.call.respond(QuestionController.getAll())
         }
 
         getAndHandleException("/forSubcategory/{subcategoryId}") {
             val subcategoryId = it.call.parameters["subcategoryId"] ?: return@getAndHandleException it.call.badRequest()
-            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
-            val data = QuestionsAndCurrentUser(
-                UserController.getByToken(token),
-                QuestionController.getForSubcategory(subcategoryId.toInt())
-            )
-
-            it.call.respond(data)
+//            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
+            it.call.respond(QuestionController.getForSubcategory(subcategoryId.toInt()))
         }
 
         getAndHandleException("/forUser/{userId}") {
             val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
-            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
-            val data = QuestionsAndCurrentUser(
-                UserController.getByToken(token),
-                QuestionController.getForUser(userId.toInt())
-            )
-
-            it.call.respond(data)
+            it.call.respond(QuestionController.getForUser(userId.toInt()))
         }
 
         getAndHandleException("/forUserRated/{userId}") {
