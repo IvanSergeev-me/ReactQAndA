@@ -1,20 +1,21 @@
+.container{
+    margin-top: 2em;
+}
 .textarea{
     box-sizing: border-box;
     width: 100%;
     resize:none;
     padding: 1em;
     outline: none;
-    border: 1px solid rgb(137, 137, 255);
-    border-radius: 5px;
+    border: 1px solid teal;
+    border-radius: 10px;
     transition-property: all;
     overflow: hidden;
     font-size: 1em;
 }
-.none_error{
-    border: 1px solid rgb(137, 137, 255);
-}
+
 .textarea:hover{
-    border: 1px solid rgb(79, 79, 255);
+    border: 1px solid rgb(0, 180, 180);
     transition: 0.25s;
 }
 .textarea_error{

@@ -33,7 +33,7 @@ export const getQuestionPageThunk = (id) =>{
         dispatch(toggleFetchingAC());
         QuestionsApi.getCurrentQuestion(id)
         .then(response => {
-            console.log(response.data);
+            
             dispatch(setQuestionPageAC(response.data.question, response.data.answers));
             
             dispatch(toggleFetchingAC());

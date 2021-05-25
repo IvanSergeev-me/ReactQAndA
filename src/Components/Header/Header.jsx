@@ -16,7 +16,7 @@ const Header = (props) =>{
                     </button>
                 </form>
                 <div className={s.enter_wrapper}>
-                    <button className={s.button_enter}>Войти</button>
+                    <NavLink to={"/Login"} className={s.button_enter}>Войти</NavLink>
                 </div>
                
             </div>

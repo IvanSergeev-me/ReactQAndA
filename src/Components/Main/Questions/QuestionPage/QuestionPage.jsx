@@ -21,6 +21,7 @@ const QuestionPage = (props) =>{
         />
         }
     )
+   
     return(
         <section className={s.questionPage_wrapper}>
             <div  className={s.questionPage_header}>
@@ -45,7 +46,8 @@ const QuestionPage = (props) =>{
             </div>
             <div className={s.questionPage_body}>
                 <div className={s.body_author}>
-                    Автор  <span className={s.body_author_name}>{props.question.author} </span> спрашивает:
+                    
+                    Автор  <span className={s.body_author_name}>{props.question.author?props.question.author.login:"anonymus"} </span> спрашивает:
                 </div>
                 <div className={s.body_content}>
                     <div className={s.body_text}>

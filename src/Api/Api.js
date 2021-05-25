@@ -9,13 +9,24 @@ const instance = axios.create({
 
 export const QuestionsApi = {
     getQuestionsPage(currentPage,pageSize){
-        return instance.get(`question/all`)
+        return instance.get(`question/all`);
         //must be like: return instance.get(`question/all?page=${currentPage}&count=${pageSize}`)
     },
+    getQuestionsForSubcategory(id){
+        return instance.get(`question/forSubcategory/${id}`);
+    },
     getCurrentQuestion(id){
-        return instance.get(`question/info/${id}`)
+        return instance.get(`question/info/${id}`);
     },
     
+};
+export const AskQuestionApi = {
+    getCategories(){
+        return instance.get(`category/list`);
+    },
+    getSubcategories(id){
+        return instance.get(`subcategory/forCategory/${id}`);
+    }
 };
 export const AuthorisationApi = {
     /*loginExists(login, password){

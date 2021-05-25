@@ -1,0 +1,105 @@
+.ask_wrapper{
+    padding: 5% 15% 15% 15%;
+}
+.form{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.form_button_container{
+    width: 100%;
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.form_send{
+    padding: 1em 2em;
+    background-color: teal;
+    font-size: 1em;
+    color:white;
+    border-radius: 10px;
+    text-align: center;
+    transition-property: all;
+
+}
+
+.form_send:hover{
+    filter:brightness(1.5);
+    transition: 0.35s;
+}
+.ask_title{
+    font-size: 1.5em;
+    color: black;
+    font-weight: 600;
+}
+.ask_categories_choise{
+    width: 100%;
+    display: flex;
+    margin-top: 1em;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+.categories_choise_column{
+    width: 40%;
+    border:1px solid black;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-sizing: border-box;
+    max-height: 400px;
+}
+.categoryBrick{
+    
+    margin-top: 10px;
+    border:1px solid teal;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    transition-property: all;
+    cursor: pointer;
+
+}
+.categoryBrick:hover{
+    background-color: teal;
+    color: white;
+    transition: 0.25s;
+}
+.categoryBrick_name{
+    font-size: 1em;
+    color: black;
+    font-weight: 600;
+}
+.categoryBrick_selected{
+    background-color: teal;
+    color: white;
+}
+.question_category_container{
+    color: black;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    
+    
+}
+.question_category{
+    cursor: pointer;
+    font-weight: 600;
+    color: black;
+}
+.question_subcategory{
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(49, 49, 49);
+}
+.question_category:hover{
+    color:teal;
+    text-decoration: underline;
+}
+.question_subcategory:hover{
+    color:teal;
+    text-decoration: underline;
+}

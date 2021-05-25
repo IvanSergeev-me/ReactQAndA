@@ -5,12 +5,14 @@ import QuestionPage from './Questions/QuestionPage/QuestionPage.jsx';
 import AskQuestion from './AskQuestion/AskQuestion.jsx';
 import {Route} from "react-router-dom";
 import s from './Main.module.css';
+import Login from '../EnterPages/Login/Login.jsx';
 const Main = (props) =>{
     return(
         <main>
             <Route path="/Question/:questionID?" render={()=><QuestionPage />}/>
             <Route path="/Questions" render={()=><Questions />} />
             <Route path="/AskQuestion" render={()=><AskQuestion />} />
+            <Route path="/Login" render={()=><Login />} />
             <Aside />
 
         </main>

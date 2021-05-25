@@ -11,7 +11,7 @@ class Question extends React.Component{
             <NavLink to={`/Question/${this.props.id}`} className={s.question_wrapper}>
                 <div className={s.question_info}>
                     <div className={s.question_info__left}>
-                        <div className={s.question_author}>{this.props.author}</div>
+                        <div className={s.question_author}>{this.props.author.login}</div>
                         <div className={s.question_date}>{this.props.date}</div>
                     </div>
                     <div className={s.question_info__right}>

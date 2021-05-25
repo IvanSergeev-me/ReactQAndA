@@ -55,6 +55,7 @@
 }
 .button_enter{
     padding: 0.9em 2em;
+    font-size: .9em;
     background-color: teal;
     color:white;
     border-radius: 10px;
