@@ -93,7 +93,7 @@ data class Status(
 )
 ```
 
-##Questions
+## Questions
 
 ### /question/all - GET
 Ничего не принимает
