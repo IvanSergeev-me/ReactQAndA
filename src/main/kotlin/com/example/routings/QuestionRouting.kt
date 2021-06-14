@@ -1,10 +1,8 @@
 package com.example.routings
 
-import com.example.controllers.QuestionController
-import com.example.controllers.UserController
-import com.example.model.Question
-import com.example.model.QuestionScore
-import com.example.model.QuestionsAndCurrentUser
+import com.example.data.questions.model.Question
+import com.example.data.questions.model.QuestionScore
+import com.example.data.questions.queries.QuestionDao
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -13,56 +11,52 @@ import io.ktor.routing.*
 fun Route.questionRouting() {
     route("/question") {
         getAndHandleException("/all") {
-            it.call.respond(QuestionController.getAll())
-            it.call.respond(QuestionController.getAll())
+            call.respond(QuestionDao.getAll())
         }
 
         getAndHandleException("/forSubcategory/{subcategoryId}") {
-            val subcategoryId = it.call.parameters["subcategoryId"] ?: return@getAndHandleException it.call.badRequest()
-//            val token = it.call.request.cookies[COOKIE_NAME_AUTH_TOKEN] ?: ""
-            it.call.respond(QuestionController.getForSubcategory(subcategoryId.toInt()))
+            val subcategoryId = call.parameters["subcategoryId"] ?: return@getAndHandleException call.badRequest()
+            call.respond(QuestionDao.getForSubcategory(subcategoryId.toInt()))
         }
 
-        getAndHandleException("/forUser/{userId}") {
-            val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(QuestionController.getForUser(userId.toInt()))
-        }
-
-        getAndHandleException("/forUserRated/{userId}") {
-            val userId = it.call.parameters["userId"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(QuestionController.getRated(userId.toInt()))
+        getAndHandleException("/forUser") {
+            call.respond(QuestionDao.getForUser(safeCookieToken().toInt()))
         }
 
         getAndHandleException("/search/{query}") {
-            val query = it.call.parameters["query"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(QuestionController.search(query))
+            val query = call.parameters["query"] ?: return@getAndHandleException call.badRequest()
+            call.respond(QuestionDao.search(query))
         }
 
         getAndHandleException("/info/{id}") {
-            val id = it.call.parameters["id"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(QuestionController.getInfo(id.toInt()))
+            val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()
+            call.respond(QuestionDao.getInfo(id.toInt()))
         }
 
         postAndHandleException("/create") {
-            val question = it.call.receive<Question>()
-            it.call.respond(QuestionController.create(question))
-        }
-
-        postAndHandleException("/createScore") {
-            val score = it.call.receive<QuestionScore>()
-            it.call.respond(QuestionController.createScore(score))
+            val question = call.receive<Question>().copy(userId = safeCookieToken().toInt())
+            call.respond(QuestionDao.create(question))
         }
 
         postAndHandleException("/update") {
-            val question = it.call.receive<Question>()
-            QuestionController.update(question)
-            it.call.ok()
+            val question = call.receive<Question>()
+            checkAuthAndRun(question.userId) {
+                QuestionDao.update(question)
+                call.ok()
+            }
+        }
+
+        postAndHandleException("/createScore") {
+            val score = call.receive<QuestionScore>().copy(userId = safeCookieToken().toInt())
+            call.respond(QuestionDao.createScore(score))
         }
 
         deleteAndHandleException("/delete/{id}") {
-            val id = it.call.parameters["id"] ?: return@deleteAndHandleException it.call.badRequest()
-            QuestionController.delete(id.toInt())
-            it.call.ok()
+            val id = call.parameters["id"] ?: return@deleteAndHandleException call.badRequest()
+            checkAuthAndRun(QuestionDao.getById(id.toInt()).id) {
+                QuestionDao.delete(id.toInt())
+                call.ok()
+            }
         }
     }
 }

@@ -1,33 +1,22 @@
 package com.example.routings
 
-import com.example.controllers.CategoryController
-import com.example.model.Category
+import com.example.data.categories.queries.CategoryDao
+import com.example.data.categories.queries.SubcategoryDao
 import io.ktor.application.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.categoryRouting() {
     route("/category") {
         getAndHandleException("/list") {
-            it.call.respond(CategoryController.getList())
+            call.respond(CategoryDao.getList())
         }
+    }
 
-        postAndHandleException("/create") {
-            val category = it.call.receive<Category>()
-            it.call.respond(CategoryController.create(category))
-        }
-
-        postAndHandleException("/update") {
-            val category = it.call.receive<Category>()
-            CategoryController.update(category)
-            it.call.ok()
-        }
-
-        deleteAndHandleException("/delete/{id}") {
-            val id = it.call.parameters["id"] ?: return@deleteAndHandleException it.call.badRequest()
-            CategoryController.delete(id.toInt())
-            it.call.ok()
+    route("/subcategory") {
+        getAndHandleException("/forCategory/{categoryId}") {
+            val categoryId = call.parameters["categoryId"] ?: return@getAndHandleException call.badRequest()
+            call.respond(SubcategoryDao.getForCategory(categoryId.toInt()))
         }
     }
 }

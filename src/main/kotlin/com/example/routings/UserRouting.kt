@@ -1,54 +1,59 @@
 package com.example.routings
 
-import com.example.controllers.UserController
-import com.example.model.User
-import io.ktor.routing.*
+import com.example.data.users.model.User
+import com.example.data.users.queries.TokenDao.deleteToken
+import com.example.data.users.queries.TokenDao.saveToken
+import com.example.data.users.queries.TokenDao.token
+import com.example.data.users.queries.UserDao
+import com.example.data.users.queries.UserDao.setIdIfExists
 import io.ktor.application.*
-import io.ktor.response.*
 import io.ktor.request.*
-
-const val COOKIE_NAME_AUTH_TOKEN = "auth-token"
+import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.util.pipeline.*
 
 fun Route.userRouting() {
     route("/user") {
         getAndHandleException("/{id}") {
-            val id = it.call.parameters["id"] ?: return@getAndHandleException it.call.badRequest()
-            it.call.respond(UserController.getById(id.toInt()))
-        }
-
-        postAndHandleException("/register") {
-            val user = it.call.receive<User>()
-            val (new, token) = UserController.register(user)
-            it.call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${token.token}")
-            it.call.respond(new)
-        }
-
-        postAndHandleException("/auth") {
-            val user = it.call.receive<User>()
-            val (checked, token) = UserController.auth(user)
-            if (checked.id > 0) {
-                it.call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${token.token}")
-                it.call.respond(checked)
-            } else {
-                throw IllegalArgumentException("Неверный логин или пароль")
-            }
-        }
-
-        deleteAndHandleException("/signout") {
-            val user = it.call.receive<User>()
-            UserController.deleteToken(user)
-        }
-
-        postAndHandleException("/update") {
-            val new = it.call.receive<User>()
-            UserController.update(new)
-            it.call.ok()
-        }
-
-        deleteAndHandleException("/delete/{login}") {
-            val login = it.call.parameters["login"] ?: return@deleteAndHandleException it.call.badRequest()
-            UserController.delete(login)
-            it.call.ok()
+            val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()
+            call.respond(UserDao.getById(id.toInt()))
         }
     }
+
+    postAndHandleException("/register") {
+        val user = call.receive<User>()
+        val new = UserDao.create(user)
+        new.saveToken()
+        call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${new.token}")
+        call.respond(new)
+    }
+
+    postAndHandleException("/auth") {
+        val user = call.receive<User>().copy(id = 0).setIdIfExists()
+        if (user.id > 0) {
+            user.saveToken()
+            setAuthCookie(user.token)
+            call.respond(user)
+        } else {
+            throw IllegalArgumentException("Неверный логин или пароль")
+        }
+    }
+
+    postAndHandleException("/update") {
+        val new = call.receive<User>()
+        checkAuthAndRun(new.token) {
+            UserDao.update(new)
+            call.ok()
+        }
+    }
+
+    deleteAndHandleException("/signout") {
+        val user = call.receive<User>()
+        user.deleteToken()
+        setAuthCookie(COOKIE_VALUE_DELETED)
+    }
+}
+
+fun PipelineContext<Unit, ApplicationCall>.setAuthCookie(cookie: Any) {
+    call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=$cookie")
 }
