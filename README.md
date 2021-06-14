@@ -1,6 +1,6 @@
-### Base URL http://localhost:8080
+###  Base URL http://localhost:8080
 
-### Стандартная ошибка
+###  Стандартная ошибка
 
 ```kotlin
 data class Status(
@@ -11,7 +11,7 @@ data class Status(
 
 ## Users
 
-###/user/{id} - GET
+### /user/{id} - GET
 Возвращает данные пользователя:
 ```kotlin
 data class UserShort(
@@ -21,7 +21,7 @@ data class UserShort(
 )
 ```
 
-###/user/register - POST
+### /user/register - POST
 Создает нового пользователя. Если пользователь успешно создан,
 устанавливается cookie с токеном пользователя
 
@@ -38,7 +38,7 @@ data class User(
 ```
 Возвращает такого же пользователя, но с актуальным id
 
-###/user/auth - POST
+### /user/auth - POST
 Авторизация пользователя. Если пользователь авторизован создан,
 устанавливается cookie с токеном пользователя
 
@@ -51,7 +51,7 @@ data class User(
     val image: String // URL
 )
 ```
-###/user/update - POST
+### /user/update - POST
 Обновляет данные пользователя. Находит пользователя по id 
 и устанавливает данные из остальных полей.
 
@@ -76,7 +76,7 @@ data class Status(
 )
 ```
 
-###/user/signout - DELETE
+### /user/signout - DELETE
 Осуществляет выход из аккаунта. Удаляет cookie
 
 Принимает json:
@@ -95,7 +95,7 @@ data class Status(
 
 ##Questions
 
-###/question/all - GET
+### /question/all - GET
 Ничего не принимает
 
 Возвращает все вопросы
@@ -123,16 +123,16 @@ data class UserShort(
     val image: String,
 )
 ```
-###/question/forSubcategory/{subcategoryId} - GET
+### /question/forSubcategory/{subcategoryId} - GET
 Возвращает список вопросов для подкатегории. Структура ответа как у getAll.
 
-###/question/forUser - GET
+### /question/forUser - GET
 Возвращает список вопросов для пользователя. Берет пользователя из cookie. Структура ответа как у getAll.
 
-###/question/search/{query} - GET
+### /question/search/{query} - GET
 Поиск. Структура ответа как у getAll.
 
-###/question/info/{id} - GET
+### /question/info/{id} - GET
 Информация о вопросе.
 
 Ответ:
@@ -173,7 +173,7 @@ data class AnswerWithRating(
 
 ```
 
-###/question/create - POST
+### /question/create - POST
 
 Создает новый вопрос
 
@@ -194,7 +194,7 @@ data class Id(
 )
 ```
 
-###/question/update - POST
+### /question/update - POST
 Обновляет вопрос. Ищет вопрос по id и устанавливает значения из остальных полей
 
 Принимает:
@@ -215,7 +215,7 @@ data class Status(
 )
 ```
 
-###/question/createScore - POST
+### /question/createScore - POST
 Создает оценку к вопросу.
 Если оценка уже была создана этим пользователем к этому вопросу,
 обновит оценку.
@@ -236,7 +236,7 @@ data class Id( // id новой оценки
 )
 ```
 
-###/question/delete/{id} - DELETE
+### /question/delete/{id} - DELETE
 Удаляет вопрос. Может быть удален только 
 тем пользователем, который его создал
 
@@ -250,7 +250,7 @@ data class Status(
 
 ## Answers
 
-###/answer/forQuestion/{questionId} - GET
+### /answer/forQuestion/{questionId} - GET
 Список подкатегорий для категории
 
 Ответ:
@@ -267,7 +267,7 @@ data class AnswerWithRating(
 )
 ```
 
-###/answer/create - POST
+### /answer/create - POST
 Создает ответ
 
 Принимает:
@@ -287,7 +287,7 @@ data class Id( // id нового ответа
 )
 ```
 
-###/answer/createScore - POST
+### /answer/createScore - POST
 Создает оценку к ответу.
 Если оценка уже была создана этим пользователем к этому ответу,
 обновит оценку.
@@ -309,7 +309,7 @@ data class Id( // id новой оценки
 )
 ```
 
-###/answer/setBest/{answerId} - POST
+### /answer/setBest/{answerId} - POST
 Выбирает ответ как лучший. Переназначит, 
 если вопрос уже имеет лучший ответ
 
@@ -323,7 +323,7 @@ data class Status(
 )
 ```
 
-###/answer/update - POST
+### /answer/update - POST
 Изменение ответа. Ищет ответ по id и устанавливает значения из остальных полей
 
 Принимает:
@@ -345,7 +345,7 @@ data class Status(
 )
 ```
 
-###/answer/delete/{id} - DELETE
+### /answer/delete/{id} - DELETE
 Удаляет ответ.
 
 Ответ:
@@ -358,7 +358,7 @@ data class Status(
 
 ## Category
 
-###/category/list - GET
+### /category/list - GET
 Список категорий
 
 Ничего не принимает
@@ -375,7 +375,7 @@ data class Category(
 
 ## Subcategory
 
-###/subcategory/forCategory/{categoryId} - GET
+### /subcategory/forCategory/{categoryId} - GET
 Список подкатегорий для категории
 
 Ответ:
