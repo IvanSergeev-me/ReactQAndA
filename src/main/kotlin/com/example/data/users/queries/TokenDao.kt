@@ -1,5 +1,6 @@
 package com.example.data.users.queries
 
+import com.example.data.common.Id
 import com.example.data.users.ddl.Tokens
 import com.example.data.users.model.User
 import org.jetbrains.exposed.sql.deleteWhere
@@ -13,6 +14,8 @@ object TokenDao {
     }
 
     fun User.deleteToken() = delete(this.id)
+
+    fun Id.deleteToken() = delete(this.id)
 
     private fun create(id: Int): Unit = transaction {
         Tokens.insert { it[userId] = id }

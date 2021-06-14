@@ -1,5 +1,6 @@
 package com.example.routings
 
+import com.example.data.common.Id
 import com.example.data.users.model.User
 import com.example.data.users.queries.TokenDao.deleteToken
 import com.example.data.users.queries.TokenDao.saveToken
@@ -48,8 +49,8 @@ fun Route.userRouting() {
     }
 
     deleteAndHandleException("/signout") {
-        val user = call.receive<User>()
-        user.deleteToken()
+        val id = call.receive<Id>()
+        id.deleteToken()
         setAuthCookie(COOKIE_VALUE_DELETED)
     }
 }

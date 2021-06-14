@@ -48,7 +48,7 @@ data class User(
     val id: Int, // может быть любым
     val login: String,
     val password: String,
-    val image: String // URL
+    val image: String // может быть любым
 )
 ```
 ### /user/update - POST
@@ -62,7 +62,7 @@ data class User(
 Принимает json:
 ```kotlin
 data class User(
-    val id: Int, // может быть любым
+    val id: Int, 
     val login: String,
     val password: String,
     val image: String // URL
