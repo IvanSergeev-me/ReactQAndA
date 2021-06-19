@@ -1,0 +1,123 @@
+.popup_login{
+    z-index: 3;
+    position: fixed;
+    height: 100%;
+    background-color:rgba(0,0,0,0.8);
+    top:0;
+    left: 0;
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+    overflow-y: auto;
+    transition: all 0.4s ease 0s;
+}
+.popup_login_hidden{
+   display: none;
+}
+
+.popup_login_area{
+    cursor: pointer;
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.popup_login_body {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.popup_login_content {
+    width: 30%;
+    padding: 2%;
+    border-radius: 10px;
+    background: teal;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.pupup_content_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.pupup_content_header span{
+   font-size: 1.5em;
+   color: white;
+}
+.popup_login_close {
+    position: relative;
+    
+}
+.popup_login_close img{
+   width: 30px;
+}
+.popup_login_title {
+    margin-top: 2em;
+    color: white;
+    font-size: 1rem;
+}
+.form_popup_login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.inputfield {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid black;
+    background: white;
+    padding: 5%;
+}
+
+.inputfield input{
+    text-align: left;
+    outline: none;
+    border: 0;
+    margin-left: 30px;
+    font-size: 1.375rem;
+    
+}
+.inputfield input::placeholder{
+   color: #dcdcdc;
+    
+}
+.button_popup_login{
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 2.90909em;
+    background: linear-gradient(90deg, #0F5EA0 0%, #1B93E1 100%);
+    border: 0;
+    color: #fff;
+    font-size: 1.375rem;
+    text-align: center;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+@media(max-width:1400px){
+    .popup_login_content{
+        width: 70%;
+    }
+}
+@media(max-width:500px){
+    .popup_login_content{
+        width: 95%;
+    }
+    .inputfield input{
+        font-size: 1rem;
+    }
+}
