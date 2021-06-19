@@ -5,7 +5,9 @@ import { Field, reduxForm } from 'redux-form';
 import { Textarea } from '../../Common/Forms/Textarea.js';
 import { Input } from '../../Common/Forms/Input';
 import {requiredField, maxLength} from '../../../Assets/Utils/validators/validator.js';
-import {getCategories, getSubcategoriesForCategory,selectSubCategory } from '../../../Redux/Reducers/ask-reducer.js';
+import {getCategories, getSubcategoriesForCategory,selectSubCategory, askQuestionThunk } from '../../../Redux/Reducers/ask-reducer.js';
+import { withAuthRedirectComponent } from '../../../HOC/AuthRedirect';
+import { compose } from 'redux';
 const AskQuestion = (props) =>{
     
     let categoriesList = props.categories.map(
@@ -70,10 +72,6 @@ const AskQuestionForm = (props) =>{
 };
 
 const CategoryBrick = (props) =>{
-    /*let conditionSelected = props.id == props.selectedCategory;
-    console.log(props.id)
-    console.log(props.selectedCategory)
-    console.log(conditionSelected)*/
     let loadSubcategories = () =>{
         
         props.loadSubcategories(props.id, props.name);
@@ -98,7 +96,9 @@ class AskQuestionClass extends React.Component{
     }
     askNewQuestion = (values) =>{
         console.log(values);
-        alert("aaa");
+        let title = values.newQuestionTitle;
+        let description = values.newQuestionContent
+        this.props.askQuestionThunk(1, 1, title,description);
         
     }
     loadSubcategories =(id, name) =>{
@@ -107,11 +107,11 @@ class AskQuestionClass extends React.Component{
     selectSubcategory = (id,name) =>{
         this.props.selectSubCategory(id,name);
     }
+   
     componentDidMount(){
         this.props.getCategories();
     }
     render = () =>{
-        //Тут проверка если не залогинен то на логин кидать
         return <AskQuestion
         selectedCategory={this.props.askQuestion.selectedCategory} selectedSubCategory={this.props.askQuestion.selectedSubCategory}
          loadSubcategories={this.loadSubcategories} 
@@ -122,4 +122,7 @@ class AskQuestionClass extends React.Component{
 let mapStateToProps = (state) => ({
     askQuestion: state.askQuestion
 });
-export default connect(mapStateToProps, {getCategories,  getSubcategoriesForCategory, selectSubCategory })(AskQuestionClass);
+
+export default compose(connect(mapStateToProps, {getCategories,  getSubcategoriesForCategory, selectSubCategory,  askQuestionThunk}),
+withAuthRedirectComponent
+)(AskQuestionClass);

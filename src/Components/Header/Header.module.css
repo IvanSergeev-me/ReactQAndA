@@ -52,6 +52,7 @@
 }
 .enter_wrapper{
     display: flex;
+    align-items: center;
 }
 .button_enter{
     padding: 0.9em 2em;
@@ -65,4 +66,13 @@
 .button_enter:hover{
     filter:brightness(1.5);
     transition: 0.35s;
+}
+.profile_link{
+    width: 40px;
+    margin-left: 10px;
+}
+.profile_image{
+    width: 100%;
+    object-fit: contain;
+    cursor: pointer;
 }

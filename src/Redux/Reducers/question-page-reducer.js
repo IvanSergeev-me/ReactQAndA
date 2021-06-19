@@ -1,6 +1,9 @@
-import { QuestionsApi} from '../../Api/Api.js';
+import { QuestionsApi, ActionsApi} from '../../Api/Api.js';
+import { reset } from 'redux-form';
+
 const SET_QUESTION_PAGE = "SET_QUESTION_PAGE";
 const TOGGLE_FETCHING = "SET_FETCHING";
+//const ADD_ANSWER = "ADD_ANSWER";
 let initialState = {
     question: {
         
@@ -22,12 +25,39 @@ const  questionPageReducer = (state = initialState, action) => {
                 question: { ...action.question},
                 answers: [...action.answers]
             };
-        
+        /*case ADD_ANSWER:
+            let answer = {
+                id: "",
+                questionId:"",
+                userId:"",
+                answer:"",
+                isAnswerGiven: false,
+            };
+            return{
+                ...state,
+                answers:[...state.answers, answer]
+            }*/
         default: return state;
     };
 };
 const setQuestionPageAC = (question, answers) => ({type:SET_QUESTION_PAGE, question,answers});
 const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
+export const addAnswerThunk = (questionId, userId, answer) =>{
+    return (dispatch) =>{
+        dispatch(toggleFetchingAC());
+        ActionsApi.postAnswerForQuestion(questionId, userId, answer)
+        .then(response => {
+            console.log(response);
+            
+            dispatch(reset('addAnswerForm'));
+            dispatch(toggleFetchingAC());
+           
+            
+        })
+        .then(()=> dispatch(getQuestionPageThunk(questionId)));
+        
+    };
+};
 export const getQuestionPageThunk = (id) =>{
     return (dispatch) =>{
         dispatch(toggleFetchingAC());

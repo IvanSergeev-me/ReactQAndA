@@ -2,6 +2,8 @@ import React from 'react';
 import s from './Header.module.css';
 import loupe from '../../Assets/Images/loupe.svg';
 import { NavLink } from 'react-router-dom';
+import {connect} from 'react-redux';
+import ProfileSvg from './user.svg'
 const Header = (props) =>{
     return(
         <header className={s.header}>
@@ -15,12 +17,31 @@ const Header = (props) =>{
                         <img src={loupe} alt="loupe" className={s.search__icon}/>
                     </button>
                 </form>
+                {props.isAuth?
                 <div className={s.enter_wrapper}>
-                    <NavLink to={"/Login"} className={s.button_enter}>Войти</NavLink>
+                    <NavLink to={"/Login"} className={s.button_enter}>Выйти</NavLink>
+                    <NavLink to={"/Profile"} className={s.profile_link}> <img src={ProfileSvg} className={s.profile_image} alt="profile" /></NavLink>
                 </div>
+                :<div className={s.enter_wrapper}>
+                    <NavLink to={"/Login"} className={s.button_enter}>Войти</NavLink>
+                </div>}
+              
                
             </div>
         </header>
     );
 }
-export default Header
+class HeaderClass extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render( ){
+        return(
+            <Header isAuth={this.props.appDataReducer.isAuth}/>
+        );
+    }
+}
+let mapStateToProps = (state) =>({
+    appDataReducer:state.appDataReducer
+})
+export default connect(mapStateToProps, {})(HeaderClass)

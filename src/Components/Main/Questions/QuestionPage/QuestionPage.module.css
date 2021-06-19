@@ -134,3 +134,69 @@
 .totalAnswers{
     font-size: 1.1em;
 }
+.answers_add_wrapper{
+    margin-top: 1em;
+    --main-border-color: teal;
+    border-radius: 10px;
+    border:1px solid var(--main-border-color);
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+                   
+.answer_add_left{
+    padding: 0.5em;
+    border-right: 1px solid var(--main-border-color);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.left_avatar{
+    object-fit: contain;
+    width: 100%;
+    height: 128px;
+}
+.left_name{
+    cursor: pointer;
+    font-weight: 600;
+    color: teal;
+}
+.left_name:hover{
+    filter: brightness(1.5);
+}
+.answer_add_right{
+    padding: 0.5em;
+    flex: 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.right_text{
+    background-color: #FAFAFA;
+    font-size: 1.1em;
+}
+
+.addAnswer_form__button{
+    margin-top: 10px;
+    padding: 0.9em 2em;
+    font-size: .9em;
+    background-color: teal;
+    color:white;
+    border-radius: 10px;
+    text-align: center;
+    transition-property: all;
+}
+.addAnswer_form__button:hover{
+    filter:brightness(1.5);
+    transition: 0.35s;
+}
+.add_form{
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}

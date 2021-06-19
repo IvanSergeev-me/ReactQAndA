@@ -4,11 +4,13 @@ import { Field, reduxForm } from 'redux-form';
 import {requiredField, maxLength} from '../../../Assets/Utils/validators/validator.js';
 import { Input } from '../../Common/Forms/Input.js';
 import { connect } from 'react-redux';
+import {loginThunk} from '../../../Redux/Reducers/app-reducer.js';
+import { Redirect } from 'react-router';
 
 const Login = (props) =>{
     const onSubmit = (data) =>{
         
-        //props.loginThunk(data);
+        props.loginThunk(data);
     }
     
     return(
@@ -74,17 +76,25 @@ class LoginClass extends React.Component {
     componentDidMount(){
         
     };
+    loginThunk = async(data) =>{
+       
+        await this.props.loginThunk(data);
+        console.log(this.props.isAuth)
+        if(this.props.isAuth){
+            <Redirect to="/Questions" />
+        }
+    }
     render(){
         return(
-            <Login />
+            <Login loginThunk={this.loginThunk}/>
         );
         
     };
 };
 
 let mapStateToProps = (state) => ({
-    
+   isAuth:state.appDataReducer.isAuth
 });
 
 
-export default connect(mapStateToProps, {})(LoginClass) ;
+export default connect(mapStateToProps, {loginThunk})(LoginClass) ;

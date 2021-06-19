@@ -1,5 +1,5 @@
-/*import { stopSubmit } from 'redux-form';
-import {getAuthorisedAPI, LoginApi} from '../API/API.js';
+import { stopSubmit } from 'redux-form';
+import {AuthorisationApi} from '../../Api/Api.js';
 
 const SET_USER_DATA = "SET_USER_DATA";
 
@@ -8,8 +8,9 @@ let initialState = {
     messages: [],
     data: {
         id: null,
-        email: null,
-        login: null
+        login: null,
+        password:null,
+        image:null
     },
     isFetching: false,
     isAuth:false
@@ -21,7 +22,7 @@ const authReducer = (state = initialState, action) => {
             
             return {
                 ...state,
-                data: action.userData.data,
+                data: action.userData,
                 isAuth:action.isAuth
             };
         default: return state;
@@ -29,23 +30,20 @@ const authReducer = (state = initialState, action) => {
 };
 
 export const setUserData = (userData, isAuth) => ({type:SET_USER_DATA, userData:userData, isAuth:isAuth});
-export const  getAuthorisedThunk = () =>{
-    return(dispatch) =>{
-        return getAuthorisedAPI()
-        .then(response => {
-           if(response.data.resultCode === 0){
-            dispatch(setUserData(response.data, true));
-           };
-        });
-        
-    };
-};
 export const loginThunk = (data) =>{
     return(dispatch) =>{
-        LoginApi.loginMe(data.Email, data.Password, data.rememberMe)
+        AuthorisationApi.loginMe(data.Login, data.Password, data.rememberMe)
         .then(response => {
-           if(response.data.resultCode === 0){
-                dispatch(getAuthorisedThunk());
+            console.log(response)
+           if(response.status == 200){
+               if (response.data.status!="exception"){
+                    dispatch(setUserData(response.data, true));
+               }
+               else{
+                    let message = response.data.message;
+                    dispatch(stopSubmit("loginForm", {_error:message}));
+               }
+                
            }
            else{
                let message = response.messages;
@@ -55,24 +53,6 @@ export const loginThunk = (data) =>{
         });
     };
 };
-export const  logoutThunk = () =>{
-    
-    return(dispatch) =>{
-        LoginApi.logoutMe()
-        .then(response => {
-           if(response.data.resultCode === 0){
-            dispatch(setUserData({resultCode: null,
-                messages: [],
-                data: {
-                    id: null,
-                    email: null,
-                    login: null
-                },
-                isFetching: false}, false));
-           };
-        });
-    };
-};
 
 export default authReducer;
-*/
+

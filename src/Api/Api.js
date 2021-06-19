@@ -20,13 +20,22 @@ export const QuestionsApi = {
     },
     
 };
+export const ActionsApi = {
+    postAnswerForQuestion(questionId, userId, answer){
+        return instance.post(`answer/create`, {id:1, questionId, userId, answer, isAnswerGiven:false});
+    }
+}
 export const AskQuestionApi = {
     getCategories(){
         return instance.get(`category/list`);
     },
     getSubcategories(id){
         return instance.get(`subcategory/forCategory/${id}`);
+    },
+    askQuestion(subcategoryId, userId, title, description){
+        return instance.post(`question/create`, {id:1, subcategoryId, userId, title, description});
     }
+
 };
 export const AuthorisationApi = {
     /*loginExists(login, password){
@@ -34,9 +43,17 @@ export const AuthorisationApi = {
     },*/
     //Если нет - ответ 0, Если да - то возвращается id пользователя
     loginMe(login, password, rememberMe=false){
-        return instance.post(``, {login, password, rememberMe});
+        return instance.post(`user/auth`, {id:0,login, password, image:""});
     },
     logoutMe(){
         return instance.delete(``);
     }
 };
+export const ProfileApi = {
+    getMyQuestions(id){
+        return instance.get(`question/forUser/${id}`);
+    },
+    deleteMyQuestion(id){
+        return instance.delete(`question/delete/${id}`)
+    }
+}

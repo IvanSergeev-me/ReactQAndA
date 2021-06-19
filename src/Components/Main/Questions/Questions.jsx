@@ -32,25 +32,11 @@ class QuestionsClass extends React.Component {
         super(props);
 
     };
-    /*getMoreUsers = (event, thispage) => {
-        this.props.getMoreUsersThunk(thispage, this.props.pageSize);
-        event.preventDefault();
-    };
-    follow = (id) =>{
-        this.props.followThunk(id);
-           
-    };
-    unfollow =(id) =>{
-        this.props.unfollowThunk(id);
-    };*/
-
     componentDidMount() {
-        console.log("peoplemounted")
         this.props.getQuestionsThunk(0, 0);
          
     };
     componentDidUpdate(){
-        console.log("peopleupd")
     }
     render =() =>{
 

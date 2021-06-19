@@ -2,12 +2,23 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getQuestionPageThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
+import { getQuestionPageThunk, addAnswerThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
 import Answer from './Answers/Answer.jsx';
 import s from './QuestionPage.module.css';
 import eye from '../../../../Assets/Images/view.svg';
+import defaultImg from './account.png';
+import { AnswerTextarea } from '../../../Common/Forms/AnswerTextarea.js';
+import { Field, reduxForm } from 'redux-form';
+import Popup from '../../../Common/Popup-Successful/Popup.jsx';
+
 const QuestionPage = (props) =>{
     let ratingScale = props.question.averageRating;
+    let userImage = props.appDataReducer.data.image;
+    let isAuth = props.appDataReducer.isAuth;
+    const onSubmit = (data) =>{
+        console.log(data);
+        props.addAnswer(data);
+    }
     let answers_list = props.answers.map(
         a => {
             return <Answer
@@ -66,13 +77,58 @@ const QuestionPage = (props) =>{
                 <div>
                     {answers_list}
                 </div>
+                {isAuth?<div className={s.answers_add_wrapper}>
+                        <div className={s.answer_add_left}>
+                            <img className={s.left_avatar} src={userImage?userImage:defaultImg} alt="avatar" />
+                            <div className={s.left_name}>{props.appDataReducer.data.login}</div>
+                        </div>
+                        <div className={s.answer_add_right}>
+                            <AddAnswerReduxForm onSubmit={onSubmit}/>
+                           
+                        </div>
+                </div>:null}
+                
             </div>
+            
+            <Popup  popupAction={"Добавление ответа"}/>
         </section>
     )
+    /*const closeModal = () =>{
+
+    }
+    const showModal = () =>{
+        
+    }*/
 }
+//Хук юз стейт можно вынести сюда и попапом управлять отсюда
+const AddAnswerForm = (props) =>{
+    return(
+        <form className={s.add_form} onSubmit={props.handleSubmit}>
+            <Field  name="Answer" placeholder={"Оставьте ваш ответ здесь..."}  type="text" component={AnswerTextarea}/>
+            <button className={s.addAnswer_form__button}>
+                    Отправить
+            </button>
+            
+        </form>
+    );
+};
+const AddAnswerReduxForm = reduxForm({
+    form:"addAnswerForm"
+})( AddAnswerForm);
 class QuestionPageClass extends React.Component{
     constructor(props){
         super(props);
+    }
+    addAnswer = ( data) =>{
+        let questionId = this.props.match.params.questionID;
+        let userId = this.props.appDataReducer.data.id;
+        let answerContent = data.Answer;
+        this.props.addAnswerThunk(questionId, userId, answerContent);
+        //this.props.getQuestionPageThunk(questionId);
+        
+    }
+    componentDidUpdate(){
+        console.log("ahahah");
     }
     componentDidMount(){
         let questionId = this.props.match.params.questionID;
@@ -81,12 +137,13 @@ class QuestionPageClass extends React.Component{
     }
     render = () =>{
         return(
-            <QuestionPage question={this.props.currentPage.question} answers={this.props.currentPage.answers}/>
+            <QuestionPage addAnswer={this.addAnswer} appDataReducer={this.props.appDataReducer} question={this.props.currentPage.question} answers={this.props.currentPage.answers}/>
         )
     }
 }
 let mapStateToProps = (state) => ({
-    currentPage: state.questionPage
+    currentPage: state.questionPage,
+    appDataReducer: state.appDataReducer
     
 });
-export default compose(connect(mapStateToProps, { getQuestionPageThunk }),withRouter,)(QuestionPageClass);
+export default compose(connect(mapStateToProps, { getQuestionPageThunk , addAnswerThunk}),withRouter,)(QuestionPageClass);

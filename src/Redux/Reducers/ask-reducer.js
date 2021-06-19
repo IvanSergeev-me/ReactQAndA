@@ -6,6 +6,7 @@ const SET_SELECTED_CATEGORY = "SET_SELECTED_CATEGORY";
 const SET_SELECTED_SUBCATEGORY = "SET_SELECTED_SUBCATEGORY";
 
 
+
 let initialState = {
     categories:[],
     subCategoriesForCategory:[],
@@ -55,6 +56,16 @@ const setSubCategoriesAC = (subcategories) => ({type:SET_SUBCATEGORIES, subcateg
 const setSelectedCategoryAC = (id,name) => ({type:SET_SELECTED_CATEGORY, id, name});
 const setSelectedSubCategoryAC = (id, name) => ({type:SET_SELECTED_SUBCATEGORY, id, name});
 const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
+
+export const askQuestionThunk = (subcategoryId, userId, title, description) =>{
+    return(dispatch) =>{
+        dispatch(toggleFetchingAC());
+        AskQuestionApi.askQuestion(subcategoryId, userId, title, description)
+        .then(response =>{
+            dispatch(toggleFetchingAC());
+        })
+    }
+}
 export const getSubcategoriesForCategory = (id, name) =>{
     return (dispatch) =>{
        
@@ -69,9 +80,17 @@ export const getSubcategoriesForCategory = (id, name) =>{
 };
 export const getCategories = () =>{
     return (dispatch) =>{
+        
         AskQuestionApi.getCategories()
         .then(response => {
-            dispatch(setCategoriesAC(response.data));
+
+            console.log(response)
+            if(response.status == 200){
+                dispatch(setCategoriesAC(response.data));
+            }
+            else{
+                dispatch(setCategoriesAC([{id:"1",name:"Ошибка"}]))
+            }
  
         });
         
