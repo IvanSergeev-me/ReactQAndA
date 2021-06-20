@@ -23,7 +23,7 @@ fun Route.answerRouting() {
         }
 
         postAndHandleException("/create") {
-            val answer = call.receive<Answer>().copy(id = safeCookieToken().toInt())
+            val answer = call.receive<Answer>()
             call.respond(AnswerDao.create(answer))
         }
 

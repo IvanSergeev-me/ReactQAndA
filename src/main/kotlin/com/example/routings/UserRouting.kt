@@ -42,10 +42,10 @@ fun Route.userRouting() {
 
         postAndHandleException("/update") {
             val new = call.receive<User>()
-            checkAuthAndRun(new.token) {
+//            checkAuthAndRun(new.token) {
                 UserDao.update(new)
                 call.ok()
-            }
+//            }
         }
 
         deleteAndHandleException("/signout") {

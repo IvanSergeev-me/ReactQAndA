@@ -57,8 +57,6 @@ data class User(
 
 Нельзя изменить id.
 
-Пользователь может изменить только свой аккаунт
-
 Принимает json:
 ```kotlin
 data class User(
@@ -126,8 +124,8 @@ data class UserShort(
 ### /question/forSubcategory/{subcategoryId} - GET
 Возвращает список вопросов для подкатегории. Структура ответа как у getAll.
 
-### /question/forUser - GET
-Возвращает список вопросов для пользователя. Берет пользователя из cookie. Структура ответа как у getAll.
+### /question/forUser/{id} - GET
+Возвращает список вопросов для пользователя. Структура ответа как у getAll.
 
 ### /question/search/{query} - GET
 Поиск. Структура ответа как у getAll.
@@ -267,6 +265,9 @@ data class AnswerWithRating(
 )
 ```
 
+### /forUser/{id} - GET
+Возвращает ответы пользователя. Ответ как у forQuestion.
+
 ### /answer/create - POST
 Создает ответ
 
@@ -275,7 +276,7 @@ data class AnswerWithRating(
 data class Answer(
     val id: Int, // может быть любым
     val questionId: Int,
-    val userId: Int, // может быть любым, берет из cookie
+    val userId: Int, 
     val answer: String,
     val isBest: Boolean
 )
@@ -312,8 +313,6 @@ data class Id( // id новой оценки
 ### /answer/setBest/{answerId} - POST
 Выбирает ответ как лучший. Переназначит, 
 если вопрос уже имеет лучший ответ
-
-Доступно только владельцу вопроса
 
 Ответ:
 ```kotlin
