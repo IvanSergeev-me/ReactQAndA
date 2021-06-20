@@ -11,43 +11,50 @@ import io.ktor.routing.*
 
 fun Route.answerRouting() {
 
-    getAndHandleException("/forQuestion/{questionId}") {
-        val questionId = call.parameters["questionId"] ?: return@getAndHandleException call.badRequest()
-        call.respond(AnswerDao.getForQuestion(questionId.toInt()))
-    }
-
-    postAndHandleException("/create") {
-        val answer = call.receive<Answer>().copy(id = safeCookieToken().toInt())
-        call.respond(AnswerDao.create(answer))
-    }
-
-    postAndHandleException("/createScore") {
-        val score = call.receive<AnswerScore>()
-        call.respond(AnswerDao.createScore(score))
-    }
-
-    postAndHandleException("/setBest/{answerId}") {
-        val answerId = call.parameters["answerId"] ?: return@postAndHandleException call.badRequest()
-        val answer = AnswerDao.getById(answerId.toInt())
-        checkAuthAndRun(answer.question().userId) {
-            AnswerDao.setBest(answer)
-            call.ok()
+    route("/answer") {
+        getAndHandleException("/forQuestion/{questionId}") {
+            val questionId = call.parameters["questionId"] ?: return@getAndHandleException call.badRequest()
+            call.respond(AnswerDao.getForQuestion(questionId.toInt()))
         }
-    }
 
-    postAndHandleException("/update") {
-        val answer = call.receive<Answer>()
-        checkAuthAndRun(answer.userId) {
-            AnswerDao.update(answer)
-            call.ok()
+        getAndHandleException("/forUser/{id}") {
+            val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()
+            call.respond(AnswerDao.getForUser(id.toInt()))
         }
-    }
 
-    deleteAndHandleException("/delete/{id}") {
-        val id = call.parameters["id"] ?: return@deleteAndHandleException call.badRequest()
-        checkAuthAndRun(AnswerDao.getById(id.toInt()).userId) {
-            AnswerDao.delete(id.toInt())
-            call.ok()
+        postAndHandleException("/create") {
+            val answer = call.receive<Answer>().copy(id = safeCookieToken().toInt())
+            call.respond(AnswerDao.create(answer))
+        }
+
+        postAndHandleException("/createScore") {
+            val score = call.receive<AnswerScore>()
+            call.respond(AnswerDao.createScore(score))
+        }
+
+        postAndHandleException("/setBest/{answerId}") {
+            val answerId = call.parameters["answerId"] ?: return@postAndHandleException call.badRequest()
+            val answer = AnswerDao.getById(answerId.toInt())
+//            checkAuthAndRun(answer.question().userId) {
+                AnswerDao.setBest(answer)
+                call.ok()
+//            }
+        }
+
+        postAndHandleException("/update") {
+            val answer = call.receive<Answer>()
+//            checkAuthAndRun(answer.userId) {
+                AnswerDao.update(answer)
+                call.ok()
+//            }
+        }
+
+        deleteAndHandleException("/delete/{id}") {
+            val id = call.parameters["id"] ?: return@deleteAndHandleException call.badRequest()
+//            checkAuthAndRun(AnswerDao.getById(id.toInt()).userId) {
+                AnswerDao.delete(id.toInt())
+                call.ok()
+//            }
         }
     }
 }

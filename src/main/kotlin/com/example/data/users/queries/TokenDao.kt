@@ -18,7 +18,12 @@ object TokenDao {
     fun Id.deleteToken() = delete(this.id)
 
     private fun create(id: Int): Unit = transaction {
-        Tokens.insert { it[userId] = id }
+        try {
+            Tokens.insert { it[userId] = id }
+        } catch (e: Throwable) {
+            // ignore
+        }
+
     }
 
     fun User.saveToken() = create(this.id)

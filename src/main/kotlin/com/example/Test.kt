@@ -9,6 +9,9 @@ import com.example.data.questions.ddl.Questions
 import com.example.data.questions.queries.QuestionDao
 import com.example.data.users.ddl.Tokens
 import com.example.data.users.ddl.Users
+import com.example.data.users.model.User
+import com.example.data.users.queries.UserDao.setIdIfExists
+import com.example.routings.safeCookieToken
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -22,16 +25,7 @@ fun main() {
         password = "0000"
     )
 
-    transaction {
-        SchemaUtils.create( // if not exists
-            Answers,
-            Categories,
-            Questions,
-            Subcategories,
-            Users,
-            QuestionScores,
-            AnswerScores,
-            Tokens
-        )
-    }
+    val user = User(0, "aaa", "0000", "")
+
+    println(QuestionDao.getForUser(1))
 }

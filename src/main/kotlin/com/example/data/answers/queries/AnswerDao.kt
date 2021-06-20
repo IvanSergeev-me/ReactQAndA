@@ -36,7 +36,7 @@ object AnswerDao {
             isBest = this[Answers.isBest]
         )
 
-    fun getForQuestion(questionId: Int): List<AnswerWithRating> = transaction {
+    private fun get(where: SqlExpressionBuilder.() -> Op<Boolean>): List<AnswerWithRating> = transaction {
         Answers
             .leftJoin(AnswerScores)
             .slice(
@@ -47,7 +47,7 @@ object AnswerDao {
                 AnswerScores.score.avg(),
                 Answers.isBest
             )
-            .select { Answers.questionId eq questionId }
+            .select(where)
             .groupBy(
                 Answers.id,
                 Answers.userId,
@@ -65,6 +65,10 @@ object AnswerDao {
                 )
             }
     }
+
+    fun getForQuestion(questionId: Int): List<AnswerWithRating> = get { Answers.questionId eq questionId }
+
+    fun getForUser(id: Int): List<AnswerWithRating> = get { Answers.userId eq id }
 
     fun Question.answers() = getForQuestion(this.id)
 

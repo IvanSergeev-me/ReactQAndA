@@ -1,0 +1,15 @@
+POST http://localhost:8080/user/auth
+Content-Type: application/json
+
+{
+  "id": 0,
+  "image": "",
+  "login": "aaa",
+  "password": "0000"
+}
+
+###
+GET http://localhost:8080/question/forUser/1
+
+###
+GET http://localhost:8080/answer/forUser/2

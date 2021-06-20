@@ -19,39 +19,40 @@ fun Route.userRouting() {
             val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()
             call.respond(UserDao.getById(id.toInt()))
         }
-    }
 
-    postAndHandleException("/register") {
-        val user = call.receive<User>()
-        val new = UserDao.create(user)
-        new.saveToken()
-        call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${new.token}")
-        call.respond(new)
-    }
 
-    postAndHandleException("/auth") {
-        val user = call.receive<User>().copy(id = 0).setIdIfExists()
-        if (user.id > 0) {
-            user.saveToken()
-            setAuthCookie(user.token)
-            call.respond(user)
-        } else {
-            throw IllegalArgumentException("Неверный логин или пароль")
+        postAndHandleException("/register") {
+            val user = call.receive<User>()
+            val new = UserDao.create(user)
+            new.saveToken()
+            call.response.headers.append("Set-Cookie", "$COOKIE_NAME_AUTH_TOKEN=${new.token}")
+            call.respond(new)
         }
-    }
 
-    postAndHandleException("/update") {
-        val new = call.receive<User>()
-        checkAuthAndRun(new.token) {
-            UserDao.update(new)
-            call.ok()
+        postAndHandleException("/auth") {
+            val user = call.receive<User>().copy(id = 0).setIdIfExists()
+            if (user.id > 0) {
+                user.saveToken()
+                setAuthCookie(user.token)
+                call.respond(user)
+            } else {
+                throw IllegalArgumentException("Неверный логин или пароль")
+            }
         }
-    }
 
-    deleteAndHandleException("/signout") {
-        val id = call.receive<Id>()
-        id.deleteToken()
-        setAuthCookie(COOKIE_VALUE_DELETED)
+        postAndHandleException("/update") {
+            val new = call.receive<User>()
+            checkAuthAndRun(new.token) {
+                UserDao.update(new)
+                call.ok()
+            }
+        }
+
+        deleteAndHandleException("/signout") {
+            val id = call.receive<Id>()
+            id.deleteToken()
+            setAuthCookie(COOKIE_VALUE_DELETED)
+        }
     }
 }
 

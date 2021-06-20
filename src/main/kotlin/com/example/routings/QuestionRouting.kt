@@ -19,8 +19,9 @@ fun Route.questionRouting() {
             call.respond(QuestionDao.getForSubcategory(subcategoryId.toInt()))
         }
 
-        getAndHandleException("/forUser") {
-            call.respond(QuestionDao.getForUser(safeCookieToken().toInt()))
+        getAndHandleException("/forUser/{id}") {
+            val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()
+            call.respond(QuestionDao.getForUser(id.toInt()))
         }
 
         getAndHandleException("/search/{query}") {
@@ -40,10 +41,10 @@ fun Route.questionRouting() {
 
         postAndHandleException("/update") {
             val question = call.receive<Question>()
-            checkAuthAndRun(question.userId) {
+//            checkAuthAndRun(question.userId) {
                 QuestionDao.update(question)
                 call.ok()
-            }
+//            }
         }
 
         postAndHandleException("/createScore") {
@@ -53,10 +54,10 @@ fun Route.questionRouting() {
 
         deleteAndHandleException("/delete/{id}") {
             val id = call.parameters["id"] ?: return@deleteAndHandleException call.badRequest()
-            checkAuthAndRun(QuestionDao.getById(id.toInt()).id) {
+//            checkAuthAndRun(QuestionDao.getById(id.toInt()).id) {
                 QuestionDao.delete(id.toInt())
                 call.ok()
-            }
+//            }
         }
     }
 }
