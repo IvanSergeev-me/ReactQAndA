@@ -1,5 +1,6 @@
 package com.example.data.questions.queries
 
+import com.example.data.answers.ddl.Answers
 import com.example.data.answers.model.Answer
 import com.example.data.answers.queries.AnswerDao
 import com.example.data.answers.queries.AnswerDao.answers
@@ -125,7 +126,9 @@ object QuestionDao {
         )
     }
 
-    fun delete(id: Int): Unit = transaction { Questions.deleteWhere { Questions.id eq id } }
+    fun delete(id: Int): Unit = transaction {
+        Answers.deleteWhere { Answers.questionId eq id }
+        Questions.deleteWhere { Questions.id eq id } }
 
     fun update(question: Question): Unit = transaction {
         Questions.update({ Questions.id eq question.id }) {
