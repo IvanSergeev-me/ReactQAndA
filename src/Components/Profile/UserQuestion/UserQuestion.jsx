@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import eye from '../../../Assets/Images/view.svg';
 const UserQuestion = (props) =>{
     let thisId = props.id;
-    console.log(props)
     let deleteThisQuestion = () =>{
        
         props.deleteQuestion(thisId);

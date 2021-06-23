@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getQuestionPageThunk, addAnswerThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
+import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
 import Answer from './Answers/Answer.jsx';
 import s from './QuestionPage.module.css';
 import eye from '../../../../Assets/Images/view.svg';
@@ -15,6 +15,14 @@ const QuestionPage = (props) =>{
     let ratingScale = props.question.averageRating;
     let userImage = props.appDataReducer.data.image;
     let isAuth = props.appDataReducer.isAuth;
+    let myId = props.appDataReducer.data.id;
+    let questionId = props.question.id;
+    const deleteThisAnswer = (id) =>{
+        props.deleteAnswer(id);
+    }
+    const updateAnswer = (id,  answerText) =>{
+        props.updateAnswer(id,questionId,myId, answerText)
+    }
     const onSubmit = (data) =>{
         console.log(data);
         props.addAnswer(data);
@@ -26,9 +34,13 @@ const QuestionPage = (props) =>{
             id = {a.id}
             questionId ={a.questionId}
             userId = {a.userId}
+            myId = {myId}
             averageRating = {a.averageRating}
             answer = {a.answer}
             isBest = {a.isBest}
+            isAuth = {isAuth}
+            deleteThisAnswer={deleteThisAnswer}
+            updateAnswer={updateAnswer}
         />
         }
     )
@@ -127,8 +139,11 @@ class QuestionPageClass extends React.Component{
         //this.props.getQuestionPageThunk(questionId);
         
     }
-    componentDidUpdate(){
-        console.log("ahahah");
+    deleteAnswer = (id) =>{
+        this.props.deleteAnswerThunk(id);
+    }
+    updateAnswer = (id,questionId,myId, answerText) =>{
+        this.props.updateAnswerThunk(id,questionId,myId, answerText);
     }
     componentDidMount(){
         let questionId = this.props.match.params.questionID;
@@ -137,7 +152,11 @@ class QuestionPageClass extends React.Component{
     }
     render = () =>{
         return(
-            <QuestionPage addAnswer={this.addAnswer} appDataReducer={this.props.appDataReducer} question={this.props.currentPage.question} answers={this.props.currentPage.answers}/>
+            <QuestionPage 
+            addAnswer={this.addAnswer} appDataReducer={this.props.appDataReducer} 
+            question={this.props.currentPage.question} answers={this.props.currentPage.answers}
+            deleteAnswer={this.deleteAnswer} updateAnswer={this.updateAnswer}
+            />
         )
     }
 }
@@ -146,4 +165,4 @@ let mapStateToProps = (state) => ({
     appDataReducer: state.appDataReducer
     
 });
-export default compose(connect(mapStateToProps, { getQuestionPageThunk , addAnswerThunk}),withRouter,)(QuestionPageClass);
+export default compose(connect(mapStateToProps, { getQuestionPageThunk , addAnswerThunk,deleteAnswerThunk, updateAnswerThunk}),withRouter,)(QuestionPageClass);

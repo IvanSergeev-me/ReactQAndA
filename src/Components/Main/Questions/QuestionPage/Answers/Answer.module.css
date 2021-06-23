@@ -54,3 +54,30 @@
 .high_rating{
     color: green;
 }
+.delete_button:hover{
+    filter: brightness(1.5);
+}
+.edit_or_delete{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.delete_button{
+ 
+    color: teal;
+    font-weight: 600;
+    font-size: 1.2em;
+    cursor: pointer;   
+}
+.edit_button{
+    cursor: pointer;
+    width: 20px;
+}
+.edit_button__image{
+    width: 100%;
+}
+.right_input_area{
+    width: 100%;
+    font-size: 1em;
+}

@@ -1,0 +1,143 @@
+.login_section{
+    width: 100%;
+    z-index: 10;
+    
+}
+.login_wrapper{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    height: 80vh;
+}
+.login_left_part{
+    padding: 2em;
+    position: relative;
+    flex:2;
+    background-color: teal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.title_login_section{
+    font-size: 2em;
+    font-weight: 600;
+    color: white;
+    user-select: none;
+}
+.login_section_description{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    color: white;
+}
+.login_right_part{
+    padding: 2em;
+    position: relative;
+    flex:4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login_right_part_container{
+    margin-left: 10%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+}
+.title_login_above_form{
+    user-select: none;
+    font-size: 2em;
+    font-weight: 600;
+    color: #DCDCDC;
+    
+}
+.login_form{
+    width: 100%;
+}
+
+.login_form__buttons{
+    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login_form__button{
+    width: 40%;
+    padding: 1em 2em;
+    background-color: teal;
+    font-size: 1em;
+    color:white;
+    border-radius: 10px;
+    text-align: center;
+    transition-property: all;
+
+}
+.login_form__button:hover{
+    filter:brightness(1.5);
+    transition: 0.35s;
+}
+.login_form__checkbox_container{
+    margin-top: 1em;
+}
+
+.login_form__checkbox_container_checkbox{
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+
+}
+.login_form__checkbox_container_checkbox+label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+  }
+  .login_form__checkbox_container_checkbox+label::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid #adb5bd;
+    border-radius: 0.25em;
+    margin-right: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+  }
+.login_form__checkbox_container_checkbox:checked+label::before {
+    border-color: rgb(0, 161, 161);
+    background-color: rgb(0, 161, 161);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+  }
+
+.login_form__checkbox_container_checkbox:not(:disabled):not(:checked)+label:hover::before {
+    border-color: #b3d7ff;
+  }
+
+  .login_form__checkbox_container_checkbox:not(:disabled):active+label::before {
+    background-color: #b3d7ff;
+    border-color: #b3d7ff;
+  }
+
+  .login_form__checkbox_container_checkbox:focus+label::before {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  .login_form__checkbox_container_checkbox:focus:not(:checked)+label::before {
+    border-color: teal;
+  }
+  
+  .login_form__checkbox_container_checkbox:disabled+label::before {
+    background-color: #e9ecef;
+  }
+  .form_login_password_error{
+      color: rgb(255, 27, 27);
+  }

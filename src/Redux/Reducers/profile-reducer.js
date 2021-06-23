@@ -22,7 +22,6 @@ const profileReducer = (state = initialState, action) => {
         } 
         case DELETE_QUESTION:{
             let idToRemove = action.id;
-            console.log(idToRemove);
             const newQuestions = state.userQuestions.filter((item) => item.id !== idToRemove);
             return{
                 ...state,
@@ -52,11 +51,11 @@ export const deleteMyQuestionThunk = (id) =>{
     return(dispatch) =>{
         dispatch(toggleFetchingAC());
         dispatch(deleteQuestionAC(id));
-        /*ProfileApi.deleteMyQuestion(id)
+        ProfileApi.deleteMyQuestion(id)
         .then(response =>{
             
             dispatch(toggleFetchingAC());
-        })*/
+        })
     }
 }
 export default profileReducer;

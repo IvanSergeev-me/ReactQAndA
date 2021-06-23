@@ -4,7 +4,11 @@ import loupe from '../../Assets/Images/loupe.svg';
 import { NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
 import ProfileSvg from './user.svg'
+import { logoutThunk } from '../../Redux/Reducers/app-reducer';
 const Header = (props) =>{
+    const logoutMe = () =>{
+        props.logoutMe();
+    }
     return(
         <header className={s.header}>
             <div className={s.header__wrapper}>
@@ -19,7 +23,7 @@ const Header = (props) =>{
                 </form>
                 {props.isAuth?
                 <div className={s.enter_wrapper}>
-                    <NavLink to={"/Login"} className={s.button_enter}>Выйти</NavLink>
+                    <NavLink to={"/Questions"} onClick={logoutMe} className={s.button_enter}>Выйти</NavLink>
                     <NavLink to={"/Profile"} className={s.profile_link}> <img src={ProfileSvg} className={s.profile_image} alt="profile" /></NavLink>
                 </div>
                 :<div className={s.enter_wrapper}>
@@ -35,13 +39,16 @@ class HeaderClass extends React.Component{
     constructor(props){
         super(props);
     }
+    logoutMe = () =>{
+        this.props.logoutThunk();
+    }
     render( ){
         return(
-            <Header isAuth={this.props.appDataReducer.isAuth}/>
+            <Header logoutMe={this.logoutMe} isAuth={this.props.appDataReducer.isAuth}/>
         );
     }
 }
 let mapStateToProps = (state) =>({
     appDataReducer:state.appDataReducer
 })
-export default connect(mapStateToProps, {})(HeaderClass)
+export default connect(mapStateToProps, {logoutThunk})(HeaderClass)

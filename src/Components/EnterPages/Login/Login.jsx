@@ -6,6 +6,7 @@ import { Input } from '../../Common/Forms/Input.js';
 import { connect } from 'react-redux';
 import {loginThunk} from '../../../Redux/Reducers/app-reducer.js';
 import { Redirect } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 const Login = (props) =>{
     const onSubmit = (data) =>{
@@ -52,9 +53,9 @@ const LoginForm = (props) =>{
                 <button className={s.login_form__button}>
                     Войти
                 </button>
-                <button className={s.login_form__button}>
+                <NavLink to="/Registration" className={s.login_form__button}>
                     Зарегистрироваться
-                </button>
+                </NavLink>
             </div>
 
         </form>
@@ -79,7 +80,7 @@ class LoginClass extends React.Component {
     loginThunk = async(data) =>{
        
         await this.props.loginThunk(data);
-        console.log(this.props.isAuth)
+        
         if(this.props.isAuth){
             <Redirect to="/Questions" />
         }

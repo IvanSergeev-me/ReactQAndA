@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const instance = axios.create({
     withCredentials:true,
-    //headers:{"API-KEY":"9bfe0302-3819-4ebf-8b85-d5ed5fcf098a"},
     baseURL:"http://localhost:8080/"
 });
 
@@ -20,9 +19,15 @@ export const QuestionsApi = {
     },
     
 };
-export const ActionsApi = {
+export const AnswersApi = {
     postAnswerForQuestion(questionId, userId, answer){
-        return instance.post(`answer/create`, {id:1, questionId, userId, answer, isAnswerGiven:false});
+        return instance.post(`answer/create`, {id:1, questionId, userId, answer, isBest:false});
+    },
+    updateAnswer(id,questionId, userId, answer){
+        return instance.post(`answer/update`, {id, questionId, userId, answer, isBest:false});
+    },
+    deleteAnswer(id){
+        return instance.delete(`answer/delete/${id}`);
     }
 }
 export const AskQuestionApi = {
@@ -46,7 +51,10 @@ export const AuthorisationApi = {
         return instance.post(`user/auth`, {id:0,login, password, image:""});
     },
     logoutMe(){
-        return instance.delete(``);
+        return instance.delete(`/user/signout`);
+    },
+    registerNewUser(login, password, rememberMe=false){
+        return instance.post(`/user/register`, {id: 0, login, password, image:""});
     }
 };
 export const ProfileApi = {
