@@ -35,7 +35,7 @@ fun Route.questionRouting() {
         }
 
         postAndHandleException("/create") {
-            val question = call.receive<Question>().copy(userId = safeCookieToken().toInt())
+            val question = call.receive<Question>()
             call.respond(QuestionDao.create(question))
         }
 
@@ -48,7 +48,7 @@ fun Route.questionRouting() {
         }
 
         postAndHandleException("/createScore") {
-            val score = call.receive<QuestionScore>().copy(userId = safeCookieToken().toInt())
+            val score = call.receive<QuestionScore>()
             call.respond(QuestionDao.createScore(score))
         }
 

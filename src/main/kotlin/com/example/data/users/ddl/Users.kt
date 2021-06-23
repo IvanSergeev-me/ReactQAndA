@@ -6,5 +6,5 @@ object Users: Table("users") {
     val id = integer("id").primaryKey().autoIncrement()
     val login = varchar("login", 64).uniqueIndex()
     val password = varchar("password", 64)
-    val image = text("image")
+    val image = text("image").nullable()
 }
