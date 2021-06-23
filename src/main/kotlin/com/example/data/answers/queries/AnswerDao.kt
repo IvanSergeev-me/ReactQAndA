@@ -72,6 +72,12 @@ object AnswerDao {
 
     fun Question.answers() = getForQuestion(this.id)
 
+    fun getAnswerIdsForQuestion(questionId: Int): List<Int> = transaction {
+        Answers
+            .select { Answers.questionId eq questionId }
+            .map { it[Answers.id] }
+    }
+
     private fun getBestForQuestion(questionId: Int): Answer? = transaction {
         Answers
             .select { Answers.questionId.eq(questionId) and Answers.isBest.eq(true) }

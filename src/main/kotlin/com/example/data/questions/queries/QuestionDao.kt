@@ -1,5 +1,6 @@
 package com.example.data.questions.queries
 
+import com.example.data.answers.ddl.AnswerScores
 import com.example.data.answers.ddl.Answers
 import com.example.data.answers.model.Answer
 import com.example.data.answers.queries.AnswerDao
@@ -127,6 +128,8 @@ object QuestionDao {
     }
 
     fun delete(id: Int): Unit = transaction {
+        AnswerScores.deleteWhere { AnswerScores.answerId inList AnswerDao.getAnswerIdsForQuestion(id) }
+        QuestionScores.deleteWhere { QuestionScores.questionId eq id }
         Answers.deleteWhere { Answers.questionId eq id }
         Questions.deleteWhere { Questions.id eq id } }
 

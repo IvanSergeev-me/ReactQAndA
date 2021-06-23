@@ -56,6 +56,7 @@ fun Application.module() {
 //            host("localhost:3030")
             anyHost()
             method(HttpMethod.Options)
+            method(HttpMethod.Delete)
             header(HttpHeaders.XForwardedProto)
             allowCredentials = true
             allowNonSimpleContentTypes = true
