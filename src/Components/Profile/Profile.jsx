@@ -7,6 +7,9 @@ import AccountImg from './account.png';
 import UserQuestion from './UserQuestion/UserQuestion.jsx';
 import s from './Profile.module.css';
 import { setQuestionsThunk,deleteMyQuestionThunk } from '../../Redux/Reducers/profile-reducer';
+import { NavLink } from 'react-router-dom';
+import Change from './Change/Change.jsx';
+import {Route} from "react-router-dom";
 const Profile = (props) =>{
     let personalData = props.personalData;
     let myQuestions = props.userQuestions.map(
@@ -34,12 +37,29 @@ const Profile = (props) =>{
                     </div>
                     <div className={s.personal__login}>{personalData.login}</div>
                 </div>
-
+               
+                <Route path="/Profile/Settings" render={()=><ProfileOptions /> }/>
+                <Route path="/Profile/Change/:type?" render={()=><Change />}/>
             </div>
             <div className={s.profile_actions}>
+                <h2 className={s.actions__title}>Ваши действия</h2>
                 {myQuestions}
             </div>
         </section>
+    )
+}
+const ProfileOptions = (props) =>{
+    return(
+        <div className={s.profile_header__options}>
+            <div className={s.options__column}>
+                <NavLink to={"/Profile/Change/login"} className={s.column__option}>Изменить логин</NavLink>
+                <NavLink to={"/Profile/Change/password"} className={s.column__option}>Изменить пароль</NavLink>
+                <NavLink to={"/Profile/Change/image"} className={s.column__option}>Загрузить аватар</NavLink>       
+            </div>
+            <div className={s.options__column}>
+                <div className={s.column__option}>Удалить учетную запись</div>
+            </div>
+        </div>
     )
 }
 class ProfileClass extends React.Component{

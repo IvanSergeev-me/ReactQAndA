@@ -18,6 +18,7 @@ const questionsReducer = (state = initialState, action) => {
             return(state.isFetching)?{...state, isFetching: false}:{...state, isFetching:true};
         } 
         case SET_QUESTIONS_PAGE:
+            console.log(action.questions)
             return{
                 ...state, 
                 questions: [ ...action.questions]
@@ -34,7 +35,7 @@ export const getQuestionsThunk = (currentPage, pageSize) =>{
         QuestionsApi.getQuestionsPage(currentPage, pageSize)
         .then(response => {
             dispatch(setQuestionsAC(response.data));
-           // console.log(response.data);
+            console.log(response.data);
             
             //dispatch(setTotalCount(response.data.totalCount));
         }).then(dispatch(toggleFetchingAC()));

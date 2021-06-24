@@ -1,4 +1,6 @@
-import { ProfileApi } from "../../Api/Api";
+import { ProfileApi, ChangeUserApi } from "../../Api/Api";
+import { stopSubmit } from "redux-form";
+import { setUserData } from "./app-reducer";
 
 const SET_QUESTIONS = "SET_QUESTIONS";
 const TOGGLE_FETCHING = "SET_FETCHING";
@@ -46,15 +48,25 @@ export const setQuestionsThunk = (id) =>{
         })
     }
 }
-//CORS Мешает удалить
 export const deleteMyQuestionThunk = (id) =>{
     return(dispatch) =>{
         dispatch(toggleFetchingAC());
         dispatch(deleteQuestionAC(id));
         ProfileApi.deleteMyQuestion(id)
         .then(response =>{
-            
+           
             dispatch(toggleFetchingAC());
+        })
+    }
+}
+export const changeUserThunk = (id, login, password, image) =>{
+    return(dispatch) =>{
+        dispatch(toggleFetchingAC());
+        ChangeUserApi.changeUser(id, login, password, image)
+        .then(response =>{
+            dispatch(setUserData({id, login, password, image}, true));
+            dispatch(toggleFetchingAC());
+            
         })
     }
 }

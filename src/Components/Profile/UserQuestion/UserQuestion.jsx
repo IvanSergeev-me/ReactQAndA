@@ -38,7 +38,7 @@ const UserQuestion = (props) =>{
                     </p>
                    
                 </NavLink>
-                {props.isAnswerGiven?<p className={s.question_answer_given}>Answer Given</p>:<p className={s.question_answer_notgiven}>No Answer</p>}
+                {props.isAnswerGiven?<p className={s.question_answer_given}>Ответ дан</p>:<p className={s.question_answer_notgiven}>Нет лучшего ответа</p>}
                 
     </div >
  )

@@ -24,7 +24,7 @@ const Header = (props) =>{
                 {props.isAuth?
                 <div className={s.enter_wrapper}>
                     <NavLink to={"/Questions"} onClick={logoutMe} className={s.button_enter}>Выйти</NavLink>
-                    <NavLink to={"/Profile"} className={s.profile_link}> <img src={ProfileSvg} className={s.profile_image} alt="profile" /></NavLink>
+                    <NavLink to={"/Profile/Settings"} className={s.profile_link}> <img src={ProfileSvg} className={s.profile_image} alt="profile" /></NavLink>
                 </div>
                 :<div className={s.enter_wrapper}>
                     <NavLink to={"/Login"} className={s.button_enter}>Войти</NavLink>

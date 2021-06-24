@@ -3,9 +3,11 @@ import s from './Popup.module.css';
 import crossSvg from './cross.svg'
 const Popup=(props)=>{
     let PopupText = `${props.popupAction} выполнено успешно!`;
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(props.needToShow);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
     return(
         <div className={show?s.popup_login:s.popup_login_hidden} id="popup_new_order">

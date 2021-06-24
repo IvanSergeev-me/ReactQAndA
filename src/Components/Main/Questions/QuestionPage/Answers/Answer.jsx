@@ -4,6 +4,7 @@ import defaultImg from './account.png';
 import editImg from './edit.svg';
 
 const Answer = (props) =>{
+    
     let ratingScale = props.averageRating;
     let isAuth = props.isAuth;
     let itsId = props.id;
@@ -19,7 +20,8 @@ const Answer = (props) =>{
             
             editMode?toggleEditMode(false):toggleEditMode(true);
             console.log(editMode)
-            if (!editMode){
+            if (editMode){
+                
                 props.updateAnswer(itsId, answerText)
             };
             console.log(editMode)
@@ -31,7 +33,6 @@ const Answer = (props) =>{
     }
     const onAnswerChange = (e) =>{
         setAnswerText(e.currentTarget.value);
-        
     };
     return(
         <div className={props.isBest?s.answer_wrapper + " " + s.best_answer:s.answer_wrapper}>
@@ -48,8 +49,8 @@ const Answer = (props) =>{
             </div>
             <div className={s.answer_right}>
                 {editMode?
-                <textarea onChange={onAnswerChange} onBlur={toggleEdit}  autoFocus={true} className={s.right_input_area} value = {answerText}/>:
-                <p onClick={toggleEdit} className={s.right_text}>{props.answer}</p>}
+                <textarea onChange={onAnswerChange} onBlur={toggleEdit}  autoFocus={false} className={s.right_input_area} value = {answerText}/>:
+                <p onDoubleClick={toggleEdit} className={s.right_text}>{answerText}</p>}
                 <div className={s.right_rating}><span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5</div>
             </div>
         </div>

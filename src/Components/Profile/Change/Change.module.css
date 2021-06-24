@@ -1,0 +1,7 @@
+.change_wrapper{
+    margin-left: 100px;
+    display: flex;
+    flex:2;
+    justify-content: space-between;
+    align-items: stretch;
+}

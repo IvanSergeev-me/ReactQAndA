@@ -8,6 +8,7 @@ import {requiredField, maxLength} from '../../../Assets/Utils/validators/validat
 import {getCategories, getSubcategoriesForCategory,selectSubCategory, askQuestionThunk } from '../../../Redux/Reducers/ask-reducer.js';
 import { withAuthRedirectComponent } from '../../../HOC/AuthRedirect';
 import { compose } from 'redux';
+import Popup from '../../Common/Popup-Successful/Popup.jsx';
 const AskQuestion = (props) =>{
     
     let categoriesList = props.categories.map(
@@ -34,8 +35,10 @@ const AskQuestion = (props) =>{
              />
         }
     );
+    //let needToShow = false;
     let sendQuestion = (values) =>{
         props.askNewQuestion(values);
+        //needToShow = true;
     };
     return(
         <div className={s.ask_wrapper}>
@@ -55,6 +58,7 @@ const AskQuestion = (props) =>{
             </div>:<></>}
            
            <NewQuestionForm onSubmit={sendQuestion}/>
+           <Popup popupAction={"Создание вопроса"} needToShow={false}/>
         </div>
         );
 };
@@ -97,8 +101,14 @@ class AskQuestionClass extends React.Component{
     askNewQuestion = (values) =>{
         console.log(values);
         let title = values.newQuestionTitle;
-        let description = values.newQuestionContent
-        this.props.askQuestionThunk(1, 1, title,description);
+        let description = values.newQuestionContent;
+        let subcat = this.props.askQuestion.selectedSubCategory.id;
+        let myId = this.props.appDataReducer.data.id;
+        if(this.props.appDataReducer.isAuth){
+            this.props.askQuestionThunk(subcat, myId, title,description);
+        }
+  
+
         
     }
     loadSubcategories =(id, name) =>{
@@ -120,7 +130,8 @@ class AskQuestionClass extends React.Component{
     }
 }
 let mapStateToProps = (state) => ({
-    askQuestion: state.askQuestion
+    askQuestion: state.askQuestion,
+    appDataReducer: state.appDataReducer
 });
 
 export default compose(connect(mapStateToProps, {getCategories,  getSubcategoriesForCategory, selectSubCategory,  askQuestionThunk}),

@@ -9,7 +9,7 @@ import eye from '../../../../Assets/Images/view.svg';
 import defaultImg from './account.png';
 import { AnswerTextarea } from '../../../Common/Forms/AnswerTextarea.js';
 import { Field, reduxForm } from 'redux-form';
-import Popup from '../../../Common/Popup-Successful/Popup.jsx';
+
 
 const QuestionPage = (props) =>{
     let ratingScale = props.question.averageRating;
@@ -22,6 +22,7 @@ const QuestionPage = (props) =>{
     }
     const updateAnswer = (id,  answerText) =>{
         props.updateAnswer(id,questionId,myId, answerText)
+        
     }
     const onSubmit = (data) =>{
         console.log(data);
@@ -102,17 +103,12 @@ const QuestionPage = (props) =>{
                 
             </div>
             
-            <Popup  popupAction={"Добавление ответа"}/>
+            
         </section>
     )
-    /*const closeModal = () =>{
-
-    }
-    const showModal = () =>{
-        
-    }*/
+  
 }
-//Хук юз стейт можно вынести сюда и попапом управлять отсюда
+
 const AddAnswerForm = (props) =>{
     return(
         <form className={s.add_form} onSubmit={props.handleSubmit}>
@@ -143,6 +139,7 @@ class QuestionPageClass extends React.Component{
         this.props.deleteAnswerThunk(id);
     }
     updateAnswer = (id,questionId,myId, answerText) =>{
+        
         this.props.updateAnswerThunk(id,questionId,myId, answerText);
     }
     componentDidMount(){

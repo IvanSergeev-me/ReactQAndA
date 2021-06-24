@@ -37,11 +37,9 @@ const  questionPageReducer = (state = initialState, action) => {
                 answers:newAnswers
             }
         case SET_USER_ANSWER:{
-            console.log("aa")
             let idToChange = action.id;
             let newAnswer = state.answers.filter((item) => item.id === idToChange);
-            newAnswer.answer = action.answer;
-            console.log(newAnswer)
+            newAnswer.answer = action.userAnswer;
             const newAnswers = state.answers.map(a => {
                 if (a.id === newAnswer.id) {
                   return newAnswer;
@@ -98,7 +96,7 @@ export const updateAnswerThunk = (id,questionId, userId, answer) =>{
     return (dispatch) =>{
         AnswersApi.updateAnswer(id,questionId, userId, answer)
         .then(response =>{
-            dispatch(setUserAnswerAC(id, answer));
+            //dispatch(setUserAnswerAC( answer, id));
             console.log("success")
         });
     };

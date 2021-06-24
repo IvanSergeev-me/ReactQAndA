@@ -20,7 +20,7 @@ const authReducer = (state = initialState, action) => {
     
     switch (action.type) {
         case SET_USER_DATA:
-            
+            console.log("dataset")
             return {
                 ...state,
                 data: action.userData,
@@ -37,7 +37,7 @@ const authReducer = (state = initialState, action) => {
     };
 };
 
-const setUserData = (userData, isAuth) => ({type:SET_USER_DATA, userData:userData, isAuth:isAuth});
+export const setUserData = (userData, isAuth) => ({type:SET_USER_DATA, userData:userData, isAuth:isAuth});
 const logoutUser = () => ({type:LOGOUT_USER});
 
 export const loginThunk = (data) =>{
