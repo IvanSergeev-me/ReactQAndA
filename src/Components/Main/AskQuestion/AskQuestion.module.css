@@ -50,6 +50,18 @@
     box-sizing: border-box;
     max-height: 400px;
 }
+.categories_choise_column::-webkit-scrollbar {
+	width: 5px;
+}
+   
+.categories_choise_column::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+   
+.categories_choise_column::-webkit-scrollbar-thumb {
+	background-color: teal;
+	outline: 1px solid teal;
+}
 .categoryBrick{
     
     margin-top: 10px;

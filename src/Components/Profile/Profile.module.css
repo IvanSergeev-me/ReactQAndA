@@ -13,11 +13,14 @@
 }
 .personal__avatar_container{
     box-sizing: border-box;
-    border-radius: 20px;
-    border:1px solid teal;
+    
     width: 100%;
 }
 .avatar__image{
+    box-sizing: border-box;
+    object-fit: contain;
+    border-radius: 20px;
+    border:1px solid teal;
     width: 100%;
 }
 .personal__login{
