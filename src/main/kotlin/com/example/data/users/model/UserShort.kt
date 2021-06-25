@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class UserShort(
     val id: Int,
     val login: String,
-    val image: String,
+    val image: String?,
 )

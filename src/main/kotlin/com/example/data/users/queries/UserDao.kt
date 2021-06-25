@@ -53,6 +53,7 @@ object UserDao {
         Users.update({ Users.id.eq(user.id) }) {
             it[login] = user.login
             it[password] = user.password
+            it[image] = user.image
         }
     }
 

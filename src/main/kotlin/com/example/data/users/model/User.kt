@@ -7,5 +7,5 @@ data class User(
     var id: Int,
     val login: String,
     val password: String,
-    val image: String
+    val image: String?
 )
