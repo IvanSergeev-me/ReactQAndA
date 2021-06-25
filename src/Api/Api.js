@@ -28,6 +28,9 @@ export const AnswersApi = {
     },
     deleteAnswer(id){
         return instance.delete(`answer/delete/${id}`);
+    },
+    setBestAnswer(id){
+        return instance.post(`/answer/setBest/${id}`)
     }
 }
 export const AskQuestionApi = {

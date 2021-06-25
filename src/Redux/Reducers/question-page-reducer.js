@@ -9,7 +9,21 @@ const SET_USER_ANSWER = "SET_USER_ANSWER";
 
 let initialState = {
     question: {
-        
+        id: null,
+        category: "-",
+        subcategory: "-",
+        date: "00-00-00",
+        views: null,
+        answers: null,
+        averageRating: null,
+        author: {
+            id: null,
+            login: "-",
+            image: null,
+        },
+        title: "-",
+        text: "-",
+        isAnswerGiven: false,
     },
     answers: [
         
@@ -113,6 +127,14 @@ export const getQuestionPageThunk = (id) =>{
             
         });
         
+    };
+};
+export const setBestAnswerThunk = (id) =>{
+    return (dispatch) =>{
+        AnswersApi.setBestAnswer(id)
+        .then(response =>{
+            console.log("setted")
+        })
     };
 };
 export default questionPageReducer;

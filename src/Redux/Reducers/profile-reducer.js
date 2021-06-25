@@ -61,6 +61,7 @@ export const deleteMyQuestionThunk = (id) =>{
 }
 export const changeUserThunk = (id, login, password, image) =>{
     return(dispatch) =>{
+        
         dispatch(toggleFetchingAC());
         ChangeUserApi.changeUser(id, login, password, image)
         .then(response =>{

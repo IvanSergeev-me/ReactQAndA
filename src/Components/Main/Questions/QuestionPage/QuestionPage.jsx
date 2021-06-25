@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
+import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk, setBestAnswerThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
 import Answer from './Answers/Answer.jsx';
 import s from './QuestionPage.module.css';
 import eye from '../../../../Assets/Images/view.svg';
@@ -42,6 +42,9 @@ const QuestionPage = (props) =>{
             isAuth = {isAuth}
             deleteThisAnswer={deleteThisAnswer}
             updateAnswer={updateAnswer}
+            isMyQuestion={props.isMyQuestion}
+            setBestAnswer={props.setBestAnswer}
+            isAnswerAlreadyGiven = {props.question.isAnswerGiven}
         />
         }
     )
@@ -142,17 +145,26 @@ class QuestionPageClass extends React.Component{
         
         this.props.updateAnswerThunk(id,questionId,myId, answerText);
     }
+    setBestAnswer = (id) =>{
+        this.props.setBestAnswerThunk(id);
+    }
     componentDidMount(){
         let questionId = this.props.match.params.questionID;
         this.props.getQuestionPageThunk(questionId);
         
     }
     render = () =>{
+        const myId = this.props.appDataReducer.data.id;
+        const authorId = this.props.currentPage.question.author.id;
+        let isMyQuestion = false;
+        if (myId && authorId && (myId === authorId)) isMyQuestion = true;
+        
         return(
             <QuestionPage 
             addAnswer={this.addAnswer} appDataReducer={this.props.appDataReducer} 
             question={this.props.currentPage.question} answers={this.props.currentPage.answers}
             deleteAnswer={this.deleteAnswer} updateAnswer={this.updateAnswer}
+            isMyQuestion={isMyQuestion} setBestAnswer={this.setBestAnswer}
             />
         )
     }
@@ -162,4 +174,4 @@ let mapStateToProps = (state) => ({
     appDataReducer: state.appDataReducer
     
 });
-export default compose(connect(mapStateToProps, { getQuestionPageThunk , addAnswerThunk,deleteAnswerThunk, updateAnswerThunk}),withRouter,)(QuestionPageClass);
+export default compose(connect(mapStateToProps, { getQuestionPageThunk ,setBestAnswerThunk, addAnswerThunk,deleteAnswerThunk, updateAnswerThunk}),withRouter,)(QuestionPageClass);

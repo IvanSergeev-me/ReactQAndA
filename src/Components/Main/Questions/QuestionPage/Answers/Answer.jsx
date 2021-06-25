@@ -4,16 +4,25 @@ import defaultImg from './account.png';
 import editImg from './edit.svg';
 
 const Answer = (props) =>{
-    
+    let isMyQuestion = props.isMyQuestion
     let ratingScale = props.averageRating;
+    let isBest = props.isBest;
     let isAuth = props.isAuth;
     let itsId = props.id;
+    let isAnswerAlreadyGiven = props.isAnswerAlreadyGiven;
     let conditionToEdit = isAuth & !props.isBest & (props.userId === props.myId)
     let [editMode, toggleEditMode] = useState(false);
+    let [makeBest, toggleMakeBest] = useState(false);
     let [answerText, setAnswerText] = useState(props.answer);
     useEffect(()=>{
         setAnswerText(props.answer)
     },[props.answer]);
+    const toggleBest = () =>{
+        if (isMyQuestion && !isBest && !isAnswerAlreadyGiven){
+            console.log("toggleBest")
+            makeBest?toggleMakeBest(false):toggleMakeBest(true);
+        }
+    }
     const toggleEdit = () =>{
         if(conditionToEdit){
             console.log("toggleEdit")
@@ -34,8 +43,12 @@ const Answer = (props) =>{
     const onAnswerChange = (e) =>{
         setAnswerText(e.currentTarget.value);
     };
+    const makeAnswerBest = (e) =>{
+        props.setBestAnswer(itsId);
+        e.preventDefault();
+    }
     return(
-        <div className={props.isBest?s.answer_wrapper + " " + s.best_answer:s.answer_wrapper}>
+        <div onClick={toggleBest} className={props.isBest?s.answer_wrapper + " " + s.best_answer:s.answer_wrapper}>
             <div className={s.answer_left}>
                 <img className={s.left_avatar} src={defaultImg} alt="avatar" />
                 <div className={s.left_name}>{props.userId}-Автор</div>
@@ -48,10 +61,15 @@ const Answer = (props) =>{
                 
             </div>
             <div className={s.answer_right}>
+                {isBest?<p className={s.answer_best_title}>Автор считает этот ответ самым лучшим</p>:null}
                 {editMode?
                 <textarea onChange={onAnswerChange} onBlur={toggleEdit}  autoFocus={false} className={s.right_input_area} value = {answerText}/>:
                 <p onDoubleClick={toggleEdit} className={s.right_text}>{answerText}</p>}
-                <div className={s.right_rating}><span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5</div>
+                <div className={s.right_bottom_options}>
+                    <div className={s.right_rating}><span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5</div>
+                    {makeBest?<button onClick={makeAnswerBest} className={s.makeBest_button}>Это лучший ответ</button>:null}
+                </div>
+              
             </div>
         </div>
     )

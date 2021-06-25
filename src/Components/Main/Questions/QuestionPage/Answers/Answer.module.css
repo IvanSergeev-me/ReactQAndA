@@ -8,6 +8,9 @@
     width: 100%;
     flex-wrap: wrap;
 }
+.answer_wrapper:hover{
+    border:1px solid teal;
+}
 .answer_left{
     padding: 0.5em;
     border-right: 1px solid var(--main-border-color);
@@ -80,4 +83,25 @@
 .right_input_area{
     width: 100%;
     font-size: 1em;
+}
+.right_bottom_options{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.best_answer{
+    border:3px solid green!important;
+}
+.answer_best_title{
+    color:green;
+    font-size: 1em;
+    font-weight: 600;
+    user-select: none;
+}
+.makeBest_button{
+    color:white;
+    font-size: 1em;
+    width: 100%;
+    background-color: teal;
+    user-select: none;
 }

@@ -39,7 +39,7 @@ class QuestionsClass extends React.Component {
     componentDidUpdate(){
     }
     render =() =>{
-        console.log(this.props.questions.isFetching)
+       
         return (
             <>
                 {this.props.questions.isFetching ? <Preloader /> : null}
