@@ -10,14 +10,9 @@ import com.example.data.categories.queries.SubcategoryDao.subcategory
 import com.example.data.common.Id
 import com.example.data.questions.ddl.QuestionScores
 import com.example.data.questions.ddl.Questions
-import com.example.data.questions.model.Question
-import com.example.data.questions.model.QuestionFull
-import com.example.data.questions.model.QuestionInfo
-import com.example.data.questions.model.QuestionScore
+import com.example.data.questions.model.*
 import com.example.data.users.queries.UserDao.author
-import io.ktor.util.*
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.statements.DeleteStatement.Companion.where
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 
@@ -72,39 +67,60 @@ object QuestionDao {
             this[Questions.description]
         )
 
-    private fun get(where: SqlExpressionBuilder.() -> Op<Boolean>): List<QuestionFull> = transaction {
-        Questions
-            .leftJoin(QuestionScores)
-            .sliceForFullQuestion()
-            .select(where)
-            .groupForFullQuestion()
-            .map { row ->
-                row.toQuestion().run {
-                    val subcategory = subcategory()
-                    val category = subcategory.category()
-                    val answers = answers()
-                    QuestionFull(
-                        id = id,
-                        category = category.name,
-                        subcategory = subcategory.name,
-                        author = author(),
-                        title = title,
-                        text = description,
-                        averageRating = row[QuestionScores.score.avg()]?.toDouble() ?: 0.0,
-                        date = row[Questions.date].toString("yy-MM-dd"),
-                        views = row[Questions.views],
-                        answers = answers.size,
-                        isAnswerGiven = answers.any { it.isBest }
-                    )
-                }
-            }
+    private fun GetParameters.thisWhereAnd(other: SqlExpressionBuilder.() -> Op<Boolean>): SqlExpressionBuilder.() -> Op<Boolean> {
+        val filter = this
+        return {
+            Questions.date.greaterEq(DateTime.parse(filter.dateFrom)) and other.invoke(this)
+        }
     }
 
-    fun getAll() = get { Questions.id greater 0 }
+    private fun Sorting.orderingBy(): Column<*> =
+        when (this) {
+            Sorting.DATE -> Questions.date
+            Sorting.ALPHABET -> Questions.title
+            Sorting.RATING -> Questions.views
+            else -> error("Нет такого параметра сортировки ${this.ordinal}")
+        }
 
-    fun getForSubcategory(subcategoryId: Int) = get { Questions.subcategoryId eq subcategoryId }
+    private fun get(filter: GetParameters? = null, where: SqlExpressionBuilder.() -> Op<Boolean>): List<QuestionFull> =
+        transaction {
+            Questions
+                .leftJoin(QuestionScores)
+                .sliceForFullQuestion()
+                .select(filter?.thisWhereAnd(where) ?: where)
+                .groupForFullQuestion()
+                .apply {
+                    filter?.let { orderBy(it.sorting.orderingBy()) }
+                }
+                .map { row ->
+                    row.toQuestion().run {
+                        val subcategory = subcategory()
+                        val category = subcategory.category()
+                        val answers = answers()
+                        QuestionFull(
+                            id = id,
+                            category = category.name,
+                            subcategory = subcategory.name,
+                            author = author(),
+                            title = title,
+                            text = description,
+                            averageRating = row[QuestionScores.score.avg()]?.toDouble() ?: 0.0,
+                            date = row[Questions.date].toString("yy-MM-dd"),
+                            views = row[Questions.views],
+                            answers = answers.size,
+                            isAnswerGiven = answers.any { it.isBest }
+                        )
+                    }
+                }
+        }
 
-    fun getForUser(userId: Int): List<QuestionFull> = get { Questions.userId eq userId }
+    fun getAll(filter: GetParameters? = null) = get(filter) { Questions.id greater 0 }
+
+    fun getForSubcategory(subcategoryId: Int, filter: GetParameters? = null) =
+        get(filter) { Questions.subcategoryId eq subcategoryId }
+
+    fun getForUser(userId: Int, filter: GetParameters? = null): List<QuestionFull> =
+        get(filter) { Questions.userId eq userId }
 
     private fun getOneFull(id: Int): QuestionFull = get { Questions.id eq id }
         .firstOrNull() ?: throw IllegalArgumentException("Нет вопроса с таким id")
@@ -131,7 +147,8 @@ object QuestionDao {
         AnswerScores.deleteWhere { AnswerScores.answerId inList AnswerDao.getAnswerIdsForQuestion(id) }
         QuestionScores.deleteWhere { QuestionScores.questionId eq id }
         Answers.deleteWhere { Answers.questionId eq id }
-        Questions.deleteWhere { Questions.id eq id } }
+        Questions.deleteWhere { Questions.id eq id }
+    }
 
     fun update(question: Question): Unit = transaction {
         Questions.update({ Questions.id eq question.id }) {

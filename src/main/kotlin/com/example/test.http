@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/question/forUser/1
+GET http://localhost:8080/question/all
 
 ###
 GET http://localhost:8080/answer/forUser/2
@@ -23,4 +23,17 @@ Content-Type: application/json
   "image": "https://modamix.net/wp-content/uploads/2020/04/EMCwMwpWoAAa4Yz.jpg",
   "login": "aaa",
   "password": "0000"
+}
+
+
+###
+POST http://localhost:8080/question/update
+Content-Type: application/json
+
+{
+  "id": 1,
+  "subcategoryId": 1,
+  "userId": 1,
+  "title": "uio",
+  "description": "123"
 }
