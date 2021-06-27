@@ -39,15 +39,22 @@ object UserDao {
         }
     }
 
-    private fun check(login: String, password: String): Int = transaction {
-        Users.select {
-            Users.login.eq(login) and Users.password.eq(password)
-        }.firstOrNull()
-            ?.get(Users.id)
+    private fun check(login: String, password: String): User = transaction {
+        Users
+            .select { Users.login.eq(login) and Users.password.eq(password) }
+            .map {
+                User(
+                    id = it[Users.id],
+                    login = it[Users.login],
+                    password = it[Users.password],
+                    image = it[Users.image]
+                )
+            }
+            .firstOrNull()
             ?: throw IllegalArgumentException("Неверный логин или пароль")
     }
 
-    fun User.setIdIfExists(): User = this.copy(id = check(login, password))
+    fun User.check(): User = check(login, password)
 
     fun update(user: User): Unit = transaction {
         Users.update({ Users.id.eq(user.id) }) {

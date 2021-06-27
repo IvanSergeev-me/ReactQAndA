@@ -6,7 +6,7 @@ import com.example.data.users.queries.TokenDao.deleteToken
 import com.example.data.users.queries.TokenDao.saveToken
 import com.example.data.users.queries.TokenDao.token
 import com.example.data.users.queries.UserDao
-import com.example.data.users.queries.UserDao.setIdIfExists
+import com.example.data.users.queries.UserDao.check
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -30,14 +30,10 @@ fun Route.userRouting() {
         }
 
         postAndHandleException("/auth") {
-            val user = call.receive<User>().copy(id = 0).setIdIfExists()
-            if (user.id > 0) {
-                user.saveToken()
-                setAuthCookie(user.token)
-                call.respond(user)
-            } else {
-                throw IllegalArgumentException("Неверный логин или пароль")
-            }
+            val user = call.receive<User>().check()
+            user.saveToken()
+            setAuthCookie(user.token)
+            call.respond(user)
         }
 
         postAndHandleException("/update") {

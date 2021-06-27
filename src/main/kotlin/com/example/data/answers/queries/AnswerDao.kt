@@ -97,6 +97,7 @@ object AnswerDao {
             it[questionId] = new.questionId
             it[userId] = new.userId
             it[answer] = new.answer
+            it[isBest] = new.isBest
         }
     }
 
