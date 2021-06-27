@@ -7,4 +7,5 @@ object Users: Table("users") {
     val login = varchar("login", 64).uniqueIndex()
     val password = varchar("password", 64)
     val image = text("image").nullable()
+    val isAdmin = bool("is_admin").default(false)
 }

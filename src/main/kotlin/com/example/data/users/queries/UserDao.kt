@@ -20,7 +20,8 @@ object UserDao {
                 UserShort(
                     id = it[Users.id],
                     login = it[Users.login],
-                    image = it[Users.image]
+                    image = it[Users.image],
+                    isAdmin = it[Users.isAdmin]
                 )
             }.firstOrNull() ?: throw IllegalArgumentException("Нет пользователя с таким id")
     }
@@ -34,7 +35,8 @@ object UserDao {
                 id = it[Users.id],
                 login = user.login,
                 password = user.password,
-                image = user.image
+                image = user.image,
+                isAdmin = user.isAdmin
             )
         }
     }
@@ -47,7 +49,8 @@ object UserDao {
                     id = it[Users.id],
                     login = it[Users.login],
                     password = it[Users.password],
-                    image = it[Users.image]
+                    image = it[Users.image],
+                    isAdmin = it[Users.isAdmin]
                 )
             }
             .firstOrNull()
@@ -61,12 +64,11 @@ object UserDao {
             it[login] = user.login
             it[password] = user.password
             it[image] = user.image
+            it[isAdmin] = user.isAdmin
         }
     }
 
     fun Question.author(): UserShort = getById(this.userId)
 
     fun Answer.author(): UserShort = getById(this.userId)
-
-
 }

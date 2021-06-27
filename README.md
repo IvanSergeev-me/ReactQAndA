@@ -17,7 +17,8 @@ data class Status(
 data class UserShort(
     val id: Int,
     val login: String,
-    val image: String // URL
+    val image: String, // URL
+    val isAdmin: Boolean // default = false
 )
 ```
 
@@ -33,7 +34,8 @@ data class User(
     val id: Int, // может быть любым
     val login: String,
     val password: String,
-    val image: String // URL
+    val image: String, // URL
+    val isAdmin: Boolean
 )
 ```
 Возвращает такого же пользователя, но с актуальным id
@@ -48,7 +50,8 @@ data class User(
     val id: Int, // может быть любым
     val login: String,
     val password: String,
-    val image: String // может быть любым
+    val image: String, // может быть любым
+    val isAdmin: Boolean // может быть любым
 )
 ```
 ### /user/update - POST
@@ -63,7 +66,8 @@ data class User(
     val id: Int, 
     val login: String,
     val password: String,
-    val image: String // URL
+    val image: String, // URL
+    val isAdmin: Boolean
 )
 ```
 Возвращает
