@@ -33,6 +33,7 @@ export const getQuestionsThunk = (currentPage, pageSize) =>{
         dispatch(toggleFetchingAC());
         QuestionsApi.getQuestionsPage(currentPage, pageSize)
         .then(response => {
+            //console.log(response)
             dispatch(setQuestionsAC(response.data));
             
             //dispatch(setTotalCount(response.data.totalCount));

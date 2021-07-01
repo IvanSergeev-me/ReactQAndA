@@ -1,0 +1,13 @@
+.rating_wrapper{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.star_container{
+    width: 20px;
+    margin-left: 10px;
+}
+.star_image{
+    width: 100%;
+    object-fit: contain;
+}

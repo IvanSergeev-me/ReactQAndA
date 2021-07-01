@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk, setBestAnswerThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
+import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk, setBestAnswerThunk,addScoreThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
 import Answer from './Answers/Answer.jsx';
 import s from './QuestionPage.module.css';
 import eye from '../../../../Assets/Images/view.svg';
@@ -44,10 +44,24 @@ const QuestionPage = (props) =>{
             updateAnswer={updateAnswer}
             isMyQuestion={props.isMyQuestion}
             setBestAnswer={props.setBestAnswer}
+            addScore={props.addScore}
             isAnswerAlreadyGiven = {props.question.isAnswerGiven}
         />
         }
     )
+    //Лучшие ответы попадают в топ
+    answers_list.sort(
+        function (a, b) {
+            if (b.props.isBest) {
+                return 1; 
+            }
+            else {
+                return -1; 
+            }
+            return 0;
+        }     
+    );
+   // console.log(answers_list)
    
     return(
         <section className={s.questionPage_wrapper}>
@@ -148,6 +162,11 @@ class QuestionPageClass extends React.Component{
     setBestAnswer = (id) =>{
         this.props.setBestAnswerThunk(id);
     }
+    addScore = (answerId, score) =>{
+        let userId = this.props.appDataReducer.data.id;
+        if(!userId) userId = -1;
+        this.props.addScoreThunk(userId, answerId, score);
+    }
     componentDidMount(){
         let questionId = this.props.match.params.questionID;
         this.props.getQuestionPageThunk(questionId);
@@ -165,6 +184,7 @@ class QuestionPageClass extends React.Component{
             question={this.props.currentPage.question} answers={this.props.currentPage.answers}
             deleteAnswer={this.deleteAnswer} updateAnswer={this.updateAnswer}
             isMyQuestion={isMyQuestion} setBestAnswer={this.setBestAnswer}
+            addScore={this.addScore}
             />
         )
     }
@@ -174,4 +194,4 @@ let mapStateToProps = (state) => ({
     appDataReducer: state.appDataReducer
     
 });
-export default compose(connect(mapStateToProps, { getQuestionPageThunk ,setBestAnswerThunk, addAnswerThunk,deleteAnswerThunk, updateAnswerThunk}),withRouter,)(QuestionPageClass);
+export default compose(connect(mapStateToProps, { getQuestionPageThunk ,setBestAnswerThunk, addAnswerThunk,deleteAnswerThunk, updateAnswerThunk,addScoreThunk}),withRouter,)(QuestionPageClass);

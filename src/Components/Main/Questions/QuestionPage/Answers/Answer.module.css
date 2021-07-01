@@ -47,6 +47,11 @@
 .right_rating{
     padding: 10px 0;
     border-top: 2px solid teal;
+    display: flex;
+    align-items: center;
+}
+.right_star_rating{
+    margin-left: 10px!important;
 }
 .low_rating{
     color: red;

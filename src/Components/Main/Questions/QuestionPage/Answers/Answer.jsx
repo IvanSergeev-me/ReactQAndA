@@ -2,6 +2,7 @@ import React, {useState, useEffect}  from 'react';
 import s from './Answer.module.css';
 import defaultImg from './account.png';
 import editImg from './edit.svg';
+import StarRating from '../../../../Common/StartRating/StarRating';
 
 const Answer = (props) =>{
     let isMyQuestion = props.isMyQuestion
@@ -47,6 +48,9 @@ const Answer = (props) =>{
         props.setBestAnswer(itsId);
         e.preventDefault();
     }
+    const addScore = (score) =>{
+        props.addScore (itsId, score);
+    }
     return(
         <div onClick={toggleBest} className={props.isBest?s.answer_wrapper + " " + s.best_answer:s.answer_wrapper}>
             <div className={s.answer_left}>
@@ -66,7 +70,10 @@ const Answer = (props) =>{
                 <textarea onChange={onAnswerChange} onBlur={toggleEdit}  autoFocus={false} className={s.right_input_area} value = {answerText}/>:
                 <p onDoubleClick={toggleEdit} className={s.right_text}>{answerText}</p>}
                 <div className={s.right_bottom_options}>
-                    <div className={s.right_rating}><span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5</div>
+                    <div className={s.right_rating}>
+                        <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5 
+                        {isAuth?<StarRating currentRating={ratingScale} addScore={addScore}/>:null}
+                    </div>
                     {makeBest?<button onClick={makeAnswerBest} className={s.makeBest_button}>Это лучший ответ</button>:null}
                 </div>
               

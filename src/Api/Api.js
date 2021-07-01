@@ -31,6 +31,9 @@ export const AnswersApi = {
     },
     setBestAnswer(id){
         return instance.post(`/answer/setBest/${id}`)
+    },
+    createScore(userId, answerId, score){
+        return instance.post(`/answer/createScore`, {id:0, userId, answerId, score})
     }
 }
 export const AskQuestionApi = {

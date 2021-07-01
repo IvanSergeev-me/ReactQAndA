@@ -5,6 +5,8 @@ const SET_QUESTION_PAGE = "SET_QUESTION_PAGE";
 const TOGGLE_FETCHING = "SET_FETCHING";
 const DELETE_ANSWER = "DELETE_ANSWER";
 const SET_USER_ANSWER = "SET_USER_ANSWER";
+const MAKE_ANSWER_BEST = "M_A_B";
+const ADD_SCORE = "ADD_SCORE";
 //const ADD_ANSWER = "ADD_ANSWER";
 
 let initialState = {
@@ -60,11 +62,34 @@ const  questionPageReducer = (state = initialState, action) => {
                 }
                 return a;
               });
-            console.log(newAnswers)
+            //console.log(newAnswers)
             return{
                 ...state,
                 answers:newAnswers
             }
+        }
+        case  MAKE_ANSWER_BEST:{
+            let idToChange = action.id;
+            let newAnswer = state.answers.filter((item) => item.id === idToChange);
+            newAnswer[0].isBest = true;
+           // console.log(newAnswer) 
+            const newAnswers = state.answers.map(a => {
+               // console.log(a.id + "   " + newAnswer[0].id)
+                if (a.id === newAnswer.id) {
+                  //console.log("wadawd")
+                  return newAnswer;
+                }
+                return a;
+              });
+            let newQuestion = state.question;
+            newQuestion.isAnswerGiven = true;
+            //console.log(newQuestion);
+            return{
+                ...state,
+                question:newQuestion,
+                answers:newAnswers
+                
+            }  
         }
         /*case ADD_ANSWER:
             let answer = {
@@ -85,6 +110,8 @@ const setQuestionPageAC = (question, answers) => ({type:SET_QUESTION_PAGE, quest
 const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
 const deleteAnswerAC =(id) =>({type:DELETE_ANSWER, id});
 const setUserAnswerAC = (userAnswer, id) => ({type:SET_USER_ANSWER, userAnswer, id});
+const makeBestAC = (id) => ({type:MAKE_ANSWER_BEST,  id});
+const addScoreAC = (id) => ({type:ADD_SCORE}); 
 
 export const addAnswerThunk = (questionId, userId, answer) =>{
     return (dispatch) =>{
@@ -111,7 +138,7 @@ export const updateAnswerThunk = (id,questionId, userId, answer) =>{
         AnswersApi.updateAnswer(id,questionId, userId, answer)
         .then(response =>{
             //dispatch(setUserAnswerAC( answer, id));
-            console.log("success")
+           // console.log("success")
         });
     };
 };
@@ -125,16 +152,26 @@ export const getQuestionPageThunk = (id) =>{
             
             dispatch(toggleFetchingAC());
             
-        });
-        
+        });    
     };
 };
 export const setBestAnswerThunk = (id) =>{
     return (dispatch) =>{
         AnswersApi.setBestAnswer(id)
         .then(response =>{
-            console.log("setted")
+            //console.log("setted")
+            dispatch( makeBestAC(id));
         })
     };
 };
+export const addScoreThunk = (userId, answerId, score) =>{
+    return(dispatch) =>{
+        if(score > 5) score = 5;
+        if (score < 0) score = 0;
+        AnswersApi.createScore(userId, answerId, score)
+        .then(response=>{
+            console.log("rated " + score);
+        })
+    }
+}
 export default questionPageReducer;
