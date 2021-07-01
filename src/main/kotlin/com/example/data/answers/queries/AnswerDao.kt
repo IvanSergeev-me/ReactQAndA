@@ -7,6 +7,7 @@ import com.example.data.answers.model.AnswerScore
 import com.example.data.answers.model.AnswerWithRating
 import com.example.data.common.Id
 import com.example.data.questions.model.Question
+import com.example.data.users.queries.UserDao.asUser
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -58,7 +59,7 @@ object AnswerDao {
                 AnswerWithRating(
                     id = it[Answers.id],
                     questionId = it[Answers.questionId],
-                    userId = it[Answers.userId],
+                    author = it[Answers.userId].asUser(),
                     answer = it[Answers.answer],
                     averageRating = it[AnswerScores.score.avg()]?.toDouble() ?: 0.0,
                     isBest = it[Answers.isBest]
@@ -104,23 +105,21 @@ object AnswerDao {
 
     fun createScore(new: AnswerScore): Id = transaction {
         updateScore(new)
-        try {
-            AnswerScores.insert {
+            ?: AnswerScores.insert {
                 it[id] = new.id
                 it[userId] = new.userId
                 it[answerId] = new.answerId
                 it[score] = new.score
             }[AnswerScores.id].let { Id(it) }
-        } catch (e: Exception) {
-            Id(new.id)
-        }
     }
 
-    private fun updateScore(new: AnswerScore) = transaction {
-        AnswerScores
-            .update({ AnswerScores.id eq new.id }) {
-                it[score] = new.score
-            }
+    private fun updateScore(new: AnswerScore): Id? = transaction {
+        AnswerScores.update({ AnswerScores.answerId.eq(new.answerId) and AnswerScores.userId.eq(new.userId) }) {
+            it[score] = new.score
+        }
+        AnswerScores.select { AnswerScores.answerId.eq(new.answerId) and AnswerScores.userId.eq(new.userId) }
+            .map { Id(it[AnswerScores.id]) }
+            .firstOrNull()
     }
 
     fun delete(id: Int): Unit = transaction { Answers.deleteWhere { Answers.id eq id } }

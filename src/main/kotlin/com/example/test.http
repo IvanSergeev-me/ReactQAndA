@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/question/all
+GET http://localhost:8080/question/info/1
 
 ###
 POST http://localhost:8080/answer/setBest/1
@@ -36,4 +36,15 @@ Content-Type: application/json
   "userId": 1,
   "title": "uio",
   "description": "123"
+}
+
+###
+POST http://localhost:8080/question/createScore
+Content-Type: application/json
+
+{
+  "id": 0,
+  "questionId": 1,
+  "userId": 1,
+  "score": "123"
 }

@@ -160,22 +160,20 @@ object QuestionDao {
 
     fun createScore(new: QuestionScore): Id = transaction {
         updateScore(new)
-        try {
-            QuestionScores.insert {
+            ?: QuestionScores.insert {
                 it[userId] = new.userId
                 it[questionId] = new.questionId
                 it[score] = new.score
             }[QuestionScores.id].let { Id(it) }
-        } catch (e: Exception) {
-            Id(new.id)
-        }
-
     }
 
-    private fun updateScore(new: QuestionScore) = transaction {
-        QuestionScores.update({ QuestionScores.id eq new.id }) {
+    private fun updateScore(new: QuestionScore): Id? = transaction {
+        QuestionScores.update({ QuestionScores.userId.eq(new.userId) and QuestionScores.questionId.eq(new.questionId) }) {
             it[score] = new.score
         }
+        QuestionScores.select { QuestionScores.userId.eq(new.userId) and QuestionScores.questionId.eq(new.questionId) }
+            .map { Id(it[QuestionScores.id]) }
+            .firstOrNull()
     }
 
     fun search(query: String): List<QuestionFull> = transaction {

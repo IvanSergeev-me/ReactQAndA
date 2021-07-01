@@ -70,5 +70,5 @@ object UserDao {
 
     fun Question.author(): UserShort = getById(this.userId)
 
-    fun Answer.author(): UserShort = getById(this.userId)
+    fun Int.asUser(): UserShort = getById(this)
 }
