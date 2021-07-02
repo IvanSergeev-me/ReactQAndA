@@ -20,6 +20,9 @@ fun Route.userRouting() {
             call.respond(UserDao.getById(id.toInt()))
         }
 
+        getAndHandleException("/all") {
+            call.respond(UserDao.getAll())
+        }
 
         postAndHandleException("/register") {
             val user = call.receive<User>()
