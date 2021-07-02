@@ -39,14 +39,14 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/question/createScore
+POST http://localhost:8080/answer/createScore
 Content-Type: application/json
 
 {
   "id": 0,
-  "questionId": 1,
-  "userId": 1,
-  "score": "123"
+  "answerId": 1,
+  "userId": 9,
+  "score": 4
 }
 
 ###

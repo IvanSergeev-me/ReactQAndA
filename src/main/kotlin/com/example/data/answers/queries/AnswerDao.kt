@@ -106,7 +106,6 @@ object AnswerDao {
     fun createScore(new: AnswerScore): Id = transaction {
         updateScore(new)
             ?: AnswerScores.insert {
-                it[id] = new.id
                 it[userId] = new.userId
                 it[answerId] = new.answerId
                 it[score] = new.score
