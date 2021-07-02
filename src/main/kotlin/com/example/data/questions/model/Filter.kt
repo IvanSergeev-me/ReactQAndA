@@ -7,7 +7,7 @@ enum class Sorting { DATE, ALPHABET, RATING }
 
 @Serializable
 data class GetParameters(
-    val sorting: Sorting, // 0 (date) or 1 (alphabet) or 2 (rating)
+    val sorting: Sorting, // DATE or ALPHABET or RATING
     val dateFrom: String,
 )
 

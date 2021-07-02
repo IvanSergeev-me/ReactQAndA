@@ -12,27 +12,47 @@ import io.ktor.routing.*
 fun Route.questionRouting() {
     route("/question") {
         getAndHandleException("/all") {
-            val filters = call.tryReceiveFilter()
             call.respond(QuestionDao.getAll())
+        }
+
+        postAndHandleException("/all") {
+//            val filters = call.tryReceiveFilter()
+            val filters = call.receive<GetParameters>()
+            call.respond(QuestionDao.getAll(filters))
         }
 
         getAndHandleException("/forSubcategory/{subcategoryId}") {
             val subcategoryId = call.parameters["subcategoryId"] ?: return@getAndHandleException call.badRequest()
-            val filters = call.tryReceiveFilter()
             call.respond(QuestionDao.getForSubcategory(subcategoryId.toInt()))
+        }
+
+        postAndHandleException("/forSubcategory/{subcategoryId}") {
+            val subcategoryId = call.parameters["subcategoryId"] ?: return@postAndHandleException call.badRequest()
+            val filters = call.tryReceiveFilter()
+            call.respond(QuestionDao.getForSubcategory(subcategoryId.toInt(), filters))
         }
 
         getAndHandleException("/forUser/{id}") {
             val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()
-            val filters = call.tryReceiveFilter()
             call.respond(QuestionDao.getForUser(id.toInt()))
+        }
+
+        postAndHandleException("/forUser/{id}") {
+            val id = call.parameters["id"] ?: return@postAndHandleException call.badRequest()
+            val filters = call.tryReceiveFilter()
+            call.respond(QuestionDao.getForUser(id.toInt(), filters))
         }
 
         getAndHandleException("/search/{query}") {
             val query = call.parameters["query"] ?: return@getAndHandleException call.badRequest()
-            val filters = call.tryReceiveFilter()
             call.respond(QuestionDao.search(query))
         }
+
+//        postAndHandleException("/search/{query}") {
+//            val query = call.parameters["query"] ?: return@postAndHandleException call.badRequest()
+//            val filters = call.tryReceiveFilter()
+//            call.respond(QuestionDao.search(query, filters))
+//        }
 
         getAndHandleException("/info/{id}") {
             val id = call.parameters["id"] ?: return@getAndHandleException call.badRequest()

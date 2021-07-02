@@ -79,7 +79,6 @@ object QuestionDao {
             Sorting.DATE -> Questions.date
             Sorting.ALPHABET -> Questions.title
             Sorting.RATING -> Questions.views
-            else -> error("Нет такого параметра сортировки ${this.ordinal}")
         }
 
     private fun get(filter: GetParameters? = null, where: SqlExpressionBuilder.() -> Op<Boolean>): List<QuestionFull> =

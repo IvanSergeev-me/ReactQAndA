@@ -48,3 +48,12 @@ Content-Type: application/json
   "userId": 1,
   "score": "123"
 }
+
+###
+POST http://localhost:8080/question/forUser/1
+Content-Type: application/json
+
+{
+  "sorting": "ALPHABET",
+  "dateFrom": "2020-05-17"
+}
