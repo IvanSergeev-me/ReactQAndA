@@ -1,6 +1,9 @@
 import { QuestionsApi} from '../../Api/Api.js';
+import { reset } from 'redux-form';
+
 const SET_QUESTIONS_PAGE = "SET_QUESTIONS_PAGE";
 const TOGGLE_FETCHING = "SET_FETCHING";
+
 let initialState = {
     questions: [
         
@@ -37,6 +40,18 @@ export const getQuestionsThunk = (currentPage, pageSize) =>{
             dispatch(setQuestionsAC(response.data));
             
             //dispatch(setTotalCount(response.data.totalCount));
+        }).then(dispatch(toggleFetchingAC()));
+        
+    };
+};
+export const getSearchResultThunk = (query) =>{
+    return (dispatch) =>{
+        dispatch(toggleFetchingAC());
+        console.log(query)
+        QuestionsApi.getSearchResult(query)
+        .then(response => {
+            dispatch(setQuestionsAC(response.data));
+            dispatch(reset('searchForm'));
         }).then(dispatch(toggleFetchingAC()));
         
     };

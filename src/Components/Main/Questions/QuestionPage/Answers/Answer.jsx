@@ -11,10 +11,12 @@ const Answer = (props) =>{
     let isAuth = props.isAuth;
     let itsId = props.id;
     let isAnswerAlreadyGiven = props.isAnswerAlreadyGiven;
-    let conditionToEdit = isAuth & !props.isBest & (props.userId === props.myId)
+    let author = props.author;
+    let conditionToEdit = isAuth & !props.isBest & (author.id === props.myId);
     let [editMode, toggleEditMode] = useState(false);
     let [makeBest, toggleMakeBest] = useState(false);
     let [answerText, setAnswerText] = useState(props.answer);
+   
     useEffect(()=>{
         setAnswerText(props.answer)
     },[props.answer]);
@@ -54,8 +56,8 @@ const Answer = (props) =>{
     return(
         <div onClick={toggleBest} className={props.isBest?s.answer_wrapper + " " + s.best_answer:s.answer_wrapper}>
             <div className={s.answer_left}>
-                <img className={s.left_avatar} src={defaultImg} alt="avatar" />
-                <div className={s.left_name}>{props.userId}-Автор</div>
+                <img className={s.left_avatar} src={author.image?author.image:defaultImg} alt="avatar" />
+                <div className={s.left_name}>{author.login}-Автор</div>
                 {conditionToEdit?<div className={s.edit_or_delete}>
                     <div onClick={deleteThisAnswer} className={s.delete_button}>X</div>
                     <div onClick={toggleEdit} className={s.edit_button}>

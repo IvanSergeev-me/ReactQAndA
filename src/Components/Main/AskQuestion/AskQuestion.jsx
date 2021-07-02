@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './AskQuestion.module.css';
 import {connect} from 'react-redux'
 import { Field, reduxForm } from 'redux-form';
@@ -35,11 +35,14 @@ const AskQuestion = (props) =>{
              />
         }
     );
-    //let needToShow = false;
+    let [needToShow, setShow] = useState(false);
     let sendQuestion = (values) =>{
         props.askNewQuestion(values);
-        //needToShow = true;
+        setShow(true);
     };
+    let closePopup = () =>{
+        setShow(false);
+    }
     return(
         <div className={s.ask_wrapper}>
            <h1 className={s.ask_title}>Создание вопроса</h1>
@@ -58,7 +61,7 @@ const AskQuestion = (props) =>{
             </div>:<></>}
            
            <NewQuestionForm onSubmit={sendQuestion}/>
-           <Popup popupAction={"Создание вопроса"} needToShow={false}/>
+           <Popup closePopup={closePopup} popupAction={"Создание вопроса"} needToShow={needToShow}/>
         </div>
         );
 };
@@ -99,7 +102,7 @@ class AskQuestionClass extends React.Component{
         super(props);
     }
     askNewQuestion = (values) =>{
-        console.log(values);
+        //console.log(values);
         let title = values.newQuestionTitle;
         let description = values.newQuestionContent;
         let subcat = this.props.askQuestion.selectedSubCategory.id;

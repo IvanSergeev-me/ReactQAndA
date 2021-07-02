@@ -25,7 +25,7 @@ const QuestionPage = (props) =>{
         
     }
     const onSubmit = (data) =>{
-        console.log(data);
+        //console.log(data);
         props.addAnswer(data);
     }
     let answers_list = props.answers.map(
@@ -34,7 +34,6 @@ const QuestionPage = (props) =>{
             key={a.id}
             id = {a.id}
             questionId ={a.questionId}
-            userId = {a.userId}
             myId = {myId}
             averageRating = {a.averageRating}
             answer = {a.answer}
@@ -45,6 +44,7 @@ const QuestionPage = (props) =>{
             isMyQuestion={props.isMyQuestion}
             setBestAnswer={props.setBestAnswer}
             addScore={props.addScore}
+            author={a.author}
             isAnswerAlreadyGiven = {props.question.isAnswerGiven}
         />
         }

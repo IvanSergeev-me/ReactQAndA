@@ -17,6 +17,9 @@ export const QuestionsApi = {
     getCurrentQuestion(id){
         return instance.get(`question/info/${id}`);
     },
+    getSearchResult(query){
+        return instance.get(`question/search/${query}`);
+    }
     
 };
 export const AnswersApi = {

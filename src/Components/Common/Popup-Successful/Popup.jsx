@@ -3,10 +3,14 @@ import s from './Popup.module.css';
 import crossSvg from './cross.svg'
 const Popup=(props)=>{
     let PopupText = `${props.popupAction} выполнено успешно!`;
-    const [show, setShow] = useState(props.needToShow);
+    let [show, setShow] = useState(props.needToShow);
+    useEffect(()=>{
+        setShow(props.needToShow)
+    },[props.needToShow]);
 
     const handleClose = () => {
         setShow(false);
+        props.closePopup();
     }
     const handleShow = () => setShow(true);
     return(
