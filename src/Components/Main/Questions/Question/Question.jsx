@@ -1,12 +1,14 @@
 import React from 'react';
 import s from './Question.module.css'
 import eye from '../../../../Assets/Images/view.svg';
+import starYellow from '../../../../Assets/Images/starYellow.svg';
 import { NavLink } from 'react-router-dom';
 class Question extends React.Component{
     constructor(props) {
         super(props);
     };
     render = () =>{
+        let ratingScale = this.props.averageRating;
         return(
             <NavLink to={`/Question/${this.props.id}`} className={s.question_wrapper}>
                 <div className={s.question_info}>
@@ -18,6 +20,12 @@ class Question extends React.Component{
                         <div className={s.question_views}>
                             <img className={s.question_views_eye} src={eye} alt="eye" />
                             <span className={s.question_views_count}>{this.props.views}</span>
+                        </div>
+                        <div className={s.question_rating}> 
+                            <img  className={s.rating__image} src={starYellow} alt="star" />
+                            <div className={s.rating__scale}>
+                                <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5
+                            </div>
                         </div>
                         <div className={s.question_answers}>
                             answers:

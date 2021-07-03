@@ -8,6 +8,7 @@ import s from './Main.module.css';
 import Login from '../EnterPages/Login/Login.jsx';
 import Registration from '../EnterPages/Registration/Registration.jsx';
 import Profile from '../Profile/Profile.jsx';
+import Moderate from '../Moderate/Moderate.jsx';
 const Main = (props) =>{
     return(
         <main>
@@ -17,6 +18,7 @@ const Main = (props) =>{
             <Route path="/Login" render={()=><Login />} />
             <Route path="/Registration" render={()=> <Registration />}/>
             <Route path="/Profile" render={()=><Profile />} />
+            <Route path="/Moderate" render={()=><Moderate />} />
             <Aside />
 
         </main>

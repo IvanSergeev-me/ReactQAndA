@@ -19,6 +19,12 @@ export const QuestionsApi = {
     },
     getSearchResult(query){
         return instance.get(`question/search/${query}`);
+    },
+    getSortedQuestions(type, dateFrom){
+        return instance.post(`question/all` , {sorting:type, dateFrom});
+    },
+    createScore(userId, questionId, score){
+        return instance.post(`/question/createScore`, {id:0, userId, questionId, score});
     }
     
 };
@@ -33,7 +39,7 @@ export const AnswersApi = {
         return instance.delete(`answer/delete/${id}`);
     },
     setBestAnswer(id){
-        return instance.post(`/answer/setBest/${id}`)
+        return instance.post(`/answer/setBest/${id}`);
     },
     createScore(userId, answerId, score){
         return instance.post(`/answer/createScore`, {id:0, userId, answerId, score})
@@ -71,11 +77,11 @@ export const ProfileApi = {
         return instance.get(`question/forUser/${id}`);
     },
     deleteMyQuestion(id){
-        return instance.delete(`question/delete/${id}`)
+        return instance.delete(`question/delete/${id}`);
     }
 }
 export const ChangeUserApi = {
     changeUser(id, login, password, image){
-        return instance.post(`user/update`, {id, login, password,image})
+        return instance.post(`user/update`, {id, login, password,image});
     }
 }

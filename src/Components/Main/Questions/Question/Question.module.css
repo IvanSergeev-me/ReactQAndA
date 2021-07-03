@@ -68,7 +68,7 @@
 }
 .question_views_eye{
 object-fit: contain;
-width: 1.5em;
+width: 20px;
 }
 .question_views_count{
     color: black;
@@ -96,4 +96,27 @@ width: 1.5em;
 .question_answer_notgiven{
     color:red;
     
+}
+.low_rating{
+    color: red;
+}
+.medium_rating{
+ color: orange;
+}
+.high_rating{
+    color: green;
+}
+.rating__image{
+    object-fit: contain;
+    width: 20px;
+}
+.question_rating{
+    display: flex;
+    align-items: center;
+}
+.rating__scale{
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    color: black;
 }

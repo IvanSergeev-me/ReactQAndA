@@ -38,7 +38,7 @@ const Profile = (props) =>{
                     <div className={s.personal__login}>{personalData.login}</div>
                 </div>
                
-                <Route path="/Profile/Settings" render={()=><ProfileOptions /> }/>
+                <Route path="/Profile/Settings" render={()=><ProfileOptions personalData={personalData}/> }/>
                 <Route path="/Profile/Change/:type?" render={()=><Change />}/>
             </div>
             <div className={s.profile_actions}>
@@ -58,6 +58,7 @@ const ProfileOptions = (props) =>{
             </div>
             <div className={s.options__column}>
                 <div className={s.column__option}>Удалить учетную запись</div>
+                {props.personalData.isAdmin?<NavLink to={"/Moderate"} className={s.column__option}>Модерация пользователей</NavLink>:null}   
             </div>
         </div>
     )

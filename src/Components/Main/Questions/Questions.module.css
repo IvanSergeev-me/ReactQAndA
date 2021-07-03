@@ -1,7 +1,36 @@
+.questions_section{
+    padding: 5% 15%;
+}
 .questions_wrapper{
     display: flex;
     flex-wrap: wrap;
-    padding: 5% 15%;
+  
     align-items: stretch;
     justify-content: space-between;
+}
+.wrapper__sort{
+    box-sizing: border-box;
+    margin-bottom: 3%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.sort__column{
+    display: flex;
+    align-items: center;
+}
+.sort__title{
+    font-size: 1em;
+    color: black;
+    font-weight: 600;
+}
+.sort__select{
+    width: 100px;
+    box-sizing: border-box;
+    margin-left: 20px;
+    font-size: 1em;
+    color:teal;
+}
+.select__option{
+    font-size: 1em;
 }

@@ -47,11 +47,20 @@ export const getQuestionsThunk = (currentPage, pageSize) =>{
 export const getSearchResultThunk = (query) =>{
     return (dispatch) =>{
         dispatch(toggleFetchingAC());
-        console.log(query)
         QuestionsApi.getSearchResult(query)
         .then(response => {
             dispatch(setQuestionsAC(response.data));
             dispatch(reset('searchForm'));
+        }).then(dispatch(toggleFetchingAC()));
+        
+    };
+};
+export const getSortedThunk = (type, dateFrom) =>{
+    return (dispatch) =>{
+        dispatch(toggleFetchingAC());
+        QuestionsApi.getSortedQuestions(type, dateFrom)
+        .then(response => {
+            dispatch(setQuestionsAC(response.data));
         }).then(dispatch(toggleFetchingAC()));
         
     };

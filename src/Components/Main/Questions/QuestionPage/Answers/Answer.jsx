@@ -12,7 +12,8 @@ const Answer = (props) =>{
     let itsId = props.id;
     let isAnswerAlreadyGiven = props.isAnswerAlreadyGiven;
     let author = props.author;
-    let conditionToEdit = isAuth & !props.isBest & (author.id === props.myId);
+    let isAdmin = props.isAdmin;
+    let conditionToEdit = ((isAuth & !props.isBest & (author.id === props.myId))||isAdmin);
     let [editMode, toggleEditMode] = useState(false);
     let [makeBest, toggleMakeBest] = useState(false);
     let [answerText, setAnswerText] = useState(props.answer);
@@ -22,13 +23,13 @@ const Answer = (props) =>{
     },[props.answer]);
     const toggleBest = () =>{
         if (isMyQuestion && !isBest && !isAnswerAlreadyGiven){
-            console.log("toggleBest")
+            //console.log("toggleBest")
             makeBest?toggleMakeBest(false):toggleMakeBest(true);
         }
     }
     const toggleEdit = () =>{
         if(conditionToEdit){
-            console.log("toggleEdit")
+            //console.log("toggleEdit")
             
             editMode?toggleEditMode(false):toggleEditMode(true);
             console.log(editMode)

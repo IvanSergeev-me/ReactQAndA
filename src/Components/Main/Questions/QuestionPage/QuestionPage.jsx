@@ -2,18 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk, setBestAnswerThunk,addScoreThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
+import { getQuestionPageThunk, addAnswerThunk, deleteAnswerThunk, updateAnswerThunk, setBestAnswerThunk,addScoreThunk,addQuestionScoreThunk } from '../../../../Redux/Reducers/question-page-reducer.js';
 import Answer from './Answers/Answer.jsx';
 import s from './QuestionPage.module.css';
 import eye from '../../../../Assets/Images/view.svg';
 import defaultImg from './account.png';
 import { AnswerTextarea } from '../../../Common/Forms/AnswerTextarea.js';
 import { Field, reduxForm } from 'redux-form';
+import { deleteMyQuestionThunk } from '../../../../Redux/Reducers/profile-reducer.js';
+import StarRating from '../../../Common/StartRating/StarRating';
 
 
 const QuestionPage = (props) =>{
     let ratingScale = props.question.averageRating;
     let userImage = props.appDataReducer.data.image;
+    let isAdmin = props.appDataReducer.data.isAdmin;
     let isAuth = props.appDataReducer.isAuth;
     let myId = props.appDataReducer.data.id;
     let questionId = props.question.id;
@@ -25,8 +28,14 @@ const QuestionPage = (props) =>{
         
     }
     const onSubmit = (data) =>{
-        //console.log(data);
         props.addAnswer(data);
+    }
+    const deleteQuestion = (e) =>{
+        props.deleteQuestion(questionId);
+        e.preventDefault();
+    }
+    let rateQuestion = (score) =>{
+        props.addQuestionScore(questionId, score);
     }
     let answers_list = props.answers.map(
         a => {
@@ -39,6 +48,7 @@ const QuestionPage = (props) =>{
             answer = {a.answer}
             isBest = {a.isBest}
             isAuth = {isAuth}
+            isAdmin = {isAdmin}
             deleteThisAnswer={deleteThisAnswer}
             updateAnswer={updateAnswer}
             isMyQuestion={props.isMyQuestion}
@@ -46,6 +56,7 @@ const QuestionPage = (props) =>{
             addScore={props.addScore}
             author={a.author}
             isAnswerAlreadyGiven = {props.question.isAnswerGiven}
+            
         />
         }
     )
@@ -61,7 +72,7 @@ const QuestionPage = (props) =>{
             return 0;
         }     
     );
-   // console.log(answers_list)
+  
    
     return(
         <section className={s.questionPage_wrapper}>
@@ -96,9 +107,10 @@ const QuestionPage = (props) =>{
                     </div>
                     <div className={s.body_review}>
                         <div>Этот вопрос решен? {props.question.isAnswerGiven?<span className={s.answerGiven}>Да</span>:<span  className={s.answerNotGiven}>Нет</span>}</div>
-                        <div>Этот вопрос полезен? <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{props.question.averageRating}</span>/5</div>
+                        <div> {isAuth? <StarRating currentRating={0} addScore={rateQuestion}/>:null} Этот вопрос полезен? <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5</div>
                     </div>
                 </div>
+                {isAdmin?<button onClick={deleteQuestion} className={s.delete_question_button}>Удалить вопрос</button>:null}
             </div>
             <div className={s.questionPage_answers}>
                 <div className={s.answers_header}>
@@ -167,6 +179,15 @@ class QuestionPageClass extends React.Component{
         if(!userId) userId = -1;
         this.props.addScoreThunk(userId, answerId, score);
     }
+    addQuestionScore = (questionId, score) =>{
+        let userId = this.props.appDataReducer.data.id;
+        if(!userId) userId = -1;
+
+        this.props.addQuestionScoreThunk(userId, questionId, score)
+    }
+    deleteQuestion = (id) =>{
+        this.props.deleteMyQuestionThunk(id);
+    }
     componentDidMount(){
         let questionId = this.props.match.params.questionID;
         this.props.getQuestionPageThunk(questionId);
@@ -184,7 +205,8 @@ class QuestionPageClass extends React.Component{
             question={this.props.currentPage.question} answers={this.props.currentPage.answers}
             deleteAnswer={this.deleteAnswer} updateAnswer={this.updateAnswer}
             isMyQuestion={isMyQuestion} setBestAnswer={this.setBestAnswer}
-            addScore={this.addScore}
+            addScore={this.addScore} deleteQuestion={this.deleteQuestion}
+            addQuestionScore={this.addQuestionScore}
             />
         )
     }
@@ -194,4 +216,5 @@ let mapStateToProps = (state) => ({
     appDataReducer: state.appDataReducer
     
 });
-export default compose(connect(mapStateToProps, { getQuestionPageThunk ,setBestAnswerThunk, addAnswerThunk,deleteAnswerThunk, updateAnswerThunk,addScoreThunk}),withRouter,)(QuestionPageClass);
+export default compose(connect(mapStateToProps, { getQuestionPageThunk ,setBestAnswerThunk, 
+    addAnswerThunk,deleteAnswerThunk, updateAnswerThunk,addScoreThunk, deleteMyQuestionThunk,addQuestionScoreThunk}),withRouter,)(QuestionPageClass);

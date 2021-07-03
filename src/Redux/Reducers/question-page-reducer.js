@@ -62,7 +62,6 @@ const  questionPageReducer = (state = initialState, action) => {
                 }
                 return a;
               });
-            //console.log(newAnswers)
             return{
                 ...state,
                 answers:newAnswers
@@ -72,18 +71,14 @@ const  questionPageReducer = (state = initialState, action) => {
             let idToChange = action.id;
             let newAnswer = state.answers.filter((item) => item.id === idToChange);
             newAnswer[0].isBest = true;
-           // console.log(newAnswer) 
             const newAnswers = state.answers.map(a => {
-               // console.log(a.id + "   " + newAnswer[0].id)
                 if (a.id === newAnswer.id) {
-                  //console.log("wadawd")
                   return newAnswer;
                 }
                 return a;
               });
             let newQuestion = state.question;
             newQuestion.isAnswerGiven = true;
-            //console.log(newQuestion);
             return{
                 ...state,
                 question:newQuestion,
@@ -137,8 +132,7 @@ export const updateAnswerThunk = (id,questionId, userId, answer) =>{
     return (dispatch) =>{
         AnswersApi.updateAnswer(id,questionId, userId, answer)
         .then(response =>{
-            //dispatch(setUserAnswerAC( answer, id));
-           // console.log("success")
+            //Todo
         });
     };
 };
@@ -147,11 +141,8 @@ export const getQuestionPageThunk = (id) =>{
         dispatch(toggleFetchingAC());
         QuestionsApi.getCurrentQuestion(id)
         .then(response => {
-            
-            dispatch(setQuestionPageAC(response.data.question, response.data.answers));
-            
+            dispatch(setQuestionPageAC(response.data.question, response.data.answers));    
             dispatch(toggleFetchingAC());
-            
         });    
     };
 };
@@ -159,19 +150,31 @@ export const setBestAnswerThunk = (id) =>{
     return (dispatch) =>{
         AnswersApi.setBestAnswer(id)
         .then(response =>{
-            //console.log("setted")
             dispatch( makeBestAC(id));
         })
     };
 };
 export const addScoreThunk = (userId, answerId, score) =>{
     return(dispatch) =>{
-        if(score > 5) score = 5;
-        if (score < 0) score = 0;
+        score = normalizeScore(score);
         AnswersApi.createScore(userId, answerId, score)
         .then(response=>{
-            console.log("rated " + score);
+            //Todo
         })
     }
+}
+export const addQuestionScoreThunk = (userId, questionId, score) =>{
+    return(dispatch) =>{
+        score = normalizeScore(score);
+        QuestionsApi.createScore(userId, questionId, score)
+        .then(response=>{
+           //Todo
+        })
+    }
+}
+let normalizeScore = (score) =>{
+    if(score > 5) score = 5;
+    if (score < 0) score = 0;
+    return score;
 }
 export default questionPageReducer;
