@@ -52,6 +52,12 @@ fun Route.userRouting() {
             id.deleteToken()
             setAuthCookie(COOKIE_VALUE_DELETED)
         }
+
+        deleteAndHandleException("/delete/{id}") {
+            val id = call.parameters["id"] ?: return@deleteAndHandleException call.badRequest()
+            UserDao.delete(id.toInt())
+
+        }
     }
 }
 

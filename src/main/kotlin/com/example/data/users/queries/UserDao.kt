@@ -77,4 +77,7 @@ object UserDao {
     fun Question.author(): UserShort = getById(this.userId)
 
     fun Int.asUser(): UserShort = getById(this)
+    fun delete(id: Int) = transaction {
+        Users.deleteWhere { Users.id eq id }
+    }
 }
