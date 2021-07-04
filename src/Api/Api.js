@@ -83,5 +83,12 @@ export const ProfileApi = {
 export const ChangeUserApi = {
     changeUser(id, login, password, image){
         return instance.post(`user/update`, {id, login, password,image});
+    },
+    getAllUser(){
+        return instance.get(`user/all`);
+    },
+    deleteUser(id){
+        return instance.post(`user/delete/${id}`);
     }
+    
 }

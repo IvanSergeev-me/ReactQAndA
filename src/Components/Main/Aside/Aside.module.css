@@ -63,3 +63,11 @@
    100% { margin-right: 0;}
 }
 /*800px - пора медиазапросить*/
+@media(max-width:700px){
+    .aside_showed{
+        width: 100%;      
+    }
+    .aside_collapsed_arrow{
+        width: 50px;     
+    }
+}

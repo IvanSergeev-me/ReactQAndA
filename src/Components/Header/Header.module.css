@@ -76,3 +76,24 @@
     object-fit: contain;
     cursor: pointer;
 }
+@media(max-width:700px){
+   .header__wrapper{
+       padding: 1em 5%;
+   }
+}
+@media(max-width:480px){
+    .header__wrapper{
+        padding: 1em 5%;
+        flex-direction: column;
+    }
+    .seacrh_form{
+        width: 100%;
+    }
+    .enter_wrapper{
+        width: 100%;
+    }
+    .button_enter{
+      width: 100%;
+      margin-top: 10px;
+    }
+ }

@@ -110,3 +110,8 @@
     background-color: teal;
     user-select: none;
 }
+@media (max-width:480px) {
+    .right_rating{
+        flex-direction: column;
+    }
+}

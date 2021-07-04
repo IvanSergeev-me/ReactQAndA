@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# React Questions and Answers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## О проекте
 
-## Available Scripts
+Проект представляет собой классическое клиент-серверное приложение, где фронтовая часть выполнена с использованием стека технологий
+React&Redux, а бекенд - с помощью языка Kotlin.
 
-In the project directory, you can run:
+### О чем проект
 
-### `npm start`
+Веб-приложение "React Q&A" поможет вам найти ответ на любой интересующий вас вопрос. В этом и есть смысл приложения - "Вопросы и Ответы".
+Если говорить вкратце, основной функционал приложения можно описать так: Вы можете оставлять свои вопросы, например:
+> "Как пройти в библиотеку?"
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+, а так же отвечать на вопросы других людей.
+А приятный и быстрый веб интерфейс обеспечит вам комфортное пользование сайтом.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Технологии и языки программирования
 
-### `npm test`
+Приложение состоит из трех частей. Как уже было сказано, это классическое клиент-серверное приложение.
+В эти три части входят:
+1. Клиент.
+2. Сервер приложений.
+3. Сервер баз данных.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Клиентская часть - то что вы видите, написано на React JS, с использованием следующих библиотек:
+* "axios": "^0.21.1";
+* "react": "^17.0.2";
+* "react-dom": "^17.0.2";
+* "react-redux": "^7.2.4";
+* "react-router-dom": "^5.2.0";
+* "react-scripts": "4.0.3";
+* "react-star-ratings": "^2.3.0";
+* "redux": "^4.1.0";
+* "redux-form": "^8.3.7";
+* "redux-thunk": "^2.3.0";
+* "web-vitals": "^1.1.2".
 
-### `npm run build`
+Разрабатывая код приложения на Реакте, разработчик (я) постарался учесть все концепции FLUX-архитектуры и все принципы чистых функций.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Стоит ли говорить что были использованы стандартные инструменты - HTML5, CSS3, JS ES6+?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Разработчики
 
-### `npm run eject`
+* Бекэнд - Ветров Александр Юрьевич (https://github.com/vetrov129);
+* Фронтэнд - Сергеев Иван Николаевич (https://github.com/IvanSergeev-me);
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Скриншоты приложения
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Ниже представлены некоторые скриншоты веб-приложения. Стоит отметить, что не весь функционал приложения удалось уместить на скриншотах.
+Некоторые принципиальные аспекты стоит испытать, пользуясь приложением вживую.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Логин
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![](https://i.imgur.com/bJe9lgS.png)
 
-## Learn More
+### Страница всех вопросов
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![](https://i.imgur.com/AIoZkUr.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Страница вопроса
 
-### Code Splitting
+![](https://i.imgur.com/YKF5s8a.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Страница создания вопроса
 
-### Analyzing the Bundle Size
+![](https://i.imgur.com/sRWcrow.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Вопрос создан
 
-### Making a Progressive Web App
+![](https://i.imgur.com/vJRUoeA.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Профиль
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![](https://i.imgur.com/LdmhKSz.png)

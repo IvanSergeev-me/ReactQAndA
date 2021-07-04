@@ -20,3 +20,8 @@
     font-weight: 600;
     text-align: center;
 }
+@media(max-width:480px){
+    .change_wrapper{
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,10 @@
+.moderate__wrapper{
+    padding: 5% 15%;
+}
+.moderate__title{
+    border-bottom: 2px solid teal;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: black;
+    margin:1em 0;
+}

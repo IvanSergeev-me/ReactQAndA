@@ -71,4 +71,16 @@ export const changeUserThunk = (id, login, password, image) =>{
         })
     }
 }
+export const deleteUserThunk = (id) =>{
+    return(dispatch) =>{
+        
+        dispatch(toggleFetchingAC());
+        ChangeUserApi.deleteUser(id)
+        .then(response =>{
+            dispatch(setUserData({id:null, login:null, password:null, image:null}, false));
+            dispatch(toggleFetchingAC());
+            
+        })
+    }
+}
 export default profileReducer;

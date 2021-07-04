@@ -8,6 +8,7 @@ import questionPageReducer from './Reducers/question-page-reducer.js';
 import askReducer from './Reducers/ask-reducer.js';
 import appReducer from './Reducers/app-reducer.js';
 import profileReducer from "./Reducers/profile-reducer.js";
+import adminReducer from "./Reducers/admin-reducer.js";
 
 let reducers = combineReducers({
    form:formReducer,
@@ -17,7 +18,8 @@ let reducers = combineReducers({
    questionPage: questionPageReducer,
    askQuestion: askReducer,
    appDataReducer: appReducer,
-   profileReducer: profileReducer
+   profileReducer: profileReducer,
+   adminReducer: adminReducer
    
 });
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));

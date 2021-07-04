@@ -74,7 +74,9 @@ const Answer = (props) =>{
                 <p onDoubleClick={toggleEdit} className={s.right_text}>{answerText}</p>}
                 <div className={s.right_bottom_options}>
                     <div className={s.right_rating}>
-                        <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5 
+                        <div className={s.rating__ratingScale}>
+                         <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5 
+                        </div>
                         {isAuth?<StarRating currentRating={ratingScale} addScore={addScore}/>:null}
                     </div>
                     {makeBest?<button onClick={makeAnswerBest} className={s.makeBest_button}>Это лучший ответ</button>:null}

@@ -141,3 +141,25 @@
   .form_login_password_error{
       color: rgb(255, 27, 27);
   }
+  @media (max-width:1150px) {
+    .login_wrapper{
+        flex-direction: column;
+    }
+    .login_right_part{
+        padding: 1em;
+        justify-content:flex-start;
+    }
+    .login_right_part_container{
+        width: 100%;
+        margin-left: 0;
+    }
+}
+@media (max-width:700px) {
+   .login_form__buttons{
+       flex-direction: column;
+   }
+   .login_form__button{
+       width: 100%;
+       margin-bottom: 1em;
+   }
+}

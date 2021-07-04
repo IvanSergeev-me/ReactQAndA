@@ -34,3 +34,16 @@
 .select__option{
     font-size: 1em;
 }
+@media(max-width:900px){
+    .wrapper__sort{
+        flex-direction: column;
+    }
+    .sort__column{
+        margin-top: 1em;
+    }
+}
+@media(max-width:700px){
+    .questions_section{
+        padding: 5%;
+    }  
+}
