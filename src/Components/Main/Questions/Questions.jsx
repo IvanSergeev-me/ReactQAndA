@@ -43,7 +43,8 @@ const Questions = (props) =>{
                 <div className={s.sort__column}>
                     <span className={s.sort__title}>Фильровать по категории:</span>
                     <select className={s.sort__select} name="filterQuestions" id="filterQ">
-                        <option className={s.select__option}  value="date">test</option>
+                        <option className={s.select__option}  value="date">Аниме</option>
+                        <option className={s.select__option}  value="date">С Сегодня</option>
                     </select>
                 </div>
             </div>

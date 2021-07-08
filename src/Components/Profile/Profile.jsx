@@ -42,7 +42,7 @@ const Profile = (props) =>{
                 <Route path="/Profile/Change/:type?" render={()=><Change />}/>
             </div>
             <div className={s.profile_actions}>
-                <h2 className={s.actions__title}>Ваши действия</h2>
+                <h2 className={s.actions__title}>Ваши действия {myQuestions.length>0?`: ${myQuestions.length}`:null} </h2>
                 {myQuestions}
             </div>
         </section>

@@ -71,3 +71,9 @@
         width: 50px;     
     }
 }
+@media print{
+    
+    .aside_collapsed{
+        display:none;
+    }
+}

@@ -42,7 +42,7 @@ class Question extends React.Component{
                     </p>
                    
                 </div>
-                {this.props.isAnswerGiven?<p className={s.question_answer_given}>Answer Given</p>:<p className={s.question_answer_notgiven}>No Answer</p>}
+                {this.props.isAnswerGiven?<p className={s.question_answer_given}>Ответ дан</p>:<p className={s.question_answer_notgiven}>Нет ответа</p>}
                 
             </NavLink>
          );

@@ -115,3 +115,10 @@
         flex-direction: column;
     }
 }
+@media print {
+    .answer_wrapper{
+        page-break-before :auto ;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+}

@@ -226,3 +226,9 @@
         
     }
 }
+@media print{
+    @page { margin: 1cm; }
+    .answers_add_wrapper{
+        page-break-before:always;
+    }
+}
