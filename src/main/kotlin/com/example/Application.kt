@@ -33,16 +33,16 @@ fun initDatabase() {
         url = "jdbc:postgresql://localhost:5432/cp4",
         driver = "org.postgresql.Driver",
         user = "postgres",
-        password = "0000"
+        password = "1337"
     )
 
     transaction {
         SchemaUtils.create( // if not exists
-            Answers,
-            Categories,
-            Questions,
-            Subcategories,
             Users,
+            Categories,
+            Subcategories,
+            Questions,
+            Answers,
             QuestionScores,
             AnswerScores,
             Tokens

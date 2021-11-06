@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 
 object Questions: Table("questions") {
-    val id = integer("id").primaryKey().autoIncrement()
+    val id = integer("id").primaryKey().uniqueIndex().autoIncrement()
     val subcategoryId = integer("subcategory_id").references(Subcategories.id)
     val userId = integer("user_id").references(Users.id)
     val title = text("title")
