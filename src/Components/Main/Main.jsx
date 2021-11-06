@@ -13,7 +13,7 @@ const Main = (props) =>{
     return(
         <main>
             <Route path="/Question/:questionID?" render={()=><QuestionPage />}/>
-            <Route path="/Questions" render={()=><Questions />} />
+            <Route exact path={"/Questions"||"/"} render={()=><Questions />} />
             <Route path="/AskQuestion" render={()=><AskQuestion />} />
             <Route path="/Login" render={()=><Login />} />
             <Route path="/Registration" render={()=> <Registration />}/>

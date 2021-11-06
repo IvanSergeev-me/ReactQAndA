@@ -54,7 +54,7 @@
 }
 .popup_login_close {
     position: relative;
-    
+    background: transparent;
 }
 .popup_login_close img{
    width: 30px;

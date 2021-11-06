@@ -18,10 +18,9 @@ const Popup=(props)=>{
             <div onClick={handleClose} className={s.popup_login_area}></div>
             <div className={s.popup_login_body}>
                 <div className={s.popup_login_content}>
-                    <div className={s.pupup_content_header}>
-                     
+                    <div className={s.pupup_content_header}>                    
                         <span>Действие выполнено успешно</span>
-                        <a href="#" className={s.popup_login_close}><img src={crossSvg} alt="cross"/></a>
+                        <button onClick={handleClose} className={s.popup_login_close}><img src={crossSvg} alt="cross"/></button>
                     </div>
                     
                     <p className={s.popup_login_title}>

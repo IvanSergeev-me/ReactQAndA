@@ -38,6 +38,7 @@ const AskQuestion = (props) =>{
     let [needToShow, setShow] = useState(false);
     let sendQuestion = (values) =>{
         props.askNewQuestion(values);
+        //Проверка вопроса накорректность
         setShow(true);
     };
     let closePopup = () =>{
