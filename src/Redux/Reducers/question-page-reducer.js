@@ -104,9 +104,9 @@ const  questionPageReducer = (state = initialState, action) => {
 const setQuestionPageAC = (question, answers) => ({type:SET_QUESTION_PAGE, question,answers});
 const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
 const deleteAnswerAC =(id) =>({type:DELETE_ANSWER, id});
-const setUserAnswerAC = (userAnswer, id) => ({type:SET_USER_ANSWER, userAnswer, id});
+//const setUserAnswerAC = (userAnswer, id) => ({type:SET_USER_ANSWER, userAnswer, id});
 const makeBestAC = (id) => ({type:MAKE_ANSWER_BEST,  id});
-const addScoreAC = (id) => ({type:ADD_SCORE}); 
+//const addScoreAC = (id) => ({type:ADD_SCORE}); 
 
 export const addAnswerThunk = (questionId, userId, answer) =>{
     return (dispatch) =>{

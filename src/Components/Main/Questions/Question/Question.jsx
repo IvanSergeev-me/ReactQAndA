@@ -9,6 +9,9 @@ class Question extends React.Component{
     };
     render = () =>{
         let ratingScale = this.props.averageRating;
+        let questionTextPreview = this.props.text;
+        let maxTextLength = 100;
+        if(this.props.text.length > maxTextLength) questionTextPreview = this.props.text.substr(0, maxTextLength-3) + "..."
         return(
             <NavLink to={`/Question/${this.props.id}`} className={s.question_wrapper}>
                 <div className={s.question_info}>
@@ -38,7 +41,7 @@ class Question extends React.Component{
                     {this.props.title}
                     </h1>
                     <p className={s.question_text}>
-                        {this.props.text}
+                        {questionTextPreview}
                     </p>
                    
                 </div>

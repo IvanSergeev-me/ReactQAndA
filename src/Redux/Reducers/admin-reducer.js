@@ -1,5 +1,4 @@
-import { ProfileApi, ChangeUserApi } from "../../Api/Api";
-import { stopSubmit } from "redux-form";
+import { ChangeUserApi } from "../../Api/Api";
 
 const SET_USERS = "USERS";
 const TOGGLE_FETCHING = "SET_FETCHING";

@@ -13,9 +13,9 @@ const ShowedAside = (props) =>{
     return(
         <section className={s.aside_showed}>
             <div className={s.aside_container}>
-                <button className={s.aside_close_button} onClick={closeAside}>close</button>
+                <button className={s.aside_close_button} onClick={closeAside}>Закрыть</button>
                 <nav className={s.aside_nav}>
-                    <NavLink to="/AskQuestion" className={s.aside_nav_element}>Задать вопрос</NavLink>
+                    <NavLink  to="/AskQuestion" className={s.aside_nav_element}>Задать вопрос</NavLink>
                    
                     <NavLink to="/Questions" className={s.aside_nav_element} >Домой</NavLink>
                 </nav>
@@ -25,6 +25,7 @@ const ShowedAside = (props) =>{
     
     )
 }
+//Need to use hooks
 class Aside extends React.Component{
     constructor(props){
         super(props);
@@ -32,24 +33,19 @@ class Aside extends React.Component{
     toggleActiveAside = () =>{
         this.props.toggleOpen();
     }
-    render(){
-        
+    render(){        
         return(
-            <>
-          
+            <>          
                 {
                 this.props.aside.isActive? 
                 <ShowedAside toggleActiveAside={this.toggleActiveAside}/>:
                   <section className={s.aside_collapsed}>
                       <img className={s.aside_collapsed_arrow} src={arrow} alt="arrow"  onClick={this.toggleActiveAside}/> 
                   </section>
-                }
-               
-           
+                }          
             </>
         );
-    }
-    
+    }   
 }
 let mapStateToProps = (state) =>{
     return {

@@ -9,11 +9,10 @@ import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 const Login = (props) =>{
-    const onSubmit = (data) =>{
-        
+    const onSubmit = (data) =>{       
         props.loginThunk(data);
     }
-    
+    if(props.isAuth) return <Redirect to="/Questions"/>
     return(
         <section className={s.login_section}>
             <div className={s.login_wrapper}>
@@ -71,23 +70,14 @@ const LoginReduxForm = reduxForm({
 class LoginClass extends React.Component {
     constructor(props) {
         super(props);
-
-
-    };
-    componentDidMount(){
-        
     };
     loginThunk = async(data) =>{
        
         await this.props.loginThunk(data);
-        
-        if(this.props.isAuth){
-            <Redirect to="/Questions" />
-        }
     }
     render(){
         return(
-            <Login loginThunk={this.loginThunk}/>
+            <Login isAuth={this.props.isAuth} loginThunk={this.loginThunk}/>
         );
         
     };

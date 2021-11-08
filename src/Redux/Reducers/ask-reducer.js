@@ -4,10 +4,12 @@ const SET_SUBCATEGORIES = "SET_SUBCAT";
 const TOGGLE_FETCHING = "TOGGLE_FETCHING";
 const SET_SELECTED_CATEGORY = "SET_SELECTED_CATEGORY";
 const SET_SELECTED_SUBCATEGORY = "SET_SELECTED_SUBCATEGORY";
-
+const SET_MESSAGE = "SET_MESSAGE";
+const CLEAR_STATE = "CLEAR_STATE";
 
 
 let initialState = {
+    message:"",
     categories:[],
     subCategoriesForCategory:[],
     selectedCategory:{},
@@ -47,6 +49,12 @@ const askReducer = (state = initialState, action) => {
         case TOGGLE_FETCHING:{
             return(state.isFetching)?{...state, isFetching: false}:{...state, isFetching:true};
         } 
+        case SET_MESSAGE:{
+            return {...state, message:action.message}
+        }
+        case CLEAR_STATE:{
+            return{...initialState}
+        }
         default: return state;
     };
 };
@@ -55,15 +63,26 @@ const setCategoriesAC = (categories) => ({type:SET_CATEGORIES, categories});
 const setSubCategoriesAC = (subcategories) => ({type:SET_SUBCATEGORIES, subcategories});
 const setSelectedCategoryAC = (id,name) => ({type:SET_SELECTED_CATEGORY, id, name});
 const setSelectedSubCategoryAC = (id, name) => ({type:SET_SELECTED_SUBCATEGORY, id, name});
+const setMessage = (message) => ({type:SET_MESSAGE, message});
 const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
+const clearState = () => ({type:CLEAR_STATE});
 
 export const askQuestionThunk = (subcategoryId, userId, title, description) =>{
     return(dispatch) =>{
-        dispatch(toggleFetchingAC());
-        AskQuestionApi.askQuestion(subcategoryId, userId, title, description)
-        .then(response =>{
+        if(subcategoryId&&userId&&title&&description){
             dispatch(toggleFetchingAC());
-        })
+            AskQuestionApi.askQuestion(subcategoryId, userId, title, description)
+            .then(response =>{
+                if (response.data.status==="exception"){
+                    dispatch(dispatch(setMessage("Error")));
+                }
+                else dispatch(setMessage("Success"));
+                dispatch(toggleFetchingAC());  
+            })
+        }
+        else{
+            dispatch(setMessage("Error"));
+        }
     }
 }
 export const getSubcategoriesForCategory = (id, name) =>{
@@ -80,11 +99,10 @@ export const getSubcategoriesForCategory = (id, name) =>{
 };
 export const getCategories = () =>{
     return (dispatch) =>{
-        
+        dispatch(clearState());
         AskQuestionApi.getCategories()
         .then(response => {
 
-            console.log(response)
             if(response.status == 200){
                 dispatch(setCategoriesAC(response.data));
             }

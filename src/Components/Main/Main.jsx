@@ -11,9 +11,9 @@ import Profile from '../Profile/Profile.jsx';
 import Moderate from '../Moderate/Moderate.jsx';
 const Main = (props) =>{
     return(
-        <main>
+        <main className={s.main_wrapper}>
             <Route path="/Question/:questionID?" render={()=><QuestionPage />}/>
-            <Route exact path={"/Questions"||"/"} render={()=><Questions />} />
+            <Route exact path={["/","/Questions"]} render={()=><Questions />} />
             <Route path="/AskQuestion" render={()=><AskQuestion />} />
             <Route path="/Login" render={()=><Login />} />
             <Route path="/Registration" render={()=> <Registration />}/>

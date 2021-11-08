@@ -31,9 +31,9 @@ const ChangeForm = (props) =>{
     let type = props.type;
     return(
         <form onSubmit={props.handleSubmit} className={s.form} >
-            {type=="login"?<Field validate={[requiredField,maxLength]} component={ChangeInput} name={"UserNewLogin"} placeholder="Измените логин"/>:null}
-            {type=="password"?<Field validate={[requiredField,maxLength]} component={ChangeInput} name={"UserNewPassword"} placeholder="Измените пароль"/>:null}
-            {type=="image"?<Field validate={[requiredField]} component={ChangeInput} name={"UserNewImage"} placeholder="Измените ссылку на изображение"/>:null}
+            {type==="login"?<Field validate={[requiredField,maxLength]} component={ChangeInput} name={"UserNewLogin"} placeholder="Измените логин"/>:null}
+            {type==="password"?<Field validate={[requiredField,maxLength]} component={ChangeInput} name={"UserNewPassword"} placeholder="Измените пароль"/>:null}
+            {type==="image"?<Field validate={[requiredField]} component={ChangeInput} name={"UserNewImage"} placeholder="Измените ссылку на изображение"/>:null}
             <div className={s.form_button_container}>
                 <button type="submit" className={s.form_send}>Отправить</button>
             </div> 

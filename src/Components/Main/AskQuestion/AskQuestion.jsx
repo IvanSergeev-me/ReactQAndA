@@ -9,6 +9,7 @@ import {getCategories, getSubcategoriesForCategory,selectSubCategory, askQuestio
 import { withAuthRedirectComponent } from '../../../HOC/AuthRedirect';
 import { compose } from 'redux';
 import Popup from '../../Common/Popup-Successful/Popup.jsx';
+import { Redirect } from 'react-router';
 const AskQuestion = (props) =>{
     
     let categoriesList = props.categories.map(
@@ -17,8 +18,7 @@ const AskQuestion = (props) =>{
                 key = {c.id}
                 id = {c.id}
                 name = {c.name}
-                loadSubcategories={props.loadSubcategories}
-                
+                loadSubcategories={props.loadSubcategories}               
                 isCategory={true}
              />
         }
@@ -44,6 +44,7 @@ const AskQuestion = (props) =>{
     let closePopup = () =>{
         setShow(false);
     }
+    
     return(
         <div className={s.ask_wrapper}>
            <h1 className={s.ask_title}>Создание вопроса</h1>
@@ -62,7 +63,9 @@ const AskQuestion = (props) =>{
             </div>:<></>}
            
            <NewQuestionForm onSubmit={sendQuestion}/>
-           <Popup closePopup={closePopup} popupAction={"Создание вопроса"} needToShow={needToShow}/>
+           {props.message==="Error"?<Popup closePopup={closePopup} isSuccess={false} popupAction={"Создание вопроса"} needToShow={needToShow}/>
+           :<Popup closePopup={closePopup} isSuccess={true} popupAction={"Создание вопроса"} needToShow={needToShow}/>}
+          
         </div>
         );
 };
@@ -103,7 +106,6 @@ class AskQuestionClass extends React.Component{
         super(props);
     }
     askNewQuestion = (values) =>{
-        //console.log(values);
         let title = values.newQuestionTitle;
         let description = values.newQuestionContent;
         let subcat = this.props.askQuestion.selectedSubCategory.id;
@@ -126,7 +128,9 @@ class AskQuestionClass extends React.Component{
         this.props.getCategories();
     }
     render = () =>{
+        //if(this.props.message==="Success") return <Redirect to="/"/>
         return <AskQuestion
+        message={this.props.askQuestion.message}
         selectedCategory={this.props.askQuestion.selectedCategory} selectedSubCategory={this.props.askQuestion.selectedSubCategory}
          loadSubcategories={this.loadSubcategories} 
         subcategories={this.props.askQuestion.subCategoriesForCategory} categories={this.props.askQuestion.categories} 

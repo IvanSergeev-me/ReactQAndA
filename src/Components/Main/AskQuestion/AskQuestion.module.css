@@ -1,5 +1,5 @@
 .ask_wrapper{
-    padding: 5% 15% 15% 15%;
+    padding: 5% 15% 0 15%;
 }
 .form{
     display: flex;
@@ -42,8 +42,6 @@
 }
 .categories_choise_column{
     width: 40%;
-    border:1px solid black;
-    padding: 0.5em;
     display: flex;
     flex-direction: column;
     overflow-y: auto;

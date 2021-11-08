@@ -29,15 +29,10 @@ const Answer = (props) =>{
     }
     const toggleEdit = () =>{
         if(conditionToEdit){
-            //console.log("toggleEdit")
-            
             editMode?toggleEditMode(false):toggleEditMode(true);
-            console.log(editMode)
-            if (editMode){
-                
+            if (editMode){               
                 props.updateAnswer(itsId, answerText)
             };
-            console.log(editMode)
         }
        
     }

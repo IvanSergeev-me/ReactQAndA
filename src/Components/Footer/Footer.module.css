@@ -5,7 +5,7 @@
    width: 100%;
     display: flex;
     align-items: stretch;
-    padding: 5% 15%;
+    padding: 1% 15%;
     justify-content: space-between;
     background-color: #fafafa;
 }
@@ -25,6 +25,15 @@
 .footer_text{
     font-weight: 600;
 }
+.footer_link{
+    color:black;
+    text-decoration: none;
+    transition-property: color;
+}
+.footer_link:hover{
+    color:teal;
+    transition: 0.3s;
+}
 @media(max-width:700px){
     .footer_wrapper{
         padding: 5%;
@@ -38,6 +47,9 @@
       
         margin-bottom: 0em;
         margin-top: 1em;
+    }
+    .footer_column{
+        width: 100%;
     }
 }
    

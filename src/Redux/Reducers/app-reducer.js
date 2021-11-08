@@ -5,8 +5,6 @@ const SET_USER_DATA = "SET_USER_DATA";
 const LOGOUT_USER = "LOGOUT_USER";
 
 let initialState = {
-    resultCode: null,
-    messages: [],
     data: {
         id: null,
         login: null,
@@ -20,7 +18,6 @@ const authReducer = (state = initialState, action) => {
     
     switch (action.type) {
         case SET_USER_DATA:
-            console.log("dataset")
             return {
                 ...state,
                 data: action.userData,
@@ -65,7 +62,6 @@ export const loginThunk = (data) =>{
 };
 export const registerThunk = (data) =>{
     return(dispatch) =>{
-        console.log(data);
         if(data.Password !== data.RepeatPassword){
             dispatch(stopSubmit("registrationForm", {_error:"Пароли не совпадают"}));
         }

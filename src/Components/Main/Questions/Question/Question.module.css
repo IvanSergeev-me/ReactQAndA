@@ -88,6 +88,8 @@ width: 20px;
 .question_text{
     line-height: 1.5em;
     color: black;
+    
+    overflow: hidden;
 }
 .question_answer_given{
     color:green;

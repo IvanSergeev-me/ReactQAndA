@@ -13,7 +13,7 @@ const Registration = (props) =>{
         props.registerMe(data)
        
     }
-    
+    if(props.isAuth) return <Redirect to="/Questions"/>
     return(
         <section className={s.login_section}>
             <div className={s.login_wrapper}>
@@ -66,29 +66,19 @@ const RegistrationReduxForm = reduxForm({
     form:"registrationForm"
 })(RegistrationForm);
 
-
-
-
 class RegistrationClass extends React.Component {
     constructor(props) {
         super(props);
-
-
-    };
-    componentDidMount(){
-        
     };
     registerMe = (data) =>{
         this.props.registerThunk(data);
     }
     render(){
         return(
-            <Registration registerMe={this.registerMe}/>
-        );
-        
+            <Registration isAuth={this.props.isAuth} registerMe={this.registerMe}/>
+        );       
     };
 };
-
 let mapStateToProps = (state) => ({
    isAuth:state.appDataReducer.isAuth
 });

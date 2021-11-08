@@ -1,6 +1,6 @@
 .questionPage_wrapper{
     
-    padding: 5% 15% 15% 5%;
+    padding: 5% 15% 0 5%;
 }
 .question_views_eye{
     object-fit: contain;
@@ -92,6 +92,7 @@
     color: black;
     background-color: #fafafa;
     border-radius: 10px;
+    word-break: break-all;
 }
 .body_review{
     
