@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import s from './Popup.module.css';
 import crossSvg from './cross.svg'
 const Popup=(props)=>{
-    
     let [show, setShow] = useState(props.needToShow);
     useEffect(()=>{
         setShow(props.needToShow)
@@ -10,7 +9,10 @@ const Popup=(props)=>{
 
     const handleClose = () => {
         setShow(false);
-        props.closePopup();
+        if(props.isSuccess)
+            props.closePopup(true);
+        else 
+            props.closePopup(false);   
     }
     return(
         <div className={show?s.popup_login:s.popup_login_hidden} id="popup_new_order">

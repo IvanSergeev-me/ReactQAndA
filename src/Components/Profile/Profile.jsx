@@ -10,6 +10,7 @@ import { setQuestionsThunk,deleteMyQuestionThunk } from '../../Redux/Reducers/pr
 import { NavLink } from 'react-router-dom';
 import Change from './Change/Change.jsx';
 import {Route} from "react-router-dom";
+import Statistics from './Statistics/Statistics';
 const Profile = (props) =>{
     let personalData = props.personalData;
     let myQuestions = props.userQuestions.map(
@@ -42,8 +43,12 @@ const Profile = (props) =>{
                 <Route path="/Profile/Change/:type?" render={()=><Change />}/>
             </div>
             <div className={s.profile_actions}>
+                 
                 <h2 className={s.actions__title}>Ваши действия {myQuestions.length>0?`: ${myQuestions.length}`:null} </h2>
-                {myQuestions}
+                <div className={s.statistics__button_container}><NavLink to={"/Profile/Settings/Statistics"} className={s.statistics__button_small}>Посмотреть статистику</NavLink>  </div>
+                <Route path="/Profile/Settings/Statistics" render={()=><Statistics />}/>
+                <Route exact path="/Profile/Settings" render={()=>myQuestions}/>
+                
             </div>
         </section>
     )
@@ -58,7 +63,7 @@ const ProfileOptions = (props) =>{
             </div>
             <div className={s.options__column}>
                 <div className={s.column__option}>Удалить учетную запись</div>
-                {props.personalData.isAdmin?<NavLink to={"/Moderate"} className={s.column__option}>Модерация пользователей</NavLink>:null}   
+                {props.personalData.isAdmin?<NavLink to={"/Moderate"} className={s.column__option}>Модерация пользователей</NavLink>:null}    
             </div>
         </div>
     )

@@ -14,7 +14,7 @@ let initialState = {
     subCategoriesForCategory:[],
     selectedCategory:{},
     selectedSubCategory:{},
-    
+    isFetching:false,
 };
 const askReducer = (state = initialState, action) => {
     
@@ -64,13 +64,14 @@ const setSubCategoriesAC = (subcategories) => ({type:SET_SUBCATEGORIES, subcateg
 const setSelectedCategoryAC = (id,name) => ({type:SET_SELECTED_CATEGORY, id, name});
 const setSelectedSubCategoryAC = (id, name) => ({type:SET_SELECTED_SUBCATEGORY, id, name});
 const setMessage = (message) => ({type:SET_MESSAGE, message});
-const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
-const clearState = () => ({type:CLEAR_STATE});
+export const toggleFetchingAC = () => ({type:TOGGLE_FETCHING});
+export const clearState = () => ({type:CLEAR_STATE});
 
 export const askQuestionThunk = (subcategoryId, userId, title, description) =>{
     return(dispatch) =>{
         if(subcategoryId&&userId&&title&&description){
             dispatch(toggleFetchingAC());
+            dispatch(setMessage("Fetching"));
             AskQuestionApi.askQuestion(subcategoryId, userId, title, description)
             .then(response =>{
                 if (response.data.status==="exception"){

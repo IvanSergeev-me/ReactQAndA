@@ -8,7 +8,7 @@
 }
 .profile_header__personal{
     display: flex;
-    flex:1;
+    flex: 0.5;
     flex-direction: column;
 }
 .personal__avatar_container{
@@ -29,6 +29,7 @@
     font-weight: 600;
     
 }
+
 .profile_header__options{
     margin-left: 100px;
     display: flex;
@@ -36,6 +37,11 @@
     justify-content: space-between;
     align-items: stretch;
 
+}
+.profile__statisctics{
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 .options__column{
     display: flex;
@@ -51,9 +57,26 @@
     border:1px solid teal;
     padding: 1em;
     background-color: teal;
-    font-size: 2em;
+    font-size: 1em;
     color: white;
     font-weight: 600;
+}
+.statistics__button_small{
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 20px;
+    border:1px solid teal;
+    background-color: teal;
+    font-size: 1em;
+    color: white;
+    font-weight: 600;
+    padding: 5px;
+    
+}
+.statistics__button_container{
+    position: relative;
+    margin-bottom: 1em;
 }
 .options__column:nth-child(2){
     margin-left: 50px;
@@ -67,6 +90,9 @@
     font-weight: 600;
     color: black;
     margin:1em 0;
+}
+.statistics__chart{
+    max-height: 500px;
 }
 @media (max-width:1200px) {
     .profile_header__options{
@@ -82,6 +108,9 @@
 @media (max-width:700px) {
     .profile_wrapper{
         padding: 5%;
+    }
+    .statistics__chart{
+        max-height: auto;
     }
 }
 @media (max-width:480px) {

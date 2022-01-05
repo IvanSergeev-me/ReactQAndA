@@ -10,8 +10,11 @@ import { withAuthRedirectComponent } from '../../../HOC/AuthRedirect';
 import { compose } from 'redux';
 import Popup from '../../Common/Popup-Successful/Popup.jsx';
 import { Redirect } from 'react-router';
+import { useHistory } from "react-router-dom";
+
 const AskQuestion = (props) =>{
-    
+    const history = useHistory();
+
     let categoriesList = props.categories.map(
         c =>{
             return <CategoryBrick     
@@ -41,8 +44,13 @@ const AskQuestion = (props) =>{
         //Проверка вопроса накорректность
         setShow(true);
     };
-    let closePopup = () =>{
+    let closePopup = (needRedirect) =>{
         setShow(false);
+        if(needRedirect){
+            let path = `/`; 
+            history.push(path);
+        }
+        
     }
     
     return(

@@ -110,7 +110,7 @@ const QuestionPage = (props) =>{
                         <div> {isAuth? <StarRating currentRating={0} addScore={rateQuestion}/>:null} Этот вопрос полезен? <span className={ratingScale>=0&&ratingScale<3?s.low_rating:ratingScale>=3&&ratingScale<4?s.medium_rating:s.high_rating}>{ratingScale}</span>/5</div>
                     </div>
                 </div>
-                {isAdmin?<button onClick={deleteQuestion} className={s.delete_question_button}>Удалить вопрос</button>:null}
+                {isAdmin?<button onDoubleClick={deleteQuestion} className={s.delete_question_button}>Удалить вопрос</button>:null}
             </div>
             <div className={s.questionPage_answers}>
                 <div className={s.answers_header}>

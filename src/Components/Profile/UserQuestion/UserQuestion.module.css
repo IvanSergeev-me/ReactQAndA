@@ -17,6 +17,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    
 
 }
 .question_info__left{
@@ -78,7 +79,7 @@ width: 1.5em;
 }
 .question_title{
     font-size: 1.2em;
-    
+    overflow: hidden;
     margin-bottom: 1em;
     font-weight: 600;
     color: teal;
@@ -86,6 +87,7 @@ width: 1.5em;
 .question_text{
     line-height: 1.5em;
     color: black;
+    overflow: hidden;
 }
 .question_answer_given{
     color:green;
