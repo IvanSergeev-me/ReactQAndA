@@ -21,13 +21,13 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
+//Точка входа в приложение
 fun main() {
     embeddedServer(Netty, port = 8080, host = "localhost") {
         module()
     }.start(wait = true)
 }
-
-
+//Подключение к бд и создание таблиц
 fun initDatabase() {
     Database.connect(
         url = "jdbc:postgresql://localhost:5432/cp4",
@@ -35,7 +35,6 @@ fun initDatabase() {
         user = "postgres",
         password = "1337"
     )
-
     transaction {
         SchemaUtils.create( // if not exists
             Users,
@@ -49,11 +48,10 @@ fun initDatabase() {
         )
     }
 }
-
+//Определение параметра CORS, инициализация роутингов и бд
 fun Application.module() {
     install(ContentNegotiation) {
         install(CORS){
-//            host("localhost:3030")
             anyHost()
             method(HttpMethod.Options)
             method(HttpMethod.Delete)
@@ -68,7 +66,7 @@ fun Application.module() {
         }
     }
 }
-
+//Инициализация роутингов
 fun Application.registerRoutes() {
     routing {
         get("/") {
